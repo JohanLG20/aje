@@ -13,7 +13,7 @@ return array(
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'AJE\\View\\' => array($baseDir . '/app/view'),
-    'AJE\\Services\\' => array($baseDir . '/app/services'),
+    'AJE\\Utils\\' => array($baseDir . '/app/utils'),
     'AJE\\Model\\' => array($baseDir . '/app/model'),
     'AJE\\Controller\\' => array($baseDir . '/app/controller'),
     'AJE\\Config\\' => array($baseDir . '/app/cls'),

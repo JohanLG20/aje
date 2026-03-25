@@ -34,7 +34,7 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         'A' =>
         array (
             'AJE\\View\\' => 9,
-            'AJE\\Services\\' => 13,
+            'AJE\\Utils\\' => 10,
             'AJE\\Model\\' => 10,
             'AJE\\Controller\\' => 15,
             'AJE\\Config\\' => 11,
@@ -70,9 +70,9 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         array (
             0 => __DIR__ . '/../..' . '/app/view',
         ),
-        'AJE\\Services\\' =>
+        'AJE\\Utils\\' =>
         array (
-            0 => __DIR__ . '/../..' . '/app/services',
+            0 => __DIR__ . '/../..' . '/app/utils',
         ),
         'AJE\\Model\\' =>
         array (

@@ -2,43 +2,61 @@
 
 namespace AJE\Controller;
 
-use AJE\Services\UserErrorHelper;
+use AJE\Utils\UserErrorHelper;
+use AJE\Model\DBUser;
+
 
 class UserManagementController extends CRUDController
 {
 
     protected function getPostValuesErrors($action, $values): array|bool
     {
-
         return UserErrorHelper::checkForErrors($values);
     }
-    protected function loadSqlParams(string $action, array $values): array
+    
+    protected function handdleSqlErrors(\Exception $e, string $action, array $values): string
     {
-        throw new \Exception("Not implemented yet");
-    }
-    protected function handdleSqlErrors(string $errorMessage, string $action, array $values): string
-    {
-        throw new \Exception("Not implemented yet");
+        $errorMessage = "Une erreur inconnue s'est produite, veuillez réessayer ou contacter le support si le problème persiste.";
+        if($e->getCode() == 0){
+            $errorMessage = "Cette adresse email est déjà utilisée.";
+        }
+        return $errorMessage;
     }
     protected function completeViewInformations(): array
     {
         return [];
     }
-    protected function create(array $valuesToAdd): bool
+    protected function create(array $params): string
+    {
+        try{
+            if(DBUser::addNewElement($params)){
+                return 'Votre compte à été créer avec succès.';
+            }
+            else{
+                return 'Une erreur est survenue lors de la création de votre compte, veuillez réessayer.';
+            }
+        }
+        catch(\PDOException $e){
+            return $this->handdleSqlErrors($e, 'create', $params);
+        }
+    }
+    protected function update(array $params): string
     {
         throw new \Exception("Not implemented yet");
     }
-    protected function update(array $valuesToModify): bool
-    {
-        throw new \Exception("Not implemented yet");
-    }
-    protected function delete(int $id): bool
+    protected function delete(int $id): string
     {
         throw new \Exception("Not implemented yet");
     }
     protected function getSuccessMessage(string $action): string
     {
-        throw new \Exception("Not implemented yet");
+        $result = "";
+        switch($action){
+            case 'create':
+                $result = "Votre compte a été crée avec succès !";
+                break;
+        }
+        return $result;
     }
     protected function callView(array $view, array $values): void
     {

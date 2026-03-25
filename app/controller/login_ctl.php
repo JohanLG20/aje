@@ -1,6 +1,6 @@
 <?php
 
-use AJE\Services\DataChecker;
+use AJE\Utils\DataChecker;
 
 if (!empty($_POST)) {
 

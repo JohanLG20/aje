@@ -9,7 +9,7 @@
             "AJE\\Model\\": "app/model/",
             "AJE\\Controller\\": "app/controller/",
             "AJE\\View\\": "app/view/",
-            "AJE\\Services\\": "app/services/"
+            "AJE\\Utils\\": "app/utils/"
         }
     },
     "authors": [

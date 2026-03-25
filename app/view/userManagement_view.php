@@ -50,7 +50,8 @@
         <!-- Ville -->
         <div class="form-item">
             <label for="city">Ville</label>
-            <input type="text" name="city" id="city" placeholder="La ville où vous habitez">
+            <input type="text" name="city" id="city" placeholder="La ville où vous habitez"
+                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['city']) ? $values['city'] : '' ?>">
         </div>
         <?php if (isset($view['errors']['city'])): ?>
             <p class="error"><?= $view['errors']['city'] ?></p>
@@ -70,16 +71,29 @@
         <div class="form-item">
             <label for="address">Adresse</label>
             <input type="text" name="address" id="address" placeholder="Votre adresse"
-            value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['address']) ? $values['address'] : '' ?>">
+                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['address']) ? $values['address'] : '' ?>">
         </div>
         <?php if (isset($view['errors']['address'])): ?>
             <p class="error"><?= $view['errors']['address'] ?></p>
+        <?php endif; ?>
+
+        <!-- Phone Number -->
+        <div class="form-item">
+            <label for="phoneNumber">N° de téléphone</label>
+            <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Votre n° de téléphone"
+                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['phoneNumber']) ? $values['phoneNumber'] : '' ?>">
+        </div>
+        <?php if (isset($view['errors']['phoneNumber'])): ?>
+            <p class="error"><?= $view['errors']['phoneNumber'] ?></p>
         <?php endif; ?>
 
 
         <input type="hidden" name="form_submitted">
         <button type="submit" class="btn1">S'inscrire</button>
 
+        <?php if (isset($view['operationResult'])) : ?>
+            <p><?= $view['operationResult'] ?></p>
+        <?php endif; ?>
     </form>
 </main>
 
