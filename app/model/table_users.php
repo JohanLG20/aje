@@ -33,7 +33,7 @@ abstract class DBUser implements DBClass
     {
         throw new Exception("Not implemented yet");
     }
-    public static function deleteElementById(int $id) : bool
+    public static function deleteElementById(array $params) : bool
     {
         throw new Exception("Not implemented yet");
     }
