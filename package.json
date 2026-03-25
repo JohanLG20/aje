@@ -1,0 +1,26 @@
+{
+  "name": "aje",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./static/sass/style.scss:./static/css/style.css"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "detect-libc": "^2.1.2",
+    "immutable": "^5.1.5",
+    "is-extglob": "^2.1.1",
+    "is-glob": "^4.0.3",
+    "node-addon-api": "^7.1.1",
+    "picomatch": "^4.0.3",
+    "readdirp": "^4.1.2",
+    "sass": "^1.98.0",
+    "source-map-js": "^1.2.1"
+  },
+  "devDependencies": {}
+}

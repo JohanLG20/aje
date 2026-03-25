@@ -1,0 +1,331 @@
+@font-face {
+  font-family: "Luciole";
+  src: url(../fonts/Luciole-Regular.woff) format("woff");
+}
+@font-face {
+  font-family: "LucioleBold";
+  src: url(../fonts/Luciole-Bold.woff) format("woff");
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "LucioleBold", "sans-serif";
+}
+
+a {
+  font-family: "Luciole", "sans-serif";
+  color: #eeeeee;
+  text-decoration: none;
+}
+
+hr {
+  color: #eeeeee;
+}
+
+.container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.visible {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.btn {
+  padding: 8px 16px;
+  background-color: #eeeeee;
+  color: #096a09;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+}
+.btn:hover {
+  color: #eeeeee;
+  background-color: black;
+}
+
+#banner {
+  background-color: #096a09;
+  color: #eeeeee;
+}
+#banner #baseMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  font-size: 32px;
+  width: 100%;
+}
+#banner #baseMenu #burger:hover {
+  color: black;
+}
+#banner #baseMenu .menuItem {
+  cursor: pointer;
+  width: 33%;
+  justify-content: center;
+}
+#banner #baseMenu .brand {
+  font-size: 32px;
+  font-family: "LucioleBold", "sans-serif";
+}
+#banner #baseMenu #menuIcons {
+  display: flex;
+}
+#banner #baseMenu #menuIcons .navItem .menuIcon {
+  width: 50%;
+}
+#banner #baseMenu #menuIcons .navItem .menuIcon:hover {
+  color: black;
+}
+#banner #baseMenu #menuIcons .navItem .topMenuIcon {
+  position: absolute;
+  background-color: #d9d9d9;
+  padding: 24px;
+  left: 80%;
+  border: 2px solid #096a09;
+  border-radius: 16px;
+  z-index: 2;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+}
+#banner #baseMenu #menuIcons #menuContactLink {
+  display: none;
+}
+#banner #baseMenu .mobileMenuItem {
+  display: block;
+}
+#banner #navMenu {
+  position: absolute;
+  width: 100%;
+  flex-direction: column;
+  padding-top: 16px;
+  background-color: #096a09;
+}
+#banner #navMenu .navItem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around start;
+  align-items: center;
+}
+#banner #navMenu .navItem .dropDownMenu {
+  padding: 8px 0;
+  flex-direction: row;
+  background-color: #eeeeee;
+  width: 100vw;
+  gap: 8px;
+}
+#banner #navMenu .navItem .dropDownMenu .droppingList {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+#banner #navMenu .navItem .dropDownMenu .droppingList a {
+  padding: 16px;
+  color: black;
+}
+#banner #navMenu .navItem a {
+  width: 33%;
+  padding: 8px 0;
+  padding-left: 8px;
+  text-align: left;
+}
+#banner #navMenu .navItem i {
+  width: 60%;
+  text-align: right;
+}
+
+#footer {
+  background-color: #096a09;
+  margin-bottom: 32px;
+}
+#footer #footerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+#footer #footerContainer hr {
+  width: 80%;
+  margin: 0 auto;
+}
+#footer #footerContainer #footerMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+#footer #footerContainer #footerMenu ul li {
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+}
+#footer #footerContainer #footerMenu ul li a:hover {
+  color: black;
+  text-decoration: underline;
+}
+#footer #footerContainer #footerContact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 75%;
+  padding: 16px;
+  gap: 24px;
+}
+#footer #footerContainer #footerContact h2,
+#footer #footerContainer #footerContact p {
+  color: #eeeeee;
+}
+#footer #footerContainer #footerContact p {
+  font-weight: bold;
+  font-size: 18px;
+}
+#footer #footerContainer #footerContact #socials {
+  width: fit-content;
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+#footer #footerContainer #footerContact #socials i {
+  color: #eeeeee;
+  font-size: 32px;
+}
+#footer #footerContainer #footerContact #socials i:hover {
+  color: black;
+}
+#footer #footerContainer #footerLocalisation {
+  display: flex;
+  width: 75%;
+  flex-direction: column;
+  text-align: center;
+  gap: 16px;
+  color: #eeeeee;
+}
+#footer #footerContainer #footerLocalisation h2 {
+  margin-bottom: 16px;
+}
+#footer #footerContainer #footerLocalisation #map {
+  height: 300px;
+}
+
+@media screen and (min-width: 1024px) {
+  #banner {
+    margin-bottom: 400px;
+  }
+  #banner #baseMenu {
+    padding: 16px 0;
+  }
+  #banner #baseMenu .searchForm {
+    display: flex;
+    background-color: #eeeeee;
+    color: black;
+    align-items: center;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+  }
+  #banner #baseMenu .searchForm #menuSearchInput {
+    background: none;
+    border: none;
+  }
+  #banner #baseMenu .searchForm #menuSearchInput:focus {
+    outline: none;
+  }
+  #banner #baseMenu .searchForm #menuSearchIcon {
+    background: none;
+    border: none;
+  }
+  #banner #baseMenu i {
+    position: relative;
+  }
+  #banner #baseMenu i .dropDownMenu {
+    position: absolute;
+  }
+  #banner #baseMenu .mobileMenuItem {
+    display: none;
+  }
+  #banner #navMenu {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 48px;
+    background-color: #eeeeee;
+    padding-top: 0;
+  }
+  #banner #navMenu .navItem {
+    position: relative;
+  }
+  #banner #navMenu .navItem a {
+    color: black;
+  }
+  #banner #navMenu .navItem:hover .dropDownMenu {
+    border: 1px solid #096a09;
+    width: max-content;
+    position: absolute;
+    display: flex;
+    top: 35px;
+  }
+  #banner #navMenu .navItem:hover .dropDownMenu a:hover {
+    color: #096a09;
+    text-decoration: underline;
+  }
+  #banner #navMenu .mobileMenuItem {
+    display: none;
+  }
+  #footer #footerContainer {
+    flex-direction: row;
+  }
+  #footer #footerContainer hr {
+    display: none;
+  }
+  #footer #footerContainer #footerMenu {
+    width: 30%;
+  }
+  #footer #footerContainer #footerLocalisation {
+    order: 2;
+    width: 40%;
+  }
+  #footer #footerContainer #footerContact {
+    width: 30%;
+    order: 3;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
