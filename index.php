@@ -7,8 +7,9 @@ require __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+
 require("app/cls/config.php");
-require(ROOT . '/cls/router.php');
+use AJE\Config\Router;
 
 if(isset($_GET['action'])){
     Router::redirect($_GET['action']);

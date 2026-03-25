@@ -46,12 +46,31 @@ hr {
     display: none;
 }
 
-.error{
+.error {
     color: red;
     font-size: 14px;
 }
 
-.btn {
+.btn1 {
+    padding: 8px 16px;
+    color: col.$color-secondary;
+    background-color: col.$color-primary;
+    border: none;
+    outline: none;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+
+    &:hover {
+        color: col.$color-secondary;
+        background-color: black;
+    }
+
+}
+
+.btn2 {
     padding: 8px 16px;
     background-color: col.$color-secondary;
     color: col.$color-primary;
@@ -69,6 +88,8 @@ hr {
     }
 
 }
+
+
 
 
 #banner {
@@ -123,7 +144,7 @@ hr {
                     -moz-border-radius: 16px;
                     -ms-border-radius: 16px;
                     -o-border-radius: 16px;
-}
+                }
 
             }
 
@@ -194,7 +215,7 @@ hr {
 
 #footer {
     background-color: col.$color-primary;
-    margin-bottom: 32px;
+    padding: 32px 0;
 
     #footerContainer {
         display: flex;
@@ -293,8 +314,6 @@ hr {
 @media screen and (min-width:1024px) {
 
     #banner {
-        margin-bottom: 400px;
-
         #baseMenu {
             padding: 16px 0;
 

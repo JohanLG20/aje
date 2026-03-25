@@ -23,10 +23,6 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         array (
             'PhpOption\\' => 10,
         ),
-        'J' =>
-        array (
-            'Johanlg20\\Aje\\' => 14,
-        ),
         'G' =>
         array (
             'GrahamCampbell\\ResultType\\' => 26,
@@ -34,6 +30,14 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         'D' =>
         array (
             'Dotenv\\' => 7,
+        ),
+        'A' =>
+        array (
+            'AJE\\View\\' => 9,
+            'AJE\\Services\\' => 13,
+            'AJE\\Model\\' => 10,
+            'AJE\\Controller\\' => 15,
+            'AJE\\Config\\' => 11,
         ),
     );
 
@@ -54,10 +58,6 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
-        'Johanlg20\\Aje\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/app',
-        ),
         'GrahamCampbell\\ResultType\\' =>
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
@@ -65,6 +65,26 @@ class ComposerStaticInitd9081c06feacce1ab8875de3da98ef75
         'Dotenv\\' =>
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'AJE\\View\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/view',
+        ),
+        'AJE\\Services\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/services',
+        ),
+        'AJE\\Model\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/model',
+        ),
+        'AJE\\Controller\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/controller',
+        ),
+        'AJE\\Config\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/app/cls',
         ),
     );
 

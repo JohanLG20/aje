@@ -5,7 +5,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Johanlg20\\Aje\\": "app/"
+            "AJE\\Config\\": "app/cls/",
+            "AJE\\Model\\": "app/model/",
+            "AJE\\Controller\\": "app/controller/",
+            "AJE\\View\\": "app/view/",
+            "AJE\\Services\\": "app/services/"
         }
     },
     "authors": [

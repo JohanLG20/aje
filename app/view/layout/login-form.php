@@ -8,8 +8,8 @@
             <p class="error"><small><?= $errors['login'] ?></small></p>
         <?php endif; ?>
 
-        <button type="submit" class="btn">Connexion</button>
-        <a href="index.php?action=singup">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
+        <button type="submit" class="btn1">Connexion</button>
+        <a href="index.php?action=signup">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
 
     </form>
 </div>

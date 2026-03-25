@@ -15,7 +15,7 @@
 
         <div id="footerContact">
             <h2>Une question, un soucis avec votre commande ?</h2>
-            <a href="index.php?action=contact" class="btn">NOUS CONTACTER</a>
+            <a href="index.php?action=contact" class="btn2">NOUS CONTACTER</a>
             <div>
                 <p>Nos réseaux</p>
                 <div id="socials">

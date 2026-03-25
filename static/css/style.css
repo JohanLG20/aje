@@ -55,7 +55,24 @@ hr {
   font-size: 14px;
 }
 
-.btn {
+.btn1 {
+  padding: 8px 16px;
+  color: #eeeeee;
+  background-color: #096a09;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+}
+.btn1:hover {
+  color: #eeeeee;
+  background-color: black;
+}
+
+.btn2 {
   padding: 8px 16px;
   background-color: #eeeeee;
   color: #096a09;
@@ -67,7 +84,7 @@ hr {
   -ms-border-radius: 16px;
   -o-border-radius: 16px;
 }
-.btn:hover {
+.btn2:hover {
   color: #eeeeee;
   background-color: black;
 }
@@ -168,7 +185,7 @@ hr {
 
 #footer {
   background-color: #096a09;
-  margin-bottom: 32px;
+  padding: 32px 0;
 }
 #footer #footerContainer {
   display: flex;
@@ -241,9 +258,6 @@ hr {
 }
 
 @media screen and (min-width: 1024px) {
-  #banner {
-    margin-bottom: 400px;
-  }
   #banner #baseMenu {
     padding: 16px 0;
   }

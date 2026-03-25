@@ -10,7 +10,11 @@ return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
-    'Johanlg20\\Aje\\' => array($baseDir . '/app'),
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
+    'AJE\\View\\' => array($baseDir . '/app/view'),
+    'AJE\\Services\\' => array($baseDir . '/app/services'),
+    'AJE\\Model\\' => array($baseDir . '/app/model'),
+    'AJE\\Controller\\' => array($baseDir . '/app/controller'),
+    'AJE\\Config\\' => array($baseDir . '/app/cls'),
 );
