@@ -4,10 +4,6 @@ use AJE\Utils\DataChecker;
 
 abstract class CRUDController
 {
-
-    public static function test(){
-        echo 'test';
-    }
     abstract protected function getPostValuesErrors($action, $values): array|bool;
     abstract protected function handdleSqlErrors(\Exception $e, string $action, array $values): string;
     abstract protected function callView(array $view, array $values): void;
@@ -29,7 +25,7 @@ abstract class CRUDController
         if (isset($_POST['form_submitted'])) {
             $values = DataChecker::escapeValues($_POST);
 
-            if ($values) {
+            if (!empty($values)) {
 
                 $hasErrors = $this->getPostValuesErrors($action, $values);
 

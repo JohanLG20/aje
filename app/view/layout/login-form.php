@@ -1,15 +1,22 @@
 <div id="connexionMenu"
     class="dropDownMenu topMenuIcon <?= isset($_GET['action']) && $_GET['action'] === 'login' ? 'visible' : 'hidden' ?>">
-    <form action="?action=login" method="post">
-        <input type="text" name="username" id="username">
-        <input type="password" name="passwd" id="passwd">
+    <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
+        <div>
+            <p>Bonjour <?= $_SESSION['name'] ?></p>
+            <a href="index.php?action=myprofil">Voir mon profil</a>
+            <a href="index.php?action=logout">Se déconnecter</a>
+        </div>
+    <?php else: ?>
+        <form action="?action=login" method="post">
+            <input type="text" name="mail" id="mail" placeholder="Entrez votre email">
+            <input type="password" name="passwd" id="passwd" placeholder="Entrez votre mot de passe">
 
-        <?php if (isset($errors['login'])): ?>
-            <p class="error"><small><?= $errors['login'] ?></small></p>
-        <?php endif; ?>
+            <?php if (isset($errors['login'])): ?>
+                <p class="error"><small><?= $errors['login'] ?></small></p>
+            <?php endif; ?>
 
-        <button type="submit" class="btn1">Connexion</button>
-        <a href="index.php?action=signup">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
-
-    </form>
+            <button type="submit" class="btn1">Connexion</button>
+            <a href="index.php?action=signup">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
+        </form>
+    <?php endif; ?>
 </div>

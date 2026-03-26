@@ -3,7 +3,7 @@
 namespace AJE\Controller;
 
 use AJE\Utils\UserErrorHelper;
-use AJE\Model\DBUser;
+use AJE\Model\DBUsers;
 
 
 class UserManagementController extends CRUDController
@@ -28,9 +28,10 @@ class UserManagementController extends CRUDController
     }
     protected function create(array $params): string
     {
+        $params['passwd']  = password_hash($params['passwd'], PASSWORD_DEFAULT);
         try{
-            if(DBUser::addNewElement($params)){
-                return 'Votre compte à été créer avec succès.';
+            if(DBUsers::addNewElement($params)){
+                return 'Votre compte à été créer avec succès. Vous pouvez maintenant vous identifier.';
             }
             else{
                 return 'Une erreur est survenue lors de la création de votre compte, veuillez réessayer.';
