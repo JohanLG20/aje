@@ -1,12 +1,12 @@
 <?php
 
-use AJE\Utils\DataChecker;
+use AJE\Utils\DataTransformer;
 use AJE\Model\DBUsers;
 
 if (!empty($_POST)) {
 
     //Each values of the post is trimmed and filtered by htmlspecialchars
-    $postVal = DataChecker::escapeValues($_POST);
+    $postVal = DataTransformer::escapeValues($_POST);
 
     $requieredUser = DBUsers::getElementById($postVal['mail']);
 

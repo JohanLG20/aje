@@ -2,7 +2,7 @@
 
 namespace AJE\Controller;
 
-use AJE\Utils\DataChecker;
+use AJE\Utils\DataTransformer;
 
 abstract class CRUDController
 {
@@ -25,7 +25,7 @@ abstract class CRUDController
         $view['operationLabel'] = $this->setOperationLabel($action);
 
         if (isset($_POST['form_submitted'])) {
-            $values = DataChecker::escapeValues($_POST);
+            $values = DataTransformer::escapeValues($_POST);
 
             if (!empty($values)) {
 

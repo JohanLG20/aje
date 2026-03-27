@@ -2,7 +2,7 @@
 
 namespace AJE\Model;
 
-class DBComment implements DBClass
+class DBComment implements DBClass, AssociativeTable
 {
     public static function getAllElements(): array
     {
@@ -77,7 +77,7 @@ class DBComment implements DBClass
     */
     }
 
-    public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
          throw new \Exception("Not implemented yet");
         /*
@@ -90,5 +90,17 @@ class DBComment implements DBClass
             throw new \PDOException($e);
         }
     */
+    }
+
+        public static function getElementsForId(string $id, string $elementToGet): array|bool
+    {
+        try {
+            $db = DBConnexion::getInstance()->getConnexion();
+            $query = $db->prepare("SELECT * FROM COMMENT WHERE :elementToGet = :id");
+            $query->execute([':id' => $id, ':elementToGet' => $elementToGet]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
     }
 }

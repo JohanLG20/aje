@@ -78,7 +78,7 @@ class DBArticles implements DBClass
     }
 
 
-    public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();

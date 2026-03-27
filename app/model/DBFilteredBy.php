@@ -2,7 +2,7 @@
 
 namespace AJE\Model;
 
-class DBFilteredBy implements DBClass
+class DBFilteredBy implements DBClass, AssociativeTable
 {
     public static function getAllElements(): array
     {
@@ -77,9 +77,9 @@ class DBFilteredBy implements DBClass
     */
     }
 
-    public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
-         throw new \Exception("Not implemented yet");
+        throw new \Exception("Not implemented yet");
         /*
             try {
             $db = DBConnexion::getInstance()->getConnexion();
@@ -90,5 +90,27 @@ class DBFilteredBy implements DBClass
             throw new \PDOException($e);
         }
     */
+    }
+
+    public static function getElementsForId(string $id, string $elementToGet): array|bool
+    {
+        try {
+            $db = DBConnexion::getInstance()->getConnexion();
+
+            //Preparing the query in function of the element to get
+            if ($elementToGet === "idCat") {
+                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_cat = :id");
+            } else if($elementToGet === "idFilterType") {
+                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_filter_type = :id");
+            }
+            else{ //Prevent sending datas if the name of the elementToGet is not good
+                return false;
+            }
+
+            $query->execute([':id' => $id]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
     }
 }

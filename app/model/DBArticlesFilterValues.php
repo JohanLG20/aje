@@ -2,12 +2,12 @@
 
 namespace AJE\Model;
 
-class DBArticlesFilterValues implements DBClass
+class DBArticlesFilterValues implements DBClass, AssociativeTable
 {
     public static function getAllElements(): array
     {
-        
-            try {
+
+        try {
             $db = DBConnexion::getInstance()->getConnexion();
             $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES");
             $query->execute();
@@ -15,7 +15,6 @@ class DBArticlesFilterValues implements DBClass
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
-    
     }
     public static function addNewElement(array $params): bool
     {
@@ -78,13 +77,25 @@ class DBArticlesFilterValues implements DBClass
     */
     }
 
-        public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();
             $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES WHERE id_article = :idArticle AND id_filter_values = :idFilterValues");
             $query->execute(['idArticle' => $id, 'idFilterValues' => ":idFilterValues"]);
             return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
+    }
+
+    public static function getElementsForId(string $id, string $elementToGet): array|bool
+    {
+        try {
+            $db = DBConnexion::getInstance()->getConnexion();
+            $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES WHERE :elementToGet = :id");
+            $query->execute([':id' => $id, ':elementToGet' => $elementToGet]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }

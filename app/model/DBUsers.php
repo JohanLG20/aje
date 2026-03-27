@@ -49,7 +49,7 @@ abstract class DBUsers implements DBClass
         throw new \Exception("Not implemented yet");
     }
 
-    public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
 
     try {

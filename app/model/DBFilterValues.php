@@ -2,7 +2,7 @@
 
 namespace AJE\Model;
 
-class DBFilterValues implements DBClass
+class DBFilterValues implements DBClass, AssociativeTable
 {
     public static function getAllElements(): array
     {
@@ -77,18 +77,34 @@ class DBFilterValues implements DBClass
     */
     }
 
-    public static function getElementById(mixed $id): array
+    public static function getElementById(string $id): array
     {
-         throw new \Exception("Not implemented yet");
-        /*
-            try {
+        try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ");
-            $query->execute();
+            $query = $db->prepare("SELECT * FROM FILTER_VALUES WHERE id_filter_value = :idFilterValue");
+            $query->execute(['idFilterValue' => $id]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
+    }
+
+    public static function getElementsForId(string $id, string $elementToGet): array|bool
+    {
+        try {
+            $db = DBConnexion::getInstance()->getConnexion();
+
+            //Preparing the query in function of the element to get
+            if ($elementToGet === "idFilterType") {
+                $query = $db->prepare("SELECT filter_value FROM FILTER_VALUES WHERE id_filter_type = :id");
+            } else { //Prevent sending datas if the name of the elementToGet is not good
+                return false;
+            }
+
+            $query->execute([':id' => $id]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
-    */
     }
 }
