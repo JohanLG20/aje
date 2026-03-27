@@ -16,7 +16,7 @@
             <?php endif; ?>
 
             <button type="submit" class="btn1">Connexion</button>
-            <a href="index.php?action=signup">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
+            <a href="index.php?path=/usermanagement/create">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
         </form>
     <?php endif; ?>
 </div>

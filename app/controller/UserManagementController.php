@@ -61,9 +61,9 @@ class UserManagementController extends CRUDController
     }
     protected function callView(array $view, array $values): void
     {
-        if ($view['action'] === "create") {
-            include(VIEW . '/userManagement_view.php');
-        }
+        
+        include(VIEW . '/userManagement_view.php');
+    
     }
 
 
@@ -73,7 +73,7 @@ class UserManagementController extends CRUDController
 
         switch ($action) {
             case 'create':
-                $label = "S'inscire sur AJE";
+                $label = "S'inscrire sur AJE";
                 break;
 
             case 'update':

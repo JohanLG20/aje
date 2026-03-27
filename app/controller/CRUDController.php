@@ -1,18 +1,20 @@
 <?php
+
 namespace AJE\Controller;
+
 use AJE\Utils\DataChecker;
 
 abstract class CRUDController
 {
     abstract protected function getPostValuesErrors($action, $values): array|bool;
     abstract protected function handdleSqlErrors(\Exception $e, string $action, array $values): string;
-    abstract protected function callView(array $view, array $values): void;
-    abstract protected function completeViewInformations(): array;
     abstract protected function create(array $params): string;
     abstract protected function update(array $params): string;
     abstract protected function delete(int $id): string;
-    abstract protected function getSuccessMessage(string $action) : string;
+    abstract protected function getSuccessMessage(string $action): string;
     abstract protected function setOperationLabel(string $action): string;
+    abstract protected function callView(array $view, array $values): void;
+    abstract protected function completeViewInformations(): array;
 
 
     public function prepareAndDisplayView(string $action)
@@ -52,21 +54,21 @@ abstract class CRUDController
     protected function executeOperation(string $action, array $values): string
     {
         $operationResult = "";
-           switch ($action) {
-                case 'create':
-                    $operationResult = $this->create($values);
-                    break;
+        switch ($action) {
+            case 'create':
+                $operationResult = $this->create($values);
+                break;
 
-                case 'update':
-                    $operationResult = $this->update($values);
-                    break;
+            case 'update':
+                $operationResult = $this->update($values);
+                break;
 
-                case 'delete':
-                    $operationResult = $this->delete(0); //TODO: Mettre à jour le int
-                    break;
-            }
-            
-            return $operationResult;
+            case 'delete':
+                $operationResult = $this->delete(0); //TODO: Mettre à jour le int
+                break;
+        }
+
+        return $operationResult;
     }
 
 

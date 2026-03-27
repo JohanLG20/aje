@@ -1,7 +1,7 @@
 <?php require(LAYOUT . '/header.php') ?>
 <main>
     <h2><?= $view['operationLabel'] ?></h2>
-    <form action="index.php?action=signup" method="post">
+    <form action="index.php?path=/usermanagement/<?= $view['action'] ?>" method="post">
         <!-- Last name -->
         <div class="form-item">
             <label for="lastname">Nom</label>
@@ -89,7 +89,7 @@
 
 
         <input type="hidden" name="form_submitted">
-        <button type="submit" class="btn1">S'inscrire</button>
+        <button type="submit" class="btn1"><?= explode(" " ,$view['operationLabel'])[0] ?></button>
 
         <?php if (isset($view['operationResult'])) : ?>
             <p><?= $view['operationResult'] ?></p>

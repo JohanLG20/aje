@@ -28,6 +28,7 @@ CREATE TABLE FILTER_VALUES(
 CREATE TABLE ARTICLES(
    id_article INT AUTO_INCREMENT,
    description VARCHAR(255) NOT NULL,
+   brand VARCHAR(50),
    id_cat INT NOT NULL,
    PRIMARY KEY(id_article),
    FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
@@ -99,39 +100,3 @@ CREATE TABLE ARTICLES_FILTER_VALUES(
    FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article),
    FOREIGN KEY(id_filter_value) REFERENCES FILTER_VALUES(id_filter_value)
 );
-
-CREATE TRIGGER valid_filter_value BEFORE INSERT ON ARTICLES_FILTER_VALUES FOR EACH ROW
-IF NOT EXISTS( 
-  SELECT
-    1
-  FROM
-    (FILTER_VALUES AS fv
-    INNER JOIN FILTER_TYPE AS ft ON fv.id_filter_type = ft.id_filter_type
-    INNER JOIN FILTERED_BY AS fb ON ft.id_filter_type = fb.id_filter_type
-    INNER JOIN ARTICLES AS a ON fb.id_cat = a.id_cat)
-  WHERE
-    fv.id_filter_value = NEW.id_filter_value
-    AND a.id_article = NEW.id_article)
-   BEGIN
-   END
-
-
-CREATE ASSERTION valid_filter_value CHECK (
-  (
-    SELECT
-      id_cat as articleCat
-    FROM
-      ARTICLES_FILTER_VALUES
-      INNER JOIN ARTICLES ON ARTICLES.id_article = ARTICLES_FILTER_VALUES.id_article
-  ) = (
-    SELECT
-      id_cat
-    FROM
-      ARTICLES_FILTER_VALUES
-      INNER JOIN FILTER_VALUES ON ARTICLES_FILTER_VALUES.id_filter_values = FILTER_VALUES.id_filter_value
-      INNER JOIN FILTER_TYPE ON FILTER_VALUES.id_filter_type = FILTER_TYPE.id_filter_type
-      INNER JOIN FILTERED_BY ON FILTER_TYPE.id_filter_type = FILTERED_BY.id_filter_type
-      AND FILTERED_BY.id_cat = articleCat
-  )
-)
-
