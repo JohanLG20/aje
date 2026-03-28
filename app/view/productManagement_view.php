@@ -33,12 +33,29 @@
             <p class="error"><?= $view['errors']['description'] ?></p>
         <?php endif; ?>
 
+        <!-- Colors -->
+        <div class="form-item">
+            <label for="idColor">Couleur de l'article</label>
+            <select name="idColor" id="idColor" value="<?= $values['idColor'] ?? '' ?>">
+                <option value="-1">Sélectionnez une couleur</option>
+                <?php //Creating the options with all the colors in the database
+                foreach ($view['colorsList'] as $color):
+                ?>
+                    <option value=<?= $color['id_color'] ?>> <?= $color['color_label'] ?></option>
+                <?php endforeach ?>
+            </select>
+        </div>
+        <?php if (isset($view['errors']["idColor"])): ?>
+            <p class="error"><?= $view['errors']["idColor"] ?></p>
+        <?php endif; ?>
+
+        <!-- Categories -->
         <div class="form-item">
             <label for="idCat">Catégorie de l'article</label>
             <select name="idCat" id="idCat" value="<?= $values['idCat'] ?? '' ?>">
                 <option value="-1">Sélectionnez une catégorie</option>
                 <?php //Creating the options with all the categories in the database
-                foreach ($view['categoryList'] as $category):
+                foreach ($view['categoriesList'] as $category):
                 ?>
                     <option value=<?= $category['id_cat'] ?>> <?= $category['cat_label'] ?></option>
                 <?php endforeach ?>
@@ -47,6 +64,13 @@
         <?php if (isset($view['errors']["idCat"])): ?>
             <p class="error"><?= $view['errors']["idCat"] ?></p>
         <?php endif; ?>
+
+        <!-- Categories -->
+        <div id="filterList">
+
+        </div>
+
+        <!-- Image section -->
         <div id="addImagesSection">
             <p><b>Ajouter des images</b></p>
         </div>
@@ -89,6 +113,48 @@
         })
 
     })
+
+    let categorySelector = document.querySelector("#idCat")
+    let filterListDiv = document.querySelector("#filterList")
+    categorySelector.addEventListener("change", () => {
+        //Removing all the existing elements of the filter
+        filterListDiv.innerHTML = "";
+
+        //Adding the filters only if a category is selected
+        if (categorySelector.value != -1) {
+            //Adding the title
+            let filterListTitle = document.createElement("p")
+            let filterListBoldTitle = document.createElement("b")
+            filterListBoldTitle.textContent = "Ajouter des valeurs de filtres pour l'article"
+            filterListTitle.append(filterListBoldTitle)
+            filterListDiv.appendChild(filterListTitle)
+
+            //Adding the filters
+            fetch("index.php?path=/ajax/table6/"+categorySelector.value+"/idCat")
+            .then(r => {
+                console.log(r)
+                if(r.ok){
+                    return r.json()
+                }
+                else{
+                    throw new Exception("Impossible de charger les filtres")
+                }
+            })
+            .then(filtersType =>{
+                filtersType.array.forEach(async (filterType) => {
+                    let filterValuesDiv = await createFilterValuesDiv(filterType.id_filter_type)
+                    filterListDiv.appendChild(filterValuesDiv)
+
+                });
+            })
+        }
+
+
+    })
+
+    async function createFilterValuesDiv(idFilterType){
+        
+    }
 </script>
 
 <?php require(LAYOUT . '/footer.php'); ?>

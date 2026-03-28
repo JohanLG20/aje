@@ -25,23 +25,11 @@ CREATE TABLE FILTER_VALUES(
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
 
-CREATE TABLE SPECIFICITES(
-   id_specificites INT AUTO_INCREMENT,
-   stock INT,
-   PRIMARY KEY(id_specificites)
-);
-
-CREATE TABLE ARTICLES(
-   id_article INT AUTO_INCREMENT,
-   article_name VARCHAR(50),
-   description VARCHAR(255) NOT NULL,
-   brand VARCHAR(20),
-   link_to_product_page VARCHAR(70),
-   id_specificites INT NOT NULL,
-   id_cat INT NOT NULL,
-   PRIMARY KEY(id_article),
-   FOREIGN KEY(id_specificites) REFERENCES SPECIFICITES(id_specificites),
-   FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
+CREATE TABLE COLORS(
+   id_color INT AUTO_INCREMENT,
+   color_label VARCHAR(50),
+   color_value VARCHAR(7),
+   PRIMARY KEY(id_color)
 );
 
 CREATE TABLE USERS(
@@ -59,6 +47,35 @@ CREATE TABLE USERS(
    FOREIGN KEY(id_user_level) REFERENCES USERS_LEVEL(id_user_level)
 );
 
+CREATE TABLE SPECIFICITES(
+   id_specificite INT AUTO_INCREMENT,
+   stock INT,
+   id_color INT NOT NULL,
+   PRIMARY KEY(id_specificite),
+   FOREIGN KEY(id_color) REFERENCES COLORS(id_color)
+);
+
+CREATE TABLE ARTICLES(
+   id_article INT AUTO_INCREMENT,
+   article_name VARCHAR(50),
+   brand VARCHAR(30) NOT NULL,
+   description VARCHAR(255) NOT NULL,
+   link_to_product_page VARCHAR(70) NOT NULL,
+   id_specificite INT NOT NULL,
+   id_cat INT NOT NULL,
+   PRIMARY KEY(id_article),
+   FOREIGN KEY(id_specificite) REFERENCES SPECIFICITES(id_specificite),
+   FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
+);
+
+CREATE TABLE ORDERS(
+   id_order INT AUTO_INCREMENT,
+   date_ VARCHAR(50) NOT NULL,
+   mail VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_order),
+   FOREIGN KEY(mail) REFERENCES USERS(mail)
+);
+
 CREATE TABLE PRICES_HISTORY(
    id_price_history INT AUTO_INCREMENT,
    start_date DATE NOT NULL,
@@ -69,12 +86,12 @@ CREATE TABLE PRICES_HISTORY(
    FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article)
 );
 
-CREATE TABLE ORDERS(
-   id_order INT AUTO_INCREMENT,
-   date_ VARCHAR(50) NOT NULL,
-   mail VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_order),
-   FOREIGN KEY(mail) REFERENCES USERS(mail)
+CREATE TABLE IMAGES_URI(
+   id_image_uri INT AUTO_INCREMENT,
+   image_uri VARCHAR(70),
+   id_article INT NOT NULL,
+   PRIMARY KEY(id_image_uri),
+   FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article)
 );
 
 CREATE TABLE ARTICLES_ORDER(
@@ -105,8 +122,9 @@ CREATE TABLE FILTERED_BY(
 
 CREATE TABLE SPECIFIED_BY(
    id_filter_value INT,
-   id_specificites INT,
-   PRIMARY KEY(id_filter_value, id_specificites),
+   id_specificite INT,
+   PRIMARY KEY(id_filter_value, id_specificite),
    FOREIGN KEY(id_filter_value) REFERENCES FILTER_VALUES(id_filter_value),
-   FOREIGN KEY(id_specificites) REFERENCES SPECIFICITES(id_specificites)
+   FOREIGN KEY(id_specificite) REFERENCES SPECIFICITES(id_specificite)
 );
+

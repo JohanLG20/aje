@@ -3,6 +3,7 @@
 namespace AJE\Utils;
 
 use AJE\Model\DBCategory;
+use AJE\Model\DBColors;
 
 class ProductErrorHelper
 {
@@ -11,10 +12,10 @@ class ProductErrorHelper
     {
         $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
         $errors['brand'] = self::checkBrandErrors($values['brand']);
-
         $errors['description'] = self::checkDescriptionErrors($values['description']);
+        $errors['idColor'] = self::checkColorErrors($values['idColor']);
         $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
-        $errors['brand'] = self::checkBrandErrors($values['brand']);
+        
         $errors['brand'] = self::checkBrandErrors($values['brand']);
         $errors['brand'] = self::checkBrandErrors($values['brand']);
 
@@ -83,17 +84,29 @@ class ProductErrorHelper
         }
     }
 
-    private static function checkCategoryErrors(string $idCat) : ?string {
-        if(strlen($idCat) > 0){
-            if(is_numeric($idCat) && DBCategory::getElementById($idCat)){
+    private static function checkCategoryErrors(string $idCat): ?string
+    {
+        if (is_numeric($idCat) && $idCat >= 0) {
+            if (DBCategory::getElementById($idCat)) {
                 return null;
-            }
-            else{
+            } else {
                 return "La catégorie demandée n'est pas disponible";
             }
-        }
-        else{
+        } else {
             return 'Veuillez choisir une catégorie';
+        }
+    }
+
+    private static function checkColorErrors(string $idColor): ?string
+    {
+        if (is_numeric($idColor) && $idColor >= 0) {
+            if (DBColors::getElementById($idColor)) {
+                return null;
+            } else {
+                return "La couleur demandée n'est pas disponible";
+            }
+        } else {
+            return 'Veuillez choisir une couleur';
         }
     }
 }

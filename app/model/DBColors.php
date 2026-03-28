@@ -2,14 +2,14 @@
 
 namespace AJE\Model;
 
-class DBArticlesFilterValues implements DBClass, AssociativeTable
+class DBColors implements DBClass
 {
     public static function getAllElements(): array
     {
 
         try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES");
+            $query = $db->prepare("SELECT * FROM COLORS");
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
@@ -81,20 +81,10 @@ class DBArticlesFilterValues implements DBClass, AssociativeTable
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES WHERE id_article = :idArticle AND id_filter_values = :idFilterValues");
-            $query->execute(['idArticle' => $id, 'idFilterValues' => ":idFilterValues"]);
-            return $query->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-
-    public static function getElementsForId(string $id, string $elementToGet): array|bool
-    {
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ARTICLES_FILTER_VALUES WHERE :elementToGet = :id");
-            $query->execute([':id' => $id, ':elementToGet' => $elementToGet]);
+            $query = $db->prepare("SELECT * FROM COLORS WHERE id_color = :idColor");
+            $query->execute([
+                "idColor" => $id
+            ]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);
