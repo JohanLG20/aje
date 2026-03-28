@@ -18,19 +18,29 @@ CREATE TABLE FILTER_TYPE(
 
 CREATE TABLE FILTER_VALUES(
    id_filter_value INT AUTO_INCREMENT,
-   filter_value VARCHAR(50) NOT NULL,
+   filter_value VARCHAR(15) NOT NULL,
    id_filter_type INT NOT NULL,
    PRIMARY KEY(id_filter_value),
    UNIQUE(filter_value),
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
 
+CREATE TABLE SPECIFICITES(
+   id_specificites INT AUTO_INCREMENT,
+   stock INT,
+   PRIMARY KEY(id_specificites)
+);
+
 CREATE TABLE ARTICLES(
    id_article INT AUTO_INCREMENT,
+   article_name VARCHAR(50),
    description VARCHAR(255) NOT NULL,
-   brand VARCHAR(50),
+   brand VARCHAR(20),
+   link_to_product_page VARCHAR(70),
+   id_specificites INT NOT NULL,
    id_cat INT NOT NULL,
    PRIMARY KEY(id_article),
+   FOREIGN KEY(id_specificites) REFERENCES SPECIFICITES(id_specificites),
    FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
 );
 
@@ -93,10 +103,10 @@ CREATE TABLE FILTERED_BY(
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
 
-CREATE TABLE ARTICLES_FILTER_VALUES(
-   id_article INT,
+CREATE TABLE SPECIFIED_BY(
    id_filter_value INT,
-   PRIMARY KEY(id_article, id_filter_value),
-   FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article),
-   FOREIGN KEY(id_filter_value) REFERENCES FILTER_VALUES(id_filter_value)
+   id_specificites INT,
+   PRIMARY KEY(id_filter_value, id_specificites),
+   FOREIGN KEY(id_filter_value) REFERENCES FILTER_VALUES(id_filter_value),
+   FOREIGN KEY(id_specificites) REFERENCES SPECIFICITES(id_specificites)
 );

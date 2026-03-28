@@ -77,7 +77,7 @@ class DBFilterValues implements DBClass, AssociativeTable
     */
     }
 
-    public static function getElementById(string $id): array
+    public static function getElementById(string $id): array|bool
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();

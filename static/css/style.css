@@ -55,6 +55,18 @@ hr {
   font-size: 14px;
 }
 
+.miniButton {
+  padding: 2px 4px;
+  color: #eeeeee;
+  background-color: #096a09;
+  border: none;
+  outline: none;
+}
+.miniButton:hover {
+  color: #eeeeee;
+  background-color: black;
+}
+
 .btn1 {
   padding: 8px 16px;
   color: #eeeeee;

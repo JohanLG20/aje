@@ -2,17 +2,32 @@
 
 namespace AJE\Controller;
 
+use AJE\Model\DBArticles;
+use AJE\Model\DBCategory;
+use AJE\Model\DBFilterValues;
+use AJE\Utils\ProductErrorHelper;
+
 class ProductManagementController extends CRUDController
 {
     protected function getPostValuesErrors($action, $values): array|bool
     {
-        throw new \Exception("Not implemented yet");
+        return ProductErrorHelper::checkForErrors($values);
     }
 
 
     protected function create(array $params): string
     {
-        throw new \Exception("Not implemented yet");
+        try{
+            if(DBArticles::addNewElement($params)){
+                return "Article ajouté à la base de données";
+            }
+            else{
+                return "Une erreur s'est produite lors de l'ajout, veuillez réessayer";
+            }
+        }
+        catch (\PDOException $e){
+            return $this->handdleSqlErrors($e, 'create', $params);
+        }
     }
     protected function update(array $params): string
     {
@@ -28,7 +43,7 @@ class ProductManagementController extends CRUDController
     }
     protected function handdleSqlErrors(\Exception $e, string $action, array $values): string
     {
-        throw new \Exception("Not implemented yet");
+        return $e->getMessage();
     }
     protected function setOperationLabel(string $action): string
     {
@@ -46,7 +61,10 @@ class ProductManagementController extends CRUDController
     }
     protected function completeViewInformations(): array
     {
-        return [];
+        $extraInformations['categoryList'] = DBCategory::getAllElements();
+        $extraInformations['filterValueList'] = DBFilterValues::getAllElements();
+        return $extraInformations;
+
     }
     protected function callView(array $view, array $values): void
     {

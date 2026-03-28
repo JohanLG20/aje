@@ -18,20 +18,23 @@ class DBArticles implements DBClass
     }
     public static function addNewElement(array $params): bool
     {
-        throw new \Exception("Not implemented yet");    /*
+
             try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO
-            VALUES ()");
+            $query = $db->prepare("INSERT INTO `ARTICLES`(`article_name`, `description`, `brand`, `id_cat`, `id_specificites`, `link_to_product_page`)
+            VALUES (:articleName, :description, :brand, :idCat, '1', 'coucou')");
             
             return $query->execute([
-
+                "articleName" => $params['articleName'],
+                "description" => $params['description'],
+                "brand" => $params['brand'],
+                "idCat" => $params['idCat']
             ]);
 
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
-    */
+
     }
 
     public static function modifyElementById(array $params): bool
@@ -78,7 +81,7 @@ class DBArticles implements DBClass
     }
 
 
-    public static function getElementById(string $id): array
+    public static function getElementById(string $id): array|bool
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();

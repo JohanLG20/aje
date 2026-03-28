@@ -77,7 +77,7 @@ class DBPricesHistory implements DBClass
     */
     }
 
-    public static function getElementById(string $id): array
+    public static function getElementById(string $id): array|bool
     {
         throw new \Exception("Not implemented yet");
         /*
