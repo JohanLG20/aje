@@ -1,13 +1,13 @@
 <?php
 namespace AJE\Utils;
 
-use AJE\Model\DBChoices;
+use AJE\Model\DBChoice_;
 use AJE\Model\DBFilteredBy;
 use AJE\Model\DBFilterValues;
 
 class TableCorrelation{
     private const CORRELATIONS = [
-        "table1" => DBChoices::class,
+        "table1" => DBChoice_::class,
         "table6" => DBFilteredBy::class
 
     ];

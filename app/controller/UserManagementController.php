@@ -2,8 +2,8 @@
 
 namespace AJE\Controller;
 
+use AJE\Model\DBUser;
 use AJE\Utils\UserErrorHelper;
-use AJE\Model\DBUsers;
 
 
 class UserManagementController extends CRUDController
@@ -20,7 +20,7 @@ class UserManagementController extends CRUDController
         if($e->getCode() == 0){
             $errorMessage = "Cette adresse email est déjà utilisée.";
         }
-        return $errorMessage;
+        return $e->getMessage();
     }
     protected function completeViewInformations(): array
     {
@@ -30,7 +30,8 @@ class UserManagementController extends CRUDController
     {
         $params['passwd']  = password_hash($params['passwd'], PASSWORD_DEFAULT);
         try{
-            if(DBUsers::addNewElement($params)){
+            $user = new DBUser();
+            if($user->addNewElement($params)){
                 return 'Votre compte à été créer avec succès. Vous pouvez maintenant vous identifier.';
             }
             else{

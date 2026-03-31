@@ -41,7 +41,7 @@
                 <?php //Creating the options with all the colors in the database
                 foreach ($view['colorsList'] as $color):
                 ?>
-                    <option value=<?= $color['id_choice'] ?>> <?= $color['color_choice_label'] ?></option>
+                    <option value=<?= $color['id_choice_'] ?>> <?= $color['color_choice_label'] ?></option>
                 <?php endforeach ?>
             </select>
         </div>
@@ -57,7 +57,7 @@
                 <?php //Creating the options with all the categories in the database
                 foreach ($view['categoriesList'] as $category):
                 ?>
-                    <option value=<?= $category['id_cat'] ?>> <?= $category['cat_label'] ?></option>
+                    <option value=<?= $category['id_category'] ?>> <?= $category['cat_label'] ?></option>
                 <?php endforeach ?>
             </select>
         </div>
@@ -178,7 +178,7 @@
         filterValues.values.forEach(val => {
             let option = document.createElement("option")
             option.textContent = val.filter_value 
-            option.setAttribute('value', val.id_choice)
+            option.setAttribute('value', val.id_choice_)
             filterSelector.appendChild(option)
         });
 

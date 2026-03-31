@@ -2,89 +2,19 @@
 
 namespace AJE\Model;
 
-class DBChoiceColor implements DBClass
+class DBChoiceColor extends CoreModel
 {
-    public static function getAllElements(): array
+    public function __construct()
     {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM CHOICE_COLOR");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
+        $this->db = DBConnexion::getInstance()->getConnexion();
+        $this->tableName = "CHOICE_COLOR";
+        $this->tableNameLower = strtolower($this->tableName);
     }
 
-    public static function addNewElement(array $params): bool
-    {
-
-
+    protected function prepareAddQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented");
+    }
+    protected function prepareModifyQuery(array $params): \PDOStatement|false{
         throw new \Exception("Not implemented yet");
-        /*
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO CHOICE_COLOR
-            VALUES ()");
-
-            return $query->execute([]);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);*/
-    }
-
-    public static function modifyElementById(array $params): bool
-    {
-
-
-        throw new \Exception("Not implemented yet");
-
-        /* try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("UPDDATE CHOICE_COLOR
-            SET
-            WHERE");
-
-            return $query->execute([]);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }*/
-    }
-
-
-
-    public static function deleteElementById(int $id): bool
-    {
-
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("DELETE FROM CHOICE_COLOR
-            WHERE id_choix = :id ");
-
-            return $query->execute(
-                [
-                    ":id" => $id
-                ]
-            );
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-
-    public static function getElementById(string $id): array|bool
-    {
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM CHOICE_COLOR WHERE id_choix = :id");
-            $query->execute(
-                [
-                    ":id" => $id
-                ]
-            );
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
     }
 }

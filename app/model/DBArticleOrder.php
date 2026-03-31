@@ -2,12 +2,12 @@
 
 namespace AJE\Model;
 
-class DBFilteredBy extends CoreModel implements AssociativeTable
+class DBArticleOrder extends CoreModel implements AssociativeTable
 {
     public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
-        $this->tableName = "FILTERED_BY";
+        $this->tableName = "ARTICLE_ORDER";
         $this->tableNameLower = strtolower($this->tableName);
     }
 
@@ -24,17 +24,8 @@ class DBFilteredBy extends CoreModel implements AssociativeTable
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();
-
-            //Preparing the query in function of the element to get
-            if ($elementToGet === "idCat") {
-                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_category = :id");
-            } else if ($elementToGet === "idFilterType") {
-                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_filter_type = :id");
-            } else { //Prevent sending datas if the name of the elementToGet is not good
-                throw new \PDOException("Element introuvable");
-            }
-
-            $query->execute([':id' => $id]);
+            $query = $db->prepare("SELECT * FROM ARTICLES_ORDER WHERE :elementToGet = :id");
+            $query->execute([':id' => $id, ':elementToGet' => $elementToGet]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);

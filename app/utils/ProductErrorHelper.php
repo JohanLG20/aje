@@ -87,7 +87,8 @@ class ProductErrorHelper
     private static function checkCategoryErrors(string $idCat): ?string
     {
         if (is_numeric($idCat) && $idCat >= 0) {
-            if (DBCategory::getElementById($idCat)) {
+            $cat = new DBCategory();
+            if ($cat->getElementById($idCat)) {
                 return null;
             } else {
                 return "La catégorie demandée n'est pas disponible";
@@ -100,7 +101,8 @@ class ProductErrorHelper
     private static function checkColorErrors(string $idColor): ?string
     {
         if (is_numeric($idColor) && $idColor >= 0) {
-            if (DBChoiceColor::getElementById($idColor)) {
+            $col = new DBChoiceColor();
+            if ($col->getElementById($idColor)) {
                 return null;
             } else {
                 return "La couleur demandée n'est pas disponible";
@@ -109,4 +111,6 @@ class ProductErrorHelper
             return 'Veuillez choisir une couleur';
         }
     }
+
+
 }

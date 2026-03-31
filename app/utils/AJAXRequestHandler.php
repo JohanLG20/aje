@@ -3,6 +3,7 @@
 namespace AJE\Utils;
 
 use AJE\Model\DBCategory;
+use AJE\Model\DBChoice_;
 use AJE\Model\DBChoices;
 use AJE\Model\DBFilteredBy;
 use AJE\Model\DBFilterType;
@@ -44,22 +45,25 @@ class AJAXRequestHandler
         try {
 
             if ($id !== "" && is_numeric($id)) {
+
                 //Retrieving all the parents category
-                $allCats = DBCategory::getAllParentsIds($id);
+                $catDb = new DBCategory();
+                $allCats = $catDb->getAllParentsIds($id);
                 array_push($allCats, $id);
+                $filDb = new DBFilteredBy();
                 //Seeking all the filters for the category
                 foreach ($allCats as $idCat) {
-                    $filts = DBFilteredBy::getElementsForId($idCat, "idCat");
+                    $filts = $filDb->getElementsForId($idCat, "idCat");
                     //Foreach because some categories may have multiples filter
                     foreach($filts as $filtId){
                         $filters[] = $filtId;
                     }
 
                 }
-
-
+                $filterTypeDb = new DBFilterType();
+                $choiceDb = new DBChoice_();
                 foreach ($filters as $filt) {
-                    $filterInfos = DBFilterType::getElementById($filt['id_filter_type']);
+                    $filterInfos = $filterTypeDb->getElementById($filt['id_filter_type']);
                     $filterName = DataTransformer::toCamelCase($filterInfos['filter_type_label']);
                     $filterLabel = $filterInfos['filter_type_label'];
 
@@ -67,7 +71,7 @@ class AJAXRequestHandler
                     //Passing the label as the first value of the array
                     $datas[$filterName]['label'] = $filterLabel;
 
-                    $filterValues = DBChoices::getElementsForId($filt['id_filter_type'], "idFilterType");
+                    $filterValues = $choiceDb->getChoicesForFilterId($filt['id_filter_type']);
                     $datas[$filterName]['values'] = $filterValues;
                 }
             } else {

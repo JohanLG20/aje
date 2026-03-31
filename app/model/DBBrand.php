@@ -2,90 +2,19 @@
 
 namespace AJE\Model;
 
-class DBBrand implements DBClass
+class DBBrand extends CoreModel
 {
-    public static function getAllElements(): array
+       public function __construct()
     {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM BRAND");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
+        $this->db = DBConnexion::getInstance()->getConnexion();
+        $this->tableName = "BRAND";
+        $this->tableNameLower = strtolower($this->tableName);
     }
 
-    public static function addNewElement(array $params): bool
-    {
-
-
+    protected function prepareAddQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented");
+    }
+    protected function prepareModifyQuery(array $params): \PDOStatement|false{
         throw new \Exception("Not implemented yet");
-        /*
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO
-            VALUES ()");
-
-            return $query->execute([]);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);*/
-    }
-
-    public static function modifyElementById(array $params): bool
-    {
-
-
-        throw new \Exception("Not implemented yet");
-
-        /* try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("UPDDATE
-            SET
-            WHERE");
-
-            return $query->execute([]);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }*/
-    }
-
-
-
-    public static function deleteElementById(int $id): bool
-    {
-
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("DELETE FROM BRAND
-            WHERE id_brand = :id ");
-
-            return $query->execute(
-                [
-                    ":id" => $id
-                ]
-            );
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-
-    public static function getElementById(string $id): array|bool
-    {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM BRAND WHERE id_brand = :id");
-            $query->execute(
-                [
-                    ":id" => $id
-                ]
-            );
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
     }
 }

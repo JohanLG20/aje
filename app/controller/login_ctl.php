@@ -1,14 +1,14 @@
 <?php
 
 use AJE\Utils\DataTransformer;
-use AJE\Model\DBUsers;
+use AJE\Model\DBUser;
 
 if (!empty($_POST)) {
 
     //Each values of the post is trimmed and filtered by htmlspecialchars
     $postVal = DataTransformer::escapeValues($_POST);
-
-    $requieredUser = DBUsers::getElementById($postVal['mail']);
+    $user = new DBUser();
+    $requieredUser = $user->getElementById($postVal['mail']);
 
     //Checking if a user with this mail exists
     if ($requieredUser) {
@@ -28,4 +28,3 @@ if (!empty($_POST)) {
     $errors['login'] = "Veuillez remplir tous les champs du formulaire";
 }
 
-require(VIEW . "/firstview_view.php");

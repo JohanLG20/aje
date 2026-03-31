@@ -2,97 +2,23 @@
 
 namespace AJE\Model;
 
-class DBComment implements DBClass, AssociativeTable
+class DBComment extends CoreModel implements AssociativeTable
 {
-    public static function getAllElements(): array
+       public function __construct()
     {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM COMMENT");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-    public static function addNewElement(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO
-            VALUES ()");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+        $this->db = DBConnexion::getInstance()->getConnexion();
+        $this->tableName = "COMMENT";
+        $this->tableNameLower = strtolower($this->tableName);
     }
 
-    public static function modifyElementById(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-
-            /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("UPDDATE
-            SET
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+    protected function prepareAddQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented");
+    }
+    protected function prepareModifyQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented yet");
     }
 
-
-
-
-    public static function deleteElementById(int $id): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("DELETE FROM
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
-    }
-
-    public static function getElementById(string $id): array|bool
-    {
-         throw new \Exception("Not implemented yet");
-        /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
-    }
-
-        public static function getElementsForId(string $id, string $elementToGet): array|bool
+    public function getElementsForId(string $id, string $elementToGet): array|bool
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();

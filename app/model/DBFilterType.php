@@ -2,93 +2,19 @@
 
 namespace AJE\Model;
 
-class DBFilterType implements DBClass
+class DBFilterType extends CoreModel
 {
-    public static function getAllElements(): array
+        public function __construct()
     {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM FILTER_TYPE");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-    public static function addNewElement(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO
-            VALUES ()");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+        $this->db = DBConnexion::getInstance()->getConnexion();
+        $this->tableName = "FILTER_TYPE";
+        $this->tableNameLower = strtolower($this->tableName);
     }
 
-    public static function modifyElementById(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-
-            /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("UPDDATE
-            SET
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+    protected function prepareAddQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented");
     }
-
-
-
-
-    public static function deleteElementById(int $id): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("DELETE FROM
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
-    }
-
-    public static function getElementById(string $id): array|bool
-    {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM FILTER_TYPE WHERE id_filter_type = :id");
-            $query->execute([
-                ":id" => $id
-            ]);
-            return $query->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
+    protected function prepareModifyQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented yet");
     }
 }

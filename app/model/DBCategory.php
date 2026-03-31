@@ -2,99 +2,27 @@
 
 namespace AJE\Model;
 
-class DBCategory implements DBClass
+class DBCategory extends CoreModel
 {
-    public static function getAllElements(): array
+        public function __construct()
     {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM CATEGORY");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-    public static function addNewElement(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("INSERT INTO
-            VALUES ()");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+        $this->db = DBConnexion::getInstance()->getConnexion();
+        $this->tableName = "CATEGORY";
+        $this->tableNameLower = strtolower($this->tableName);
     }
 
-    public static function modifyElementById(array $params): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-
-            /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("UPDDATE
-            SET
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
+    protected function prepareAddQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented");
+    }
+    protected function prepareModifyQuery(array $params): \PDOStatement|false{
+        throw new \Exception("Not implemented yet");
     }
 
-
-
-
-    public static function deleteElementById(int $id): bool
-    {
-        throw new \Exception("Not implemented yet");    /*
-    /*
-            try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("DELETE FROM
-            WHERE");
-            
-            return $query->execute([
-
-            ]);
-
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    */
-    }
-
-    public static function getElementById(string $id): array|bool
-    {
-
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM CATEGORY WHERE id_cat = :id");
-            $query->execute([":id" => $id]);
-            return $query->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
-        }
-    }
-
-    public static function getAllParentsIds(string $id, array $ids = [])
+    public function getAllParentsIds(string $id, array $ids = [])
     {
         try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT id_cat_parent_of FROM CATEGORY WHERE id_cat = :id");
+            $query = $db->prepare("SELECT id_category_parent_of FROM CATEGORY WHERE id_category = :id");
             $query->execute([":id" => $id]);
             $idParent = $query->fetch(\PDO::FETCH_NUM);
 
@@ -108,8 +36,8 @@ class DBCategory implements DBClass
             throw new \PDOException($e);
         }
     }
-    public static  function test(){
-     print_r(self::getAllParentsIds(3, []));
-        
+
+    public function test() : void {
+        var_dump($this->db);
     }
 }

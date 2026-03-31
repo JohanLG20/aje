@@ -2,19 +2,21 @@
 
 namespace AJE\Model;
 
-class DBChoiceRange extends CoreModel
+class DBPriceHistory extends CoreModel
 {
-       public function __construct()
+    public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
-        $this->tableName = "CHOICE_RANGE";
+        $this->tableName = "PRICE_HISTORY";
         $this->tableNameLower = strtolower($this->tableName);
     }
 
-    protected function prepareAddQuery(array $params): \PDOStatement|false{
+    protected function prepareAddQuery(array $params): \PDOStatement|false
+    {
         throw new \Exception("Not implemented");
     }
-    protected function prepareModifyQuery(array $params): \PDOStatement|false{
+    protected function prepareModifyQuery(array $params): \PDOStatement|false
+    {
         throw new \Exception("Not implemented yet");
     }
 }

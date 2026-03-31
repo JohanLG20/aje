@@ -2,12 +2,14 @@
 
 namespace AJE\Model;
 
-class DBChoiceRange extends CoreModel
+use Exception;
+
+class DBArticle extends CoreModel
 {
-       public function __construct()
+    public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
-        $this->tableName = "CHOICE_RANGE";
+        $this->tableName = "ARTICLE";
         $this->tableNameLower = strtolower($this->tableName);
     }
 

@@ -61,8 +61,10 @@ class ProductManagementController extends CRUDController
     }
     protected function completeViewInformations(): array
     {
-        $extraInformations['categoriesList'] = DBCategory::getAllElements();
-        $extraInformations['colorsList'] = DBChoiceColor::getAllElements();
+        $catDb = new DBCategory();
+        $colorDb = new DBChoiceColor();
+        $extraInformations['categoriesList'] = $catDb->getAllElements();
+        $extraInformations['colorsList'] = $colorDb->getAllElements();
         
 
         return $extraInformations;
