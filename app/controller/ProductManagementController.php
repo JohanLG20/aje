@@ -4,6 +4,8 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticles;
 use AJE\Model\DBCategory;
+use AJE\Model\DBChoice;
+use AJE\Model\DBChoiceColor;
 use AJE\Model\DBColors;
 use AJE\Model\DBFilterValues;
 use AJE\Utils\ProductErrorHelper;
@@ -60,8 +62,8 @@ class ProductManagementController extends CRUDController
     protected function completeViewInformations(): array
     {
         $extraInformations['categoriesList'] = DBCategory::getAllElements();
-        $extraInformations['colorsList'] = DBColors::getAllElements();
-        $extraInformations['filterValueList'] = DBFilterValues::getAllElements();
+        $extraInformations['colorsList'] = DBChoiceColor::getAllElements();
+        
 
         return $extraInformations;
     }

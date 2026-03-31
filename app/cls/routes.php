@@ -9,21 +9,31 @@ const ROUTES = [
         'controller' => AJE\Controller\UserManagementController::class,
         'method' => 'prepareAndDisplayView'
     ],
-    'productmanagement/{action}' => [
+    '/productmanagement/{action}' => [
         'controller' => AJE\Controller\ProductManagementController::class,
         'method' => 'prepareAndDisplayView'
     ],
-    'ajax/{table}' => [
+    '/ajax/{table}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getDatas'
     ],
-    'ajax/{table}/{id}' => [
+    '/ajax/{table}/{id}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getDatas'
     ],
-    'ajax/{table}/{id}/{attribute}' => [
+    '/ajax/{table}/{id}/{attribute}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getDatas'
+    ],
+
+    '/filterRequest/getFvForCat/{id}' => [
+        'controller' => AJE\Utils\AJAXRequestHandler::class,
+        'method' => 'getAllFiltersValueForFilterType'
+    ],
+
+      '/test/' => [
+        'controller' => AJE\Model\DBCategory::class,
+        'method' => 'test'
     ]
 
 ];

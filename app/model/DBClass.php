@@ -53,7 +53,7 @@ interface DBClass
     */
 
 
-    public static function deleteElementById(int $int): bool;
+    public static function deleteElementById(int $id): bool;
 
     // throw new \Exception("Not implemented yet");
     /*
@@ -63,8 +63,9 @@ interface DBClass
             $query = $db->prepare("DELETE FROM
             WHERE");
             
-            return $query->execute([
-
+            return $query->execute(
+                [
+                    ":id" = $id
             ]);
 
         } catch (\PDOException $e) {
@@ -77,8 +78,11 @@ interface DBClass
     /*
             try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ");
-            $query->execute();
+            $query = $db->prepare("SELECT * FROM WHERE id = :id");
+            $query->execute(
+                [
+                    ":id" = $id
+            ]);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);

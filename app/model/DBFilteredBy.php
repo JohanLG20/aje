@@ -58,7 +58,7 @@ class DBFilteredBy implements DBClass, AssociativeTable
 
 
 
-    public static function deleteElementById(int $int): bool
+    public static function deleteElementById(int $id): bool
     {
         throw new \Exception("Not implemented yet");    /*
     /*

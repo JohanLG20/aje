@@ -1,7 +1,9 @@
 CREATE TABLE CATEGORY(
    id_cat INT AUTO_INCREMENT,
    cat_label VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_cat)
+   id_cat_parent_of INT,
+   PRIMARY KEY(id_cat),
+   FOREIGN KEY(id_cat_parent_of) REFERENCES CATEGORY(id_cat)
 );
 
 CREATE TABLE USERS_LEVEL(
@@ -13,28 +15,38 @@ CREATE TABLE USERS_LEVEL(
 CREATE TABLE FILTER_TYPE(
    id_filter_type INT AUTO_INCREMENT,
    filter_type_label VARCHAR(50) NOT NULL,
+   filter_type_unit VARCHAR(10),
    PRIMARY KEY(id_filter_type)
 );
 
-CREATE TABLE FILTER_VALUES(
-   id_filter_value INT AUTO_INCREMENT,
-   filter_value VARCHAR(15) NOT NULL,
+CREATE TABLE CHOICES(
+   id_choice INT AUTO_INCREMENT,
    id_filter_type INT NOT NULL,
-   PRIMARY KEY(id_filter_value),
-   UNIQUE(filter_value),
+   PRIMARY KEY(id_choice),
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
 
-CREATE TABLE COLORS(
-   id_color INT AUTO_INCREMENT,
-   color_label VARCHAR(50),
-   color_value VARCHAR(7),
-   PRIMARY KEY(id_color)
+CREATE TABLE BRAND(
+   id_brand INT AUTO_INCREMENT,
+   brand_label VARCHAR(50),
+   PRIMARY KEY(id_brand),
+   UNIQUE(brand_label)
+);
+
+CREATE TABLE ARTICLES(
+   id_article INT AUTO_INCREMENT,
+   article_name VARCHAR(50),
+   description VARCHAR(255) NOT NULL,
+   id_brand INT,
+   id_cat INT,
+   PRIMARY KEY(id_article),
+   FOREIGN KEY(id_brand) REFERENCES BRAND(id_brand),
+   FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
 );
 
 CREATE TABLE USERS(
    mail VARCHAR(50),
-   passwd VARCHAR(100) NOT NULL,
+   passwd VARCHAR(255) NOT NULL,
    first_name VARCHAR(50) NOT NULL,
    last_name VARCHAR(50) NOT NULL,
    postal_code INT NOT NULL,
@@ -47,35 +59,6 @@ CREATE TABLE USERS(
    FOREIGN KEY(id_user_level) REFERENCES USERS_LEVEL(id_user_level)
 );
 
-CREATE TABLE SPECIFICITES(
-   id_specificite INT AUTO_INCREMENT,
-   stock INT,
-   id_color INT NOT NULL,
-   PRIMARY KEY(id_specificite),
-   FOREIGN KEY(id_color) REFERENCES COLORS(id_color)
-);
-
-CREATE TABLE ARTICLES(
-   id_article INT AUTO_INCREMENT,
-   article_name VARCHAR(50),
-   brand VARCHAR(30) NOT NULL,
-   description VARCHAR(255) NOT NULL,
-   link_to_product_page VARCHAR(70) NOT NULL,
-   id_specificite INT NOT NULL,
-   id_cat INT NOT NULL,
-   PRIMARY KEY(id_article),
-   FOREIGN KEY(id_specificite) REFERENCES SPECIFICITES(id_specificite),
-   FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat)
-);
-
-CREATE TABLE ORDERS(
-   id_order INT AUTO_INCREMENT,
-   date_ VARCHAR(50) NOT NULL,
-   mail VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id_order),
-   FOREIGN KEY(mail) REFERENCES USERS(mail)
-);
-
 CREATE TABLE PRICES_HISTORY(
    id_price_history INT AUTO_INCREMENT,
    start_date DATE NOT NULL,
@@ -86,12 +69,53 @@ CREATE TABLE PRICES_HISTORY(
    FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article)
 );
 
-CREATE TABLE IMAGES_URI(
-   id_image_uri INT AUTO_INCREMENT,
-   image_uri VARCHAR(70),
+CREATE TABLE CHOICE_TXT(
+   id_choice INT,
+   choice VARCHAR(30) NOT NULL,
+   PRIMARY KEY(id_choice),
+   FOREIGN KEY(id_choice) REFERENCES CHOICES(id_choice)
+);
+
+CREATE TABLE CHOICE_NUMBER(
+   id_choice INT,
+   choice DECIMAL(8,3) NOT NULL,
+   PRIMARY KEY(id_choice),
+   FOREIGN KEY(id_choice) REFERENCES CHOICES(id_choice)
+);
+
+CREATE TABLE CHOICE_RANGE(
+   id_choice INT,
+   min_ DECIMAL(8,3) NOT NULL,
+   max_ DECIMAL(8,3) NOT NULL,
+   PRIMARY KEY(id_choice),
+   FOREIGN KEY(id_choice) REFERENCES CHOICES(id_choice)
+);
+
+CREATE TABLE CHOICE_COLOR(
+   id_choice INT,
+   color_choice_label VARCHAR(30) NOT NULL,
+   color_choice_hexa VARCHAR(7) NOT NULL,
+   PRIMARY KEY(id_choice),
+   FOREIGN KEY(id_choice) REFERENCES CHOICES(id_choice)
+);
+
+CREATE TABLE VALUES_(
+   id_value INT AUTO_INCREMENT,
    id_article INT NOT NULL,
-   PRIMARY KEY(id_image_uri),
-   FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article)
+   id_choice INT NOT NULL,
+   id_filter_type INT NOT NULL,
+   PRIMARY KEY(id_value),
+   FOREIGN KEY(id_article) REFERENCES ARTICLES(id_article),
+   FOREIGN KEY(id_choice) REFERENCES CHOICES(id_choice),
+   FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
+);
+
+CREATE TABLE ORDERS(
+   id_order INT AUTO_INCREMENT,
+   date_ VARCHAR(50) NOT NULL,
+   mail VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_order),
+   FOREIGN KEY(mail) REFERENCES USERS(mail)
 );
 
 CREATE TABLE ARTICLES_ORDER(
@@ -119,12 +143,3 @@ CREATE TABLE FILTERED_BY(
    FOREIGN KEY(id_cat) REFERENCES CATEGORY(id_cat),
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
-
-CREATE TABLE SPECIFIED_BY(
-   id_filter_value INT,
-   id_specificite INT,
-   PRIMARY KEY(id_filter_value, id_specificite),
-   FOREIGN KEY(id_filter_value) REFERENCES FILTER_VALUES(id_filter_value),
-   FOREIGN KEY(id_specificite) REFERENCES SPECIFICITES(id_specificite)
-);
-

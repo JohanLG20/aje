@@ -27,4 +27,19 @@ abstract class DataTransformer
         }
     }
 
+    public static function toCamelCase(string $str): string
+    {
+        $camel = strtolower($str);
+
+        //This function transformes "\s[a-z]" into "[A-Z]"
+        $camel = preg_replace_callback(
+            "|(\s[a-z])|",
+            function ($matches) {
+                return trim(strtoupper($matches[1]));
+            },
+            $camel
+        );
+
+        return $camel;
+    }
 }

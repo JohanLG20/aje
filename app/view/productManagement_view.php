@@ -41,7 +41,7 @@
                 <?php //Creating the options with all the colors in the database
                 foreach ($view['colorsList'] as $color):
                 ?>
-                    <option value=<?= $color['id_color'] ?>> <?= $color['color_label'] ?></option>
+                    <option value=<?= $color['id_choice'] ?>> <?= $color['color_choice_label'] ?></option>
                 <?php endforeach ?>
             </select>
         </div>
@@ -71,10 +71,13 @@
         </div>
 
         <!-- Image section -->
-        <div id="addImagesSection">
+        <div>
             <p><b>Ajouter des images</b></p>
+            <div id="images">
+                <p id="imageNeededMessage">Veuillez ajouter au moins une image</p>
+            </div>
         </div>
-        <i id="addImage" class="fa-solid fa-plus miniButton"></i>
+        <i id="addImageButton" class="fa-solid fa-plus miniButton"></i>
         <br>
         <input type="hidden" name="form_submitted">
         <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
@@ -87,9 +90,12 @@
 </main>
 
 <script>
-    let addImagesSection = document.getElementById("addImagesSection")
-    let addImage = document.getElementById("addImage")
+    let images = document.getElementById("images")
+    let addImage = document.getElementById("addImageButton")
     addImage.addEventListener("click", () => {
+
+        let imageNeededMessage = document.querySelector("#")
+        
         //Creating the div and its components
         let newImageDiv = document.createElement("div")
         newImageDiv.classList.add("form-item")
@@ -103,10 +109,12 @@
         newImageDiv.appendChild(newImageInput)
         newImageDiv.appendChild(removeImageButton)
 
-        addImagesSection.appendChild(newImageDiv)
+        images.appendChild(newImageDiv)
 
         let listener = removeImageButton.addEventListener("click", (e) => {
-            addImagesSection.removeChild(e.target.parentNode)
+            images.removeChild(e.target.parentNode)
+
+            if(addImagesSection)
             //Removing the listener as the element doesn't exists anymore
             e.target.removeEventListener("click", listener)
 
@@ -116,6 +124,7 @@
 
     let categorySelector = document.querySelector("#idCat")
     let filterListDiv = document.querySelector("#filterList")
+    //TODO: Verifier la consommation de mémoire pour le innerHTML = ""
     categorySelector.addEventListener("change", () => {
         //Removing all the existing elements of the filter
         filterListDiv.innerHTML = "";
@@ -130,7 +139,7 @@
             filterListDiv.appendChild(filterListTitle)
 
             //Adding the filters
-            fetch("index.php?path=/ajax/table6/"+categorySelector.value+"/idCat")
+            fetch("index.php?path=/filterRequest/getFvForCat/"+categorySelector.value)
             .then(r => {
                 console.log(r)
                 if(r.ok){
@@ -140,20 +149,42 @@
                     throw new Exception("Impossible de charger les filtres")
                 }
             })
-            .then(filtersType =>{
-                filtersType.array.forEach(async (filterType) => {
-                    let filterValuesDiv = await createFilterValuesDiv(filterType.id_filter_type)
-                    filterListDiv.appendChild(filterValuesDiv)
-
-                });
+            .then(filtersTypes =>{
+                
+                for(let keys in filtersTypes){
+                    let filterDiv = createFilterValuesDiv(keys, filtersTypes[keys])
+                    filterListDiv.appendChild(filterDiv)
+                }
             })
         }
 
 
     })
 
-    async function createFilterValuesDiv(idFilterType){
-        
+    function createFilterValuesDiv(filterName, filterValues){
+        let filterDiv = document.createElement("div")
+        filterDiv.classList.add("form-item")
+
+        let filterLabel = document.createElement("p")
+        filterLabel.textContent = filterValues.label
+        filterDiv.appendChild(filterLabel)
+
+        //Creating the selector
+        let filterSelector = document.createElement("select")
+        filterSelector.setAttribute("name", filterName+"[]")
+        filterSelector.setAttribute("multiple", true)
+        filterDiv.appendChild(filterSelector)
+
+        filterValues.values.forEach(val => {
+            let option = document.createElement("option")
+            option.textContent = val.filter_value 
+            option.setAttribute('value', val.id_choice)
+            filterSelector.appendChild(option)
+        });
+
+        filterDiv.appendChild(filterSelector)
+
+        return filterDiv
     }
 </script>
 

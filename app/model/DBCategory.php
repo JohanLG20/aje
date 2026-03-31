@@ -58,7 +58,7 @@ class DBCategory implements DBClass
 
 
 
-    public static function deleteElementById(int $int): bool
+    public static function deleteElementById(int $id): bool
     {
         throw new \Exception("Not implemented yet");    /*
     /*
@@ -79,8 +79,8 @@ class DBCategory implements DBClass
 
     public static function getElementById(string $id): array|bool
     {
-        
-            try {
+
+        try {
             $db = DBConnexion::getInstance()->getConnexion();
             $query = $db->prepare("SELECT * FROM CATEGORY WHERE id_cat = :id");
             $query->execute([":id" => $id]);
@@ -88,6 +88,28 @@ class DBCategory implements DBClass
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
-    
+    }
+
+    public static function getAllParentsIds(string $id, array $ids = [])
+    {
+        try {
+            $db = DBConnexion::getInstance()->getConnexion();
+            $query = $db->prepare("SELECT id_cat_parent_of FROM CATEGORY WHERE id_cat = :id");
+            $query->execute([":id" => $id]);
+            $idParent = $query->fetch(\PDO::FETCH_NUM);
+
+            if (isset($idParent[0])) {
+                array_push($ids, $idParent[0]);                
+                return self::getAllParentsIds($idParent[0], $ids);
+            } else {
+                return $ids;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
+    }
+    public static  function test(){
+     print_r(self::getAllParentsIds(3, []));
+        
     }
 }

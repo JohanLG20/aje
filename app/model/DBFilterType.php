@@ -58,7 +58,7 @@ class DBFilterType implements DBClass
 
 
 
-    public static function deleteElementById(int $int): bool
+    public static function deleteElementById(int $id): bool
     {
         throw new \Exception("Not implemented yet");    /*
     /*
@@ -79,16 +79,16 @@ class DBFilterType implements DBClass
 
     public static function getElementById(string $id): array|bool
     {
-         throw new \Exception("Not implemented yet");
-        /*
-            try {
+
+        try {
             $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM ");
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
+            $query = $db->prepare("SELECT * FROM FILTER_TYPE WHERE id_filter_type = :id");
+            $query->execute([
+                ":id" => $id
+            ]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
-    */
     }
 }
