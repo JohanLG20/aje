@@ -8,7 +8,7 @@ class DBComment extends CoreModel implements AssociativeTable
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "COMMENT";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false{

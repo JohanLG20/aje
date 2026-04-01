@@ -8,7 +8,7 @@ class DBCategory extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "CATEGORY";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false{
@@ -18,17 +18,17 @@ class DBCategory extends CoreModel
         throw new \Exception("Not implemented yet");
     }
 
-    public function getAllParentsIds(string $id, array $ids = [])
+    public function getCompleteBranch(string $id, array $ids = [])
     {
+        array_push($ids, $id); //Adding the current category to the branch
         try {
             $db = DBConnexion::getInstance()->getConnexion();
             $query = $db->prepare("SELECT id_category_parent_of FROM CATEGORY WHERE id_category = :id");
             $query->execute([":id" => $id]);
-            $idParent = $query->fetch(\PDO::FETCH_NUM);
+            $idParent = $query->fetch(\PDO::FETCH_ASSOC);
 
-            if (isset($idParent[0])) {
-                array_push($ids, $idParent[0]);                
-                return self::getAllParentsIds($idParent[0], $ids);
+            if (isset($idParent['id_category_parent_of'])) {
+                return $this->getCompleteBranch($idParent['id_category_parent_of'], $ids);
             } else {
                 return $ids;
             }
@@ -37,7 +37,5 @@ class DBCategory extends CoreModel
         }
     }
 
-    public function test() : void {
-        var_dump($this->db);
-    }
+
 }

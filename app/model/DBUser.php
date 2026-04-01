@@ -9,7 +9,7 @@ class DBUser extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "USER_";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareModifyQuery(array $params): \PDOStatement|false

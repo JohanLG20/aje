@@ -2,42 +2,15 @@
 
 namespace AJE\Model;
 
-class DBFilteredBy extends CoreModel implements AssociativeTable
+class DBFilteredBy extends CoreAssociativeTable
 {
     public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "FILTERED_BY";
-        $this->tableNameLower = strtolower($this->tableName);
-    }
-
-    protected function prepareAddQuery(array $params): \PDOStatement|false
-    {
-        throw new \Exception("Not implemented");
-    }
-    protected function prepareModifyQuery(array $params): \PDOStatement|false
-    {
-        throw new \Exception("Not implemented yet");
-    }
-
-    public function getElementsForId(string $id, string $elementToGet): array|bool
-    {
-        try {
-            $db = DBConnexion::getInstance()->getConnexion();
-
-            //Preparing the query in function of the element to get
-            if ($elementToGet === "idCat") {
-                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_category = :id");
-            } else if ($elementToGet === "idFilterType") {
-                $query = $db->prepare("SELECT * FROM FILTERED_BY WHERE id_filter_type = :id");
-            } else { //Prevent sending datas if the name of the elementToGet is not good
-                throw new \PDOException("Element introuvable");
-            }
-
-            $query->execute([':id' => $id]);
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
+        $this->associativeArray = [
+            "id_filter_type" => "id_category",
+            "id_category" => "id_filter_type"
+        ];
         }
-    }
 }

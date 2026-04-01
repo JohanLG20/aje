@@ -17,7 +17,9 @@ class ProductErrorHelper
         $errors['idColor'] = self::checkColorErrors($values['idColor']);
         $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
         $errors['brand'] = self::checkBrandErrors($values['brand']);
-        $errors['brand'] = self::checkBrandErrors($values['brand']);
+
+        $filterErrorHelper = new FiltersErrorHelper($values);
+        $errors['filters'] = $filterErrorHelper->checkForErrors();
 
 
         //We remove all the values that dont have any errors

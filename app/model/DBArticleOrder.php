@@ -8,7 +8,7 @@ class DBArticleOrder extends CoreModel implements AssociativeTable
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "ARTICLE_ORDER";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false

@@ -8,7 +8,7 @@ class DBChoiceColor extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "CHOICE_COLOR";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = "choice_";
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false{

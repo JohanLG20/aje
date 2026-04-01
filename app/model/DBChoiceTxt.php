@@ -8,7 +8,7 @@ class DBChoiceTxt extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "CHOICE_TXT";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = "choice_";
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false{

@@ -8,7 +8,7 @@ class DBBrand extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "BRAND";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false{

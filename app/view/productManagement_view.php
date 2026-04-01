@@ -92,9 +92,10 @@
 <script>
     let images = document.getElementById("images")
     let addImage = document.getElementById("addImageButton")
+    //Listener for adding an image
     addImage.addEventListener("click", () => {
 
-        let imageNeededMessage = document.querySelector("#")
+        let imageNeededMessage = document.querySelector("#images")
         
         //Creating the div and its components
         let newImageDiv = document.createElement("div")
@@ -110,7 +111,7 @@
         newImageDiv.appendChild(removeImageButton)
 
         images.appendChild(newImageDiv)
-
+        //Listener on the remove button for the file
         let listener = removeImageButton.addEventListener("click", (e) => {
             images.removeChild(e.target.parentNode)
 
@@ -156,6 +157,9 @@
                     filterListDiv.appendChild(filterDiv)
                 }
             })
+            .catch((e) => {
+                
+            })
         }
 
 
@@ -171,7 +175,7 @@
 
         //Creating the selector
         let filterSelector = document.createElement("select")
-        filterSelector.setAttribute("name", filterName+"[]")
+        filterSelector.setAttribute("name", `${filterName}[]`)
         filterSelector.setAttribute("multiple", true)
         filterDiv.appendChild(filterSelector)
 
@@ -184,7 +188,7 @@
 
         filterDiv.appendChild(filterSelector)
 
-        return filterDiv
+        return filterDiv;
     }
 </script>
 

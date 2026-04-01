@@ -11,7 +11,7 @@ abstract class CoreModel
 
 
     protected string $tableName;
-    protected string $tableNameLower;
+    protected string $idName;
     protected \PDO  $db;
 
     public function getAllElements(): array
@@ -51,7 +51,7 @@ abstract class CoreModel
     {
         try {
             $query = $this->db->prepare("DELETE FROM {$this->tableName}
-            WHERE id_{$this->tableNameLower} = :id");
+            WHERE id_{$this->idName} = :id");
 
             return $query->execute(
                 [
@@ -67,7 +67,7 @@ abstract class CoreModel
     {
         try {
             $query = $this->db->prepare("SELECT * FROM {$this->tableName}
-            WHERE id_{$this->tableNameLower} = :id");
+            WHERE id_{$this->idName} = :id");
             $query->execute([
                 ":id" => $id
             ]);

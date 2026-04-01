@@ -8,7 +8,7 @@ class DBPriceHistory extends CoreModel
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "PRICE_HISTORY";
-        $this->tableNameLower = strtolower($this->tableName);
+        $this->idName = strtolower($this->tableName);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false
