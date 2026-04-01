@@ -6,7 +6,7 @@ use AJE\Model\DBCategory;
 use AJE\Model\DBChoice_;
 use AJE\Model\DBFilteredBy;
 use AJE\Model\DBFilterType;
-use AJE\Model\VFilterTypeAssociations;
+use AJE\Model\VFilterValuesAssociations;
 
 class AJAXRequestHandler
 {
@@ -53,7 +53,7 @@ class AJAXRequestHandler
                 $filters = $filtByDb->getAssociatedElementsFromArray("id_filter_type", $allCats);
 
                 $filterTypeDb = new DBFilterType();
-                $fta = new VFilterTypeAssociations();
+                $fva = new VFilterValuesAssociations();
 
                 foreach ($filters as $filt) {
 
@@ -65,7 +65,7 @@ class AJAXRequestHandler
                     //Passing the label as the first value of the array
                     $datas[$filterName]['label'] = $filterLabel;
                     //In a second, passing the values to the value part of the array
-                    $filterValues = $fta->getChoicesForFilterId($filt['id_filter_type']);
+                    $filterValues = $fva->getChoicesForFilterId($filt['id_filter_type']);
                     $datas[$filterName]['values'] = $filterValues;
                 }
             } catch (\PDOException $e) {

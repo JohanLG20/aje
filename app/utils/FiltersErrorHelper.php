@@ -4,24 +4,24 @@ namespace AJE\Utils;
 
 use AJE\Model\DBCategory;
 use AJE\Model\DBFilteredBy;
-use AJE\Model\VFilterTypeAssociations;
-use Exception;
+use AJE\Model\VFilterValuesAssociations;
 
 class FiltersErrorHelper extends ErrorHelper
 {
-    private array $filtersIdsFromPost = [];
+    //This array is meant to only get the values from filters
+    private array $filtersValues = [];
     public function __construct(array $valuesToGet)
     {
         parent::ErrorHelper($valuesToGet); // creating the $this->values
-        $this->filtersIdsFromPost = $this->getFiltersIdFromValues();
+        $this->filtersValues = $this->getFiltersValuesFromPost();
     }
 
     protected function checkErrors(): array
     {
         try {
-            $error['filtersCat'] = $this->checkFilterForCategory();
-            $error['filtersVal'] = $this->checkValuesForFilter();
-            return $error;
+            $errors['filtersCat'] = $this->checkFilterForCategory();
+            $errors['filtersVal'] = $this->checkValuesForFilter();
+            return $errors;
         } catch (\PDOException $e) {
             throw $e;
         }
@@ -38,9 +38,9 @@ class FiltersErrorHelper extends ErrorHelper
 
 
             $allFilters = array_column($allFilters, 'id_filter_type'); //Flattening the array by selecting the id_filter_type column only
-            $diff = array_diff($allFilters, $this->filtersIdsFromPost);
 
-            if (empty($diff)) {
+            //Checking if the filters ids from $this->values are valid
+            if (empty(array_diff($allFilters, array_keys($this->filtersValues)))) {
                 return null;
             } else {
                 return "Un des types de filtre sélectionné ne convient pas à l'article";
@@ -53,24 +53,39 @@ class FiltersErrorHelper extends ErrorHelper
     private function checkValuesForFilter()
     {
         try {
-            $fta = new VFilterTypeAssociations();
+            $fva = new VFilterValuesAssociations();
+
+            $allPossibleValues = $fva->getAllPossibleChoicesForIds(array_keys($this->filtersValues));
+            $allPossibleValues = array_column($allPossibleValues, 'id_choice_'); //Flattening the array
+            $allValues = array_merge(...$this->filtersValues); //Flattening the array
+
+            //Checking if the filters values are in the possible values
+            if(empty(array_diff($allValues, $allPossibleValues))){
+                return null;
+            }
+            else{
+                return "Une des valeurs choisis pour le filtre ne correspond pas aux types de filtres autorisés";
+            }
+
+            throw new \Exception("not");
         } catch (\PDOException $e) {
+            throw $e;
         }
     }
 
-    private function getFiltersIdFromValues() : array
+    private function getFiltersValuesFromPost(): array
     {
         $arr = [];
         //Each filter choice sent by post will have numeric key and an array as value
         foreach ($this->values as $key => $val) {
             if (is_numeric($key)) {
                 if (is_array($val)) {
-                    array_push($arr, $key);
+                    $arr[$key] = $val;
                 }
             }
         }
 
         return $arr;
-
     }
+
 }
