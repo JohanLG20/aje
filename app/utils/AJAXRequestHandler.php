@@ -55,6 +55,11 @@ class AJAXRequestHandler
                 $filterTypeDb = new DBFilterType();
                 $fva = new VFilterValuesAssociations();
 
+                /*Creating an array like [FilterLabel => [
+                                                     label => postName,
+                                                     values => [value1, value2 ...]
+                                         ], ...]
+                */
                 foreach ($filters as $filt) {
 
                     $filterInfos = $filterTypeDb->getElementById($filt['id_filter_type']);

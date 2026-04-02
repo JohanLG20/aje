@@ -25,12 +25,22 @@
 
         <!-- Description -->
         <div class="form-item">
-            <label for="description">Marque de l'article</label>
+            <label for="description">Description de l'article</label>
             <textarea name="description" id="description" placeholder="Décrivez l'article, essayez de faire un texte vendeur !"
                 value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['description']) ? $values['description'] : '' ?>" maxlength="255" rows="5"></textarea>
         </div>
         <?php if (isset($view['errors']['description'])): ?>
             <p class="error"><?= $view['errors']['description'] ?></p>
+        <?php endif; ?>
+
+        <!-- Price -->
+        <div class="form-item">
+            <label for="price">Prix de l'article</label>
+            <input type="text" name="price" id="price" placeholder="Le prix de l'article"
+                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['price']) ? $values['price'] : '' ?>" maxlength="255">
+        </div>
+        <?php if (isset($view['errors']['price'])): ?>
+            <p class="error"><?= $view['errors']['price'] ?></p>
         <?php endif; ?>
 
         <!-- Colors -->
@@ -74,7 +84,11 @@
         <div>
             <p><b>Ajouter des images</b></p>
             <div id="images">
-                <p id="imageNeededMessage">Veuillez ajouter au moins une image</p>
+                <?php if (isset($view['errors']["images"])): ?>
+                    <p id="imageNeededMessage" class="error"><?= $view['errors']['images'] ?></p>
+                <?php else: ?>
+                    <p id="imageNeededMessage">Veuillez insérer au moins une image</p>
+                <?php endif ?>
             </div>
         </div>
         <i id="addImageButton" class="fa-solid fa-plus miniButton"></i>
@@ -96,7 +110,7 @@
     addImage.addEventListener("click", () => {
 
         let imageNeededMessage = document.querySelector("#images")
-        
+
         //Creating the div and its components
         let newImageDiv = document.createElement("div")
         newImageDiv.classList.add("form-item")
@@ -115,14 +129,15 @@
         let listener = removeImageButton.addEventListener("click", (e) => {
             images.removeChild(e.target.parentNode)
 
-            if(addImagesSection)
-            //Removing the listener as the element doesn't exists anymore
-            e.target.removeEventListener("click", listener)
+            if (addImagesSection)
+                //Removing the listener as the element doesn't exists anymore
+                e.target.removeEventListener("click", listener)
 
         })
 
     })
 
+    // ------------------- Updating available fiters if the category changes -------------
     let categorySelector = document.querySelector("#idCat")
     let filterListDiv = document.querySelector("#filterList")
     //TODO: Verifier la consommation de mémoire pour le innerHTML = ""
@@ -140,32 +155,32 @@
             filterListDiv.appendChild(filterListTitle)
 
             //Adding the filters
-            fetch("index.php?path=/filterRequest/getFvForCat/"+categorySelector.value)
-            .then(r => {
-                console.log(r)
-                if(r.ok){
-                    return r.json()
-                }
-                else{
-                    throw new Exception("Impossible de charger les filtres")
-                }
-            })
-            .then(filtersTypes =>{
-                
-                for(let keys in filtersTypes){
-                    let filterDiv = createFilterValuesDiv(keys, filtersTypes[keys])
-                    filterListDiv.appendChild(filterDiv)
-                }
-            })
-            .catch((e) => {
-                
-            })
+            fetch("index.php?path=/filterRequest/getFvForCat/" + categorySelector.value)
+                .then(r => {
+                    console.log(r)
+                    if (r.ok) {
+                        return r.json()
+                    } else {
+                        throw new Exception("Une erreur est survenue, impossible de charger les filtres. Vérifiez votre connexion internet ou le statut de la base de données")
+                    }
+                })
+                .then(filtersTypes => {
+                    for (let keys in filtersTypes) {
+                        let filterDiv = createFilterValuesDiv(keys, filtersTypes[keys])
+                        filterListDiv.appendChild(filterDiv)
+                    }
+                })
+                .catch((e) => {
+                    let errorMessage = document.createElement("p")
+                    errorMessage.classList.add("error")
+                    filterListDiv.appendChild(errorMessage)
+                })
         }
 
 
     })
 
-    function createFilterValuesDiv(filterName, filterValues){
+    function createFilterValuesDiv(filterName, filterValues) {
         let filterDiv = document.createElement("div")
         filterDiv.classList.add("form-item")
 
@@ -181,7 +196,7 @@
 
         filterValues.values.forEach(val => {
             let option = document.createElement("option")
-            option.textContent = val.filter_value 
+            option.textContent = val.filter_value
             option.setAttribute('value', val.id_choice_)
             filterSelector.appendChild(option)
         });

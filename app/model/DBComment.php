@@ -2,7 +2,7 @@
 
 namespace AJE\Model;
 
-class DBComment extends CoreModel implements AssociativeTable
+class DBComment extends AssociativeTable
 {
        public function __construct()
     {
