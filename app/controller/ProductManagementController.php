@@ -24,12 +24,18 @@ class ProductManagementController extends CRUDController
     protected function create(array $params): string
     {
         try {
+            //Creating the article in the ARTICLE db
             $artDb = new DBArticle();
             $artParams = [
                 'articleName' => $params['articleName'],
                 'description' => $params['description'],
-                'idCat' => $params['idCat']
+                'idCat' => $params['idCat'],
+                'idBrand' => $params['idBrand']
             ];
+            $artDb->addNewElement($artParams);
+
+            //Adding the line in the price history
+
             return "Article ajouté avec succès";
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);

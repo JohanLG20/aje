@@ -12,22 +12,26 @@ class ProductErrorHelper
     public static function checkForErrors(array $values): array|bool
     {
         $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
-        $errors['brand'] = self::checkBrandErrors($values['brand']);
+        $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
         $errors['description'] = self::checkDescriptionErrors($values['description']);
         $errors['price'] = self::checkPriceErrors($values['price']);
         $errors['idColor'] = self::checkColorErrors($values['idColor']);
         $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
-        $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
-        //This is quite particular, all the treatement is done in the method
-        //Images are stored in $_FILES['images']
-        $errors['images'] = self::checkImagesErrors();
 
         //Checking filters values integrity
         $filterErrorHelper = new FiltersErrorHelper($values);
         $filterErrors = $filterErrorHelper->checkForErrors();
 
+        //This is quite particular, all the treatement is done in the method
+        //Images are stored in $_FILES['images']
+        $errors['images'] = self::checkImagesErrors();
+
+
+
         //Addind the detected errors to the list
-        if(!empty($filterErrors)){array_merge($errors, $filterErrors);}
+        if (!empty($filterErrors)) {
+            array_merge($errors, $filterErrors);
+        }
 
 
 
@@ -96,16 +100,15 @@ class ProductErrorHelper
         }
     }
 
-    private static function checkPriceErrors(string $price) : ?string{
-        if(is_numeric($price)){
-            if($price > 0 && $price < 9999.99){
+    private static function checkPriceErrors(string $price): ?string
+    {
+        if (is_numeric($price)) {
+            if ($price > 0 && $price < 9999.99) {
                 return null;
-            }
-            else{
+            } else {
                 return "Veuillez entrer un prix entre 0.01 et 9999.99";
             }
-        }
-        else{
+        } else {
             return "Veuillez entrer le prix sous la forme '99.99'. Pas besoin de préciser la monnaie";
         }
     }
@@ -138,16 +141,14 @@ class ProductErrorHelper
         }
     }
 
-    private static function checkImagesErrors() : ?string {
-        
-        if(isset($_FILES['images']) && !empty($_FILES['images'])){
+    private static function checkImagesErrors(): ?string
+    {
+
+        if (isset($_FILES['images']) && !empty($_FILES['images'])) {
             //TODO: Insert validation image
             return null;
-        }
-        else{
+        } else {
             return "Veuillez entrer au moins une image";
         }
     }
-
-
 }

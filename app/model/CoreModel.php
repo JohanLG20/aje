@@ -79,7 +79,7 @@ abstract class CoreModel
     protected function prepareAddQuery(array $params): \PDOStatement|false
     {
         if (empty(array_diff_key($this->formNameToDbName, $params))) {
-            try {
+            try { 
                 $sqlQuery = "INSERT INTO {$this->tableName}(";
 
                 //adding each column name into the query
@@ -91,21 +91,19 @@ abstract class CoreModel
                 $sqlQuery .= ") VALUES ("; //Preparing the second part of the query
 
                 //Creating the ids 
-                for ($i = 0; $i < count($params); $i++) {
-                    $sqlQuery .= ":id{$i},";
+                foreach ($params as $key => $val) {
+                    $sqlQuery .= ":{$key},";
                 }
 
                 $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-                $sqlQuery .= ")";
+                $sqlQuery .= ")"; //Ending the query
 
-                //sqlQuery now look like INSERT INTO tableName(col1,col2...) VALUES (:id1,:id2...)
+                //sqlQuery now look like INSERT INTO tableName(col1,col2...) VALUES (:postName,:otherPostName...)
                 $query = $this->db->prepare($sqlQuery);
 
-                $indexedParams = array_values($params); //Converting the params array into and indexed array
-
                 //We now bind the parameters
-                for ($i; $i < count($indexedParams); $i) {
-                    $query->bindParam(":id{$i}", $indexedParams[$i]);
+                foreach ($params as $key => $val) {
+                    $query->bindValue(":{$key}", $val); //Have to use bindValue because it causes troubles with bindParam
                 }
 
                 return $query;
