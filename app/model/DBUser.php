@@ -2,6 +2,7 @@
 
 namespace AJE\Model;
 
+
 class DBUser extends CoreModel
 {
 
@@ -16,7 +17,9 @@ class DBUser extends CoreModel
     {
         throw new \Exception("Not implemented yet");
     }
-    public function prepareAddQuery(array $params): \PDOStatement
+    
+    //The function is rewrited to handdle the fact that the phone number isn't requiered
+    public function prepareAddQuery(array $params): \PDOStatement|false
     {
         $addProdQuery = $this->db->prepare("INSERT INTO `{$this->tableName}`(`mail`, `city`, `first_name`, `address`, `phone_number`, `postal_code`, `last_name`, `passwd`, `id_user_level`) 
             VALUES (:email, :city, :firstname, :address, :phoneNumber, :postCode, :lastname, :passwd, 1)");

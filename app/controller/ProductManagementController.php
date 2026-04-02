@@ -2,6 +2,7 @@
 
 namespace AJE\Controller;
 
+use AJE\Model\DBArticle;
 use AJE\Model\DBArticles;
 use AJE\Model\DBCategory;
 use AJE\Model\DBChoice;
@@ -12,6 +13,7 @@ use AJE\Utils\ProductErrorHelper;
 
 class ProductManagementController extends CRUDController
 {
+
     protected function getPostValuesErrors($action, $values): array|bool
     {
         return ProductErrorHelper::checkForErrors($values);
@@ -21,11 +23,13 @@ class ProductManagementController extends CRUDController
     protected function create(array $params): string
     {
         try {
-            if (DBArticles::addNewElement($params)) {
-                return "Article ajouté à la base de données";
-            } else {
-                return "Une erreur s'est produite lors de l'ajout, veuillez réessayer";
-            }
+            $artDb = new DBArticle();
+            $artParams = [
+                'articleName' => $params['articleName'],
+                'description' => $params['description'],
+                'idCat' => $params['idCat']
+            ];
+            return "Article ajouté avec succès";
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);
         }

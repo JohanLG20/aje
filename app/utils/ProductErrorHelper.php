@@ -4,7 +4,6 @@ namespace AJE\Utils;
 
 use AJE\Model\DBCategory;
 use AJE\Model\DBChoiceColor;
-use AJE\Model\DBColors;
 
 class ProductErrorHelper
 {

@@ -4,18 +4,11 @@ namespace AJE\Model;
 
 class DBCategory extends CoreModel
 {
-        public function __construct()
+    public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "CATEGORY";
         $this->idName = strtolower($this->tableName);
-    }
-
-    protected function prepareAddQuery(array $params): \PDOStatement|false{
-        throw new \Exception("Not implemented");
-    }
-    protected function prepareModifyQuery(array $params): \PDOStatement|false{
-        throw new \Exception("Not implemented yet");
     }
 
     public function getCompleteBranch(string $id, array $ids = [])
@@ -36,6 +29,4 @@ class DBCategory extends CoreModel
             throw new \PDOException($e);
         }
     }
-
-
 }

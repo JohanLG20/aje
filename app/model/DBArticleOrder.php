@@ -2,22 +2,13 @@
 
 namespace AJE\Model;
 
-class DBArticleOrder extends CoreModel implements AssociativeTable
+class DBArticleOrder extends AssociativeTable
 {
     public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "ARTICLE_ORDER";
         $this->idName = strtolower($this->tableName);
-    }
-
-    protected function prepareAddQuery(array $params): \PDOStatement|false
-    {
-        throw new \Exception("Not implemented");
-    }
-    protected function prepareModifyQuery(array $params): \PDOStatement|false
-    {
-        throw new \Exception("Not implemented yet");
     }
 
     public function getElementsForId(string $id, string $elementToGet): array|bool
