@@ -2,6 +2,7 @@
 
 namespace AJE\Utils;
 
+use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
 use AJE\Model\DBChoiceColor;
 
@@ -16,7 +17,7 @@ class ProductErrorHelper
         $errors['price'] = self::checkPriceErrors($values['price']);
         $errors['idColor'] = self::checkColorErrors($values['idColor']);
         $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
-        $errors['brand'] = self::checkBrandErrors($values['brand']);
+        $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
         //This is quite particular, all the treatement is done in the method
         //Images are stored in $_FILES['images']
         $errors['images'] = self::checkImagesErrors();
@@ -65,14 +66,15 @@ class ProductErrorHelper
      */
     private static function checkBrandErrors(string $brand): ?string
     {
-        if (strlen($brand) > 0) {
-            if (strlen($brand) <= 50) {
+        if (is_numeric($brand) && $brand > 0) {
+            $brandDb = new DBBrand();
+            if ($brandDb->getElementById($brand)) {
                 return null;
             } else {
-                return "Veuillez entrer un nom de marque plus court (30 caractères maximum)";
+                return "La marque que vous avez sélectionné n'est pas disponible";
             }
         } else {
-            return "Veuillez entrer le nom d'une marque pour l'article";
+            return "Veuillez sélectionner une marque pour l'article";
         }
     }
 
@@ -100,7 +102,7 @@ class ProductErrorHelper
                 return null;
             }
             else{
-                return "Veuillez entrer un prix entre 0 et 9999.99";
+                return "Veuillez entrer un prix entre 0.01 et 9999.99";
             }
         }
         else{

@@ -15,12 +15,18 @@
 
         <!-- Brand -->
         <div class="form-item">
-            <label for="brand">Marque de l'article</label>
-            <input type="text" name="brand" id="brand" placeholder="La marque de l'article"
-                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['brand']) ? $values['brand'] : '' ?>">
+            <label for="idBrand">Marque de l'article</label>
+            <select name="idBrand" id="idBrand" value="<?= $values['idBrand'] ?? '' ?>">
+                <option value="-1">Sélectionnez une marque</option>
+                <?php //Creating the options with all the brand in the database
+                foreach ($view['brandList'] as $brand):
+                ?>
+                    <option value=<?= $brand['id_brand'] ?>> <?= $brand['brand_label'] ?></option>
+                <?php endforeach ?>
+            </select>
         </div>
-        <?php if (isset($view['errors']['brand'])): ?>
-            <p class="error"><?= $view['errors']['brand'] ?></p>
+        <?php if (isset($view['errors']['idBrand'])): ?>
+            <p class="error"><?= $view['errors']['idBrand'] ?></p>
         <?php endif; ?>
 
         <!-- Description -->

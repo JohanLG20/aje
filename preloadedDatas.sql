@@ -39,6 +39,16 @@ INSERT INTO `CHOICE_NUMBER`(`id_choice_`, `choice`) VALUES ('11','44');
 INSERT INTO `CHOICE_NUMBER`(`id_choice_`, `choice`) VALUES ('12','45');
 INSERT INTO `CHOICE_NUMBER`(`id_choice_`, `choice`) VALUES ('13','46');
 
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Puma');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Nike');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Adidas');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Jordan\'s');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Reebook');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Lapierre');
+INSERT INTO `BRAND`(`brand_label`) VALUES ('Trocado');
+
+                                           
+
 CREATE VIEW FILTER_VALUES_ASSOCIATIONS 
 AS
 SELECT *, CASE

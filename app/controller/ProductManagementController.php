@@ -4,6 +4,7 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticles;
+use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
 use AJE\Model\DBChoice;
 use AJE\Model\DBChoiceColor;
@@ -67,8 +68,10 @@ class ProductManagementController extends CRUDController
     {
         $catDb = new DBCategory();
         $colorDb = new DBChoiceColor();
+        $brandDb = new DBBrand();
         $extraInformations['categoriesList'] = $catDb->getAllElements();
         $extraInformations['colorsList'] = $colorDb->getAllElements();
+        $extraInformations['brandList'] = $brandDb->getAllElements();
         
 
         return $extraInformations;
