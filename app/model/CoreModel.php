@@ -20,7 +20,7 @@ abstract class CoreModel
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            throw new \PDOException($e);
+            throw $e;
         }
     }
 
@@ -32,7 +32,7 @@ abstract class CoreModel
             $query = $this->prepareAddQuery($params);
             return $query->execute();
         } catch (\PDOException $e) {
-            throw new \PDOException($e);
+            throw $e;
         }
     }
 
@@ -76,10 +76,22 @@ abstract class CoreModel
         }
     }
 
+    public function getLastAddedElement(): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT * FROM {$this->tableName}
+            ORDER BY id_{$this->idName} DESC LIMIT 1");
+            $query->execute();
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e);
+        }
+    }
+
     protected function prepareAddQuery(array $params): \PDOStatement|false
     {
         if (empty(array_diff_key($this->formNameToDbName, $params))) {
-            try { 
+            try {
                 $sqlQuery = "INSERT INTO {$this->tableName}(";
 
                 //adding each column name into the query
@@ -103,7 +115,8 @@ abstract class CoreModel
 
                 //We now bind the parameters
                 foreach ($params as $key => $val) {
-                    $query->bindValue(":{$key}", $val); //Have to use bindValue because it causes troubles with bindParam
+                    //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
+                    $query->bindValue(":{$key}", $val); 
                 }
 
                 return $query;

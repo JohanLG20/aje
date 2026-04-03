@@ -42,4 +42,8 @@ abstract class DataTransformer
 
         return $camel;
     }
+
+    public static function removeWhitespaces(string $str) : string {
+        return preg_replace("/\s/", "", $str);
+    }
 }

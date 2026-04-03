@@ -61,7 +61,7 @@ CREATE TABLE USER_(
 
 CREATE TABLE PRICE_HISTORY(
    id_price_history INT AUTO_INCREMENT,
-   start_date DATE NOT NULL,
+   start_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    end_date DATE,
    price DECIMAL(7,2),
    id_article INT NOT NULL,
