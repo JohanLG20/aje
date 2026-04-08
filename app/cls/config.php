@@ -7,5 +7,5 @@ define("LAYOUT", VIEW . "/layout");
 define("TEMPLATES", VIEW . "/templates");
 define("CONTROLLER", ROOT . "/controller");
 define("SERVICES", ROOT . "/services");
-define("IMAGES", dirname(__DIR__, 2) . "/images");
-define("ARTICLES_IMAGES", dirname(__DIR__, 2) . "/static/images/articles");
+define("ARTICLES_IMAGES", dirname(ROOT) . "/images");
+define("IMAGE_LINK", "http://localhost/web/aje/images");

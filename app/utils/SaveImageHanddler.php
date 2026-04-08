@@ -1,7 +1,9 @@
 <?php
+
 namespace AJE\Utils;
 
-class SaveImageHanddler{
+class SaveImageHanddler
+{
     private string $artName;
     private string $imageDirectory;
 
@@ -12,39 +14,37 @@ class SaveImageHanddler{
         $this->createImageDirectory();
     }
 
-    public function generateUniqid() : string{
+    public function generateUniqid(): string
+    {
         return uniqid();
     }
 
-    private function createImageDirectory() : void {
-        if(!is_dir(ARTICLES_IMAGES . "/" . $this->idArt . $this->artName)){
-            mkdir(ARTICLES_IMAGES . "/" . $this->idArt . $this->artName);
+    private function createImageDirectory(): void
+    {
+        if (!is_dir(ARTICLES_IMAGES . "/")) {
+            mkdir(ARTICLES_IMAGES . "/");
         }
-        $this->imageDirectory = ARTICLES_IMAGES . "/" . $this->idArt . $this->artName . "/";
-
+        $this->imageDirectory = ARTICLES_IMAGES . "/";
     }
 
-    public function saveImage(array $images) : bool {
+    public function saveImage(array $images): bool
+    {
 
-        for($i = 0; $i < count($images['tmp_name']); $i++){
+        for ($i = 0; $i < count($images['tmp_name']); $i++) {
             $tempName = $images['tmp_name'][$i];
             $extenstion = $this->setupImageExtension($images['type'][$i]);
-            $fileName = "image". $i .$extenstion;
-            if(move_uploaded_file($tempName, $this->imageDirectory . $fileName)){
+            $fileName = "image" . $i . $extenstion;
+            if (move_uploaded_file($tempName, $this->imageDirectory . $fileName)) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
-
         }
-        
     }
-    private function setupImageExtension(string $type) : string {
+    private function setupImageExtension(string $type): string
+    {
         $ext = ".";
         $ext .= preg_replace("/image\//", "", $type);
         return $ext;
     }
-
-
 }

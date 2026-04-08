@@ -21,7 +21,6 @@ class ProductManagementController extends CRUDController
         return ProductErrorHelper::checkForErrors($values);
     }
 
-
     protected function create(array $params): string
     {
         try {
@@ -74,12 +73,15 @@ class ProductManagementController extends CRUDController
                 }
             }
 
+            //--------------------- Saving the image -------------
+
             $sih = new SaveImageHanddler($artParams['articleName'], $idLastArticle);
             if ($sih->saveImage($_FILES['images'])) {
             } else {
                 throw new Exception("Impossible de créer la page de l'article");
             }
 
+            //--------------------- Creating the page ---------------
             $cap = new CreateArticlePage();
             $fileContent = $cap->loadArticleInformation($idLastArticle);
             if ($cap->saveFile($fileContent)) {
@@ -87,8 +89,8 @@ class ProductManagementController extends CRUDController
                 throw new Exception("Impossible de créer la page de l'article");
             }
 
-
             return "Article ajouté avec succès";
+
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);
         }

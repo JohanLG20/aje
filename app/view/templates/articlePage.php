@@ -4,7 +4,11 @@
     <div id="productOverview">
         <div>
             <h2><?= $articleInfos['name'] ?></h2>
-
+            <div id="images">
+                <?php foreach($articleInfos['images'] as $img): ?>
+                    <img src=<?= $img['path'] ?> alt="<?= $img['alt'] ?>">
+                <?php endforeach ?>
+            </div>
             <p><?= $articleInfos['brand'] ?></p>
             <p><?= $articleInfos['price'] ?>€</p>
             <p>DATE DE LIVRAISON</p>

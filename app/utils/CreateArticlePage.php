@@ -12,10 +12,7 @@ use AJE\Model\VFilterValuesAssociations;
 class CreateArticlePage
 {
 
-    public function __construct()
-    {
-        
-    }
+    public function __construct() {}
 
     public function loadArticleInformation(string $id): array
     {
@@ -23,6 +20,8 @@ class CreateArticlePage
         $artInfo = $dbArticle->getElementById($id);
         $infos['name'] = $artInfo['article_name'];
         $infos['description'] = $artInfo['description'];
+
+        $infos['images'] = $this->retrieveImages($artInfo['uniqid'], $infos['name']);
 
         $dbBrand = new DBBrand();
         $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
@@ -67,7 +66,7 @@ class CreateArticlePage
 
             $ch = $vAssoc->getAllInfosForId($choice['id_choice_']);
             if (!array_key_exists($ch[0]['id_filter_type'], $choiceInfos)) {
-                $choiceInfos[$ch[0]['id_filter_type']]['values'] = array( $ch[0]['filter_value']);
+                $choiceInfos[$ch[0]['id_filter_type']]['values'] = array($ch[0]['filter_value']);
             } else {
                 array_push($choiceInfos[$ch[0]['id_filter_type']]['values'],  $ch[0]['filter_value']);
             }
@@ -78,15 +77,62 @@ class CreateArticlePage
         foreach ($choiceInfos as $key => $infos) {
             $choiceInfos[$key]['label'] = $dbFiltType->getElementById($key, ["filterTypeLabel"])["filter_type_label"];
         }
-        
+
         return $choiceInfos;
     }
 
+    /**
+     * Return all the comment of the queried article
+     *
+     * @param string $idArticle The id of the article
+     * 
+     * @return array An array with all the comments in the form of :
+     * [0] => [
+     *          ['fullname'] => nameOfCommentator,
+     *          ['comment'] => theComment
+     *         ]
+     * ....
+     */
     private function retrieveComments(string $idArticle): array
     {
         $dbArticle = new DBArticle();
         $allIdsComments = $dbArticle->getCommentsForArticle($idArticle);
 
         return $allIdsComments;
+    }
+
+    /**
+     * Retrieve all the images in the given directory name
+     * 
+     * @param string $uniqid The directory where the images are stored
+     * 
+     * @param string $articleName The name of the article. It will be used for the alt
+     * 
+     * @return array An array that contains all the paths and the alt of the image in the form of
+     * [0] => [
+     *         'path' => fullPathOfImage
+     *         'alt' => nameOfTheArticle
+     *          ]
+     */
+    public function retrieveImages(string $uniqid, string $articleName): array
+    {
+        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid )) {
+
+            $dir = ARTICLES_IMAGES . "/" . $uniqid;
+            $allImagesPath = array_diff(scandir($dir), ["..", "."]);
+            $allImages = [];
+            var_dump($allImagesPath);
+            //Creating the array of path and alt
+            foreach($allImagesPath as $path){
+                $image['path'] = IMAGE_LINK . "/" . $uniqid . "/" . $path;
+                $image['alt'] = $articleName;
+                array_push($allImages, $image);
+            }
+
+            return $allImages;
+        }
+        else{
+            return [];
+        }
     }
 }
