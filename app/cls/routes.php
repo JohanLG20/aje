@@ -31,9 +31,17 @@ const ROUTES = [
         'method' => 'getAllFiltersValueForFilterType'
     ],
 
-      '/test/{id}' => [
+    '/test/{id}' => [
         'controller' => AJE\Utils\CreateArticlePage::class,
         'method' => 'prepareAndDisplayView'
+    ],
+    'basket/add/{id}' => [
+        'controller' => AJE\Controller\BasketManager::class,
+        'method' => 'addToBasket'
+    ],
+    'basket/remove/{id}' => [
+        'controller' => AJE\Controller\BasketManager::class,
+        'method' => 'removeFromBasket'
     ]
 
 ];

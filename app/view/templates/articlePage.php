@@ -12,7 +12,7 @@
             <p><?= $articleInfos['brand'] ?></p>
             <p><?= $articleInfos['price'] ?>€</p>
             <p>DATE DE LIVRAISON</p>
-            <button class="addToBasket btn1" value="<?= $articleInfos['id'] ?>">Ajouter au panier</button>
+            <a href="index.php?path=/basket/add/<?= $articleInfos['id'] ?>" class="addBasketButton btn1">Ajouter au panier</a>
         </div>
 
         <!-- Description -->

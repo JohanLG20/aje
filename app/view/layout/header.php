@@ -42,7 +42,7 @@
                 <div class="navItem">
                     <i class="fa-solid fa-basket-shopping menuIcon"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
-                        <p>Salut</p>
+                        <?php require (LAYOUT . '/basket.php') ?>
                     </div>
                 </div>
 

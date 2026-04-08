@@ -7,7 +7,7 @@ class DBArticle extends CoreModel
 
     public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "ARTICLE";
         $this->idName = strtolower($this->tableName);
         $this->formNameToDbName = [

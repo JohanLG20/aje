@@ -9,7 +9,7 @@ class DBPriceHistory extends CoreModel
 {
     public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "PRICE_HISTORY";
         $this->idName = strtolower($this->tableName);
     }
@@ -33,8 +33,9 @@ class DBPriceHistory extends CoreModel
         return $query;
     }
 
-    public function getCurrentArticlePrice(string $id) : array {
-        try{
+    public function getCurrentArticlePrice(string $id): array
+    {
+        try {
             $query = $this->db->prepare("SELECT price FROM {$this->tableName}
                          WHERE id_article = :id
                     AND end_date IS NULL");
@@ -42,10 +43,8 @@ class DBPriceHistory extends CoreModel
             $query->execute();
 
             return $query->fetch(\PDO::FETCH_ASSOC);
-        }
-        catch (PDOException $e){
+        } catch (PDOException $e) {
             throw $e;
         }
     }
 }
-

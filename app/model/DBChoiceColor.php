@@ -6,9 +6,8 @@ class DBChoiceColor extends CoreModel
 {
     public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "CHOICE_COLOR";
         $this->idName = "choice_";
     }
-
 }

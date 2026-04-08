@@ -4,11 +4,10 @@ namespace AJE\Model;
 
 class DBChoiceTxt extends CoreModel
 {
-       public function __construct()
+    public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "CHOICE_TXT";
         $this->idName = "choice_";
     }
-
 }

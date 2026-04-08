@@ -6,7 +6,7 @@ class DBValues_ extends CoreModel
 {
     public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "VALUES_";
         $this->idName = strtolower($this->tableName);
         $this->formNameToDbName = [
@@ -16,15 +16,15 @@ class DBValues_ extends CoreModel
         ];
     }
 
-    public function getAllChoicesForArticle(string $id) : array{
-        try{
+    public function getAllChoicesForArticle(string $id): array
+    {
+        try {
             $query = $this->db->prepare("SELECT id_choice_ FROM {$this->tableName}
                                         WHERE id_article = :id");
             $query->bindParam(":id", $id);
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        catch (\PDOException $e){
+        } catch (\PDOException $e) {
             throw $e;
         }
     }

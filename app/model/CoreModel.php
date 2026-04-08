@@ -14,6 +14,11 @@ abstract class CoreModel
     protected array $formNameToDbName;
     protected \PDO  $db;
 
+    public function __construct()
+    {
+        $this->db = DBConnexion::getInstance()->getConnexion();
+    }
+
     public function getAllElements(array $attrsToGet = []): array
     {
         try {

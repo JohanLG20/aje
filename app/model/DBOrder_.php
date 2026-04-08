@@ -6,9 +6,8 @@ class DBOrder_ extends CoreModel
 {
     public function __construct()
     {
-        $this->db = DBConnexion::getInstance()->getConnexion();
+        parent::__construct();
         $this->tableName = "ORDER_";
         $this->idName = strtolower($this->tableName);
     }
-
 }
