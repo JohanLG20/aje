@@ -3,6 +3,7 @@
 namespace AJE\Model;
 
 use Exception;
+use PDOException;
 
 abstract class CoreModel
 {
@@ -13,10 +14,23 @@ abstract class CoreModel
     protected array $formNameToDbName;
     protected \PDO  $db;
 
-    public function getAllElements(): array
+    public function getAllElements(array $attrsToGet = []): array
     {
         try {
-            $query = $this->db->prepare("SELECT * FROM {$this->tableName}");
+            if (!empty($attrsToGet)) {
+                $sqlQuery = "SELECT ";
+                //adding each parameter to the query
+                foreach ($attrsToGet as $attr) {
+                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
+                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+
+                }
+            } else {
+                $sqlQuery = "SELECT *";
+            }
+            //Finalising the query
+            $sqlQuery .= " FROM {$this->tableName}";
+            $query = $this->db->prepare($sqlQuery);
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
@@ -62,17 +76,58 @@ abstract class CoreModel
         }
     }
 
-    public function getElementById(string $id): array|bool
+    public function getElementById(string $id, array $attrsToGet = []): array|bool
     {
         try {
-            $query = $this->db->prepare("SELECT * FROM {$this->tableName}
-            WHERE id_{$this->idName} = :id");
+            if (!empty($attrsToGet)) {
+                $sqlQuery = "SELECT ";
+                //adding each parameter to the query
+                foreach ($attrsToGet as $attr) {
+                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
+                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+
+                }
+            } else {
+                $sqlQuery = "SELECT *";
+            }
+            //Finalising the query
+            $sqlQuery .= " FROM {$this->tableName} WHERE id_{$this->idName} = :id";
+
+            $query = $this->db->prepare($sqlQuery);
             $query->execute([
                 ":id" => $id
             ]);
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw new \PDOException($e);
+        }
+    }
+
+    public function getAllElementsForValue(string $elementName, string $elementVal, array $attrsToGet = []): array
+    {
+        try {
+            //Prepering the select section of the querry
+            if (!empty($attrsToGet)) {
+                $sqlQuery = "SELECT ";
+                //adding each parameter to the query
+                foreach ($attrsToGet as $attr) {
+                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
+                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+
+                }
+            } else {
+                $sqlQuery = "SELECT *";
+            }
+            //Finalising the query
+            $sqlQuery .= " FROM {$this->tableName} WHERE
+                    {$this->formNameToDbName[$elementName]} = :elemToGet";
+
+            $query = $this->db->prepare($sqlQuery);
+            $query->bindParam(":elemToGet", $elementVal);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw $e;
         }
     }
 
@@ -86,6 +141,41 @@ abstract class CoreModel
         } catch (\PDOException $e) {
             throw new \PDOException($e);
         }
+    }
+
+    public function getAllElementsForValues(string $elementName, array $values, array $attrsToGet = [])
+    {
+        //Prepering the select section of the querry
+        if (!empty($attrsToGet)) {
+            $sqlQuery = "SELECT ";
+            //adding each parameter to the query
+            foreach ($attrsToGet as $attr) {
+                $sqlQuery .= "{$this->formNameToDbName[$attr]},";
+                $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+
+            }
+        } else {
+            $sqlQuery = "SELECT *";
+        }
+        $sqlQuery .= " FROM {$this->tableName} WHERE
+                    {$this->formNameToDbName[$elementName]} IN (";
+
+        //Preparing the query with the keys of the array
+        foreach ($values as $key => $val) {
+            $sqlQuery .= ":{$key},";
+        }
+        $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+        $sqlQuery .= ")"; //Finalising the query
+
+        $query = $this->db->prepare($sqlQuery);
+
+        foreach ($val as $key => $val) {
+            //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
+            $query->bindValue(":{$key}", $val);
+        }
+
+        $query->execute();
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false
@@ -116,7 +206,7 @@ abstract class CoreModel
                 //We now bind the parameters
                 foreach ($params as $key => $val) {
                     //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
-                    $query->bindValue(":{$key}", $val); 
+                    $query->bindValue(":{$key}", $val);
                 }
 
                 return $query;

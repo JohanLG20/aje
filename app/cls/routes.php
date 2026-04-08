@@ -31,9 +31,9 @@ const ROUTES = [
         'method' => 'getAllFiltersValueForFilterType'
     ],
 
-      '/test/' => [
-        'controller' => AJE\Model\DBCategory::class,
-        'method' => 'test'
+      '/test/{id}' => [
+        'controller' => AJE\Utils\CreateArticlePage::class,
+        'method' => 'prepareAndDisplayView'
     ]
 
 ];

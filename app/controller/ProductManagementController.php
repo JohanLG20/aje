@@ -10,6 +10,8 @@ use AJE\Model\DBPriceHistory;
 use AJE\Model\DBValues_;
 use AJE\Utils\ProductErrorHelper;
 use AJE\Utils\SaveImageHanddler;
+use AJE\Utils\CreateArticlePage;
+use Exception;
 
 class ProductManagementController extends CRUDController
 {
@@ -43,6 +45,13 @@ class ProductManagementController extends CRUDController
             $phDb->addNewElement($phParams);
 
             // ------------ Adding the values ------------
+            /* Post format of the fileters values
+            *
+            * [id_filter_type] => [
+            *                    [0] => id_choice_
+            *                    [1] => id_choice_ ...
+            *                    ]
+            */
             $valDb = new DBValues_();
             $filterValues = [];
             //Retrieving all the filters and their values
@@ -52,19 +61,32 @@ class ProductManagementController extends CRUDController
                         $filterValues[$key] = $val;
                     }
                 }
+            }
 
-                //Adding all the values in the table
-                foreach ($filterValues as $filterKey => $filterVal) {
-                    foreach ($filterVal as $val) {
-                        $valDb->addNewElement([
-                            'idArticle' => $idLastArticle,
-                            'idFilterType' => $filterKey,
-                            'idChoice' => $val
-                        ]);
-                    }
+            //Adding all the values in the table
+            foreach ($filterValues as $filterKey => $filterVal) {
+                foreach ($filterVal as $val) {
+                    $valDb->addNewElement([
+                        'idArticle' => $idLastArticle,
+                        'idFilterType' => $filterKey,
+                        'idChoice' => $val
+                    ]);
                 }
             }
-            new SaveImageHanddler($_FILES['images'], $artParams['articleName'], $idLastArticle);
+
+            $sih = new SaveImageHanddler($artParams['articleName'], $idLastArticle);
+            if ($sih->saveImage($_FILES['images'])) {
+            } else {
+                throw new Exception("Impossible de créer la page de l'article");
+            }
+
+            $cap = new CreateArticlePage();
+            $fileContent = $cap->loadArticleInformation($idLastArticle);
+            if ($cap->saveFile($fileContent)) {
+            } else {
+                throw new Exception("Impossible de créer la page de l'article");
+            }
+
 
             return "Article ajouté avec succès";
         } catch (\PDOException $e) {

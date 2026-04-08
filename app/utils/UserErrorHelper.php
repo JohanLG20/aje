@@ -95,7 +95,7 @@ abstract class UserErrorHelper
         if (strlen($email) > 0) {
             if (strlen($email) <= 50) {
                 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                    return 'Veuillez entrer un email valide (exemple@exemple.fr)';
+                    return 'Veuillez entrer un email valide (exemple@exemple.com)';
                 } else {
                     //No errors has been encountered so we return null
                     return null;
@@ -200,7 +200,7 @@ abstract class UserErrorHelper
                     $address,
                     FILTER_VALIDATE_REGEXP,
                     array('options' => array(
-                        'regexp' => "/^([a-zA-Z\-\s]*)$/"
+                        'regexp' => "/^([a-zA-Z\-\s\']*)$/"
 
                     ))
                 )) {

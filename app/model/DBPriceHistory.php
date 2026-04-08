@@ -2,6 +2,7 @@
 
 namespace AJE\Model;
 
+use PDOException;
 use PDOStatement;
 
 class DBPriceHistory extends CoreModel
@@ -31,4 +32,20 @@ class DBPriceHistory extends CoreModel
 
         return $query;
     }
+
+    public function getCurrentArticlePrice(string $id) : array {
+        try{
+            $query = $this->db->prepare("SELECT price FROM {$this->tableName}
+                         WHERE id_article = :id
+                    AND end_date IS NULL");
+            $query->bindValue(":id", $id);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e){
+            throw $e;
+        }
+    }
 }
+

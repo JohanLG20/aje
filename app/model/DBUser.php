@@ -38,4 +38,5 @@ class DBUser extends CoreModel
 
         return $addProdQuery;
     }
+
 }

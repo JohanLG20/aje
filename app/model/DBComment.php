@@ -2,25 +2,30 @@
 
 namespace AJE\Model;
 
-class DBComment extends AssociativeTable
+use PDOException;
+
+class DBComment extends CoreAssociativeTable
 {
        public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "COMMENT";
-        $this->idName = strtolower($this->tableName);
+        $this->associativeArray = [
+            "id_user_" => "id_article",
+            "id_article" => "id_user_"
+        ];
     }
 
-
-    public function getElementsForId(string $id, string $elementToGet): array|bool
-    {
+    public function getCommentsForArticle(string $articleId) : array {
         try {
-            $db = DBConnexion::getInstance()->getConnexion();
-            $query = $db->prepare("SELECT * FROM COMMENT WHERE :elementToGet = :id");
-            $query->execute([':id' => $id, ':elementToGet' => $elementToGet]);
+            $query = $this->db->prepare("SELECT id_user_,comment FROM {$this->tableName}
+                                        WHERE id_article = :idArticle");
+            $query->bindParam(':id', $articleId);
+            $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw new \PDOException($e);
+        }
+        catch (\PDOException $e){
+            throw $e;
         }
     }
 }

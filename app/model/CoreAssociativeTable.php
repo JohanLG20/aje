@@ -18,7 +18,7 @@ abstract class CoreAssociativeTable
             for ($i = 0; $i < count($ids); $i++) {
                 $sqlQuery .= "{$this->associativeArray[$elementToGet]} = :id{$i} OR ";
             }
-            
+
             $sqlQuery = substr($sqlQuery, 0, -3); // Removing the last "OR " at the end of the query
             $query = $this->db->prepare($sqlQuery);
             //Preparing the query with bindParam
@@ -29,8 +29,6 @@ abstract class CoreAssociativeTable
             $query->execute();
 
             return $query->fetchAll(\PDO::FETCH_ASSOC);
-
-
         } catch (\PDOException $e) {
             throw $e;
         }
@@ -38,6 +36,19 @@ abstract class CoreAssociativeTable
 
     public function getAssociatedElementsFromString(string $elementToGet, string $id): array|bool
     {
-        throw new \Exception("Not implemented yet");
+        try {
+            $sqlQuery = "SELECT {$elementToGet} FROM {$this->tableName} 
+                            WHERE {$this->associativeArray[$elementToGet]} = :id";
+            $query = $this->db->prepare($sqlQuery);
+
+            //Preparing the query with bindParam
+            $query->bindParam(":id", $id);
+
+            $query->execute();
+
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
     }
 }

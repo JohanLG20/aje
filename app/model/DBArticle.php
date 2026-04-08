@@ -2,9 +2,6 @@
 
 namespace AJE\Model;
 
-use Exception;
-use PDOStatement;
-
 class DBArticle extends CoreModel
 {
 
@@ -21,4 +18,18 @@ class DBArticle extends CoreModel
         ];
     }
 
+    public function getCommentsForArticle(string $articleId): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT CONCAT(first_name, ' ', last_name) as fullname,comment_label as comment FROM {$this->tableName}
+                INNER JOIN COMMENT ON {$this->tableName}.id_{$this->idName} = COMMENT.id_{$this->idName}
+                INNER JOIN USER_ ON COMMENT.id_user_ = USER_.id_user_
+                WHERE {$this->tableName}.id_{$this->idName} = :idArticle");
+            $query->bindParam(':idArticle', $articleId);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
 }
