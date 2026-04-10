@@ -2,12 +2,127 @@
 
 namespace AJE\Controller;
 
-class BasketController{
-    public function addToBasket(string $id) : void {
-        
+use AJE\Model\DBArticle;
+use AJE\Model\DBBrand;
+use AJE\Model\DBPriceHistory;
+use PDOException;
+
+/**
+ * [Description BasketController]
+ * This is the controller for the basket. It can add, or remove but also gathering informations
+ * for the layout. All it's value will be stock int the $_SESSION['basket'] array which has a form of :
+ * $_SESSION['basket'] =>[
+ *                  [idArticle1] =>[
+ *                      'quantity' => 1
+ *                      'image' => imagePath
+ *                      'name' => nameOfArticle
+ *                      'brand' => brandOfArticle
+ *                      'price' => priceOfArticle
+ *     '                 error' => //Filled with string if an error occured or null if not
+ *                          ]
+ *                      ],
+ *                  [idArticle2] => ...
+ *                  ]
+ *
+ */
+class BasketController
+{
+    /**
+     * Add an article to the basket. If there already is an occurence of this article, add one to the quantity. Else, create the line.
+     * @param string $id The id of the article we want to add
+     * 
+     */
+    public function addToBasket(string $id)
+    {
+        //Creating the session value
+        if (!isset($_SESSION['basket'])) {
+            $_SESSION['basket'] = [];
+        }
+
+        if (array_key_exists($id, $_SESSION['basket'])) {
+            $_SESSION['basket'][$id]['quantity']++;
+        } else {
+            $_SESSION['basket'][$id] = $this->createBasketItem($id);
+        }
+
+        header("Location: {$_SERVER['HTTP_REFERER']}");
     }
 
-    public function removeFromBasket() : void {
-        
+    /**
+     * Remove an article to the basket.
+     * @param string $id The id of the article we want to remove
+     * 
+     */
+    public function removeFromBasket(string $id)
+    {
+        unset($_SESSION['basket'][$id]);
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+    }
+
+    /**
+     * Return an array in the form of
+     * [
+     *  'quantity' => 1
+     *  'image' => imagePath
+     *  'name' => nameOfArticle
+     *  'brand' => brandOfArticle
+     *  'price' => priceOfArticle
+     *  'error' => //Filled with string if an error occured or null if not
+     * ]
+     * 
+     *
+     * @param string $id The id of the article added in the basket
+     * 
+     * @return array An array with the informations of the given article
+     */
+    private function createBasketItem(string $id): array
+    {
+        try {
+            $basket['quantity'] = 1;
+            $dbArticle = new DBArticle();
+            $articleInfos = $dbArticle->getElementById($id, ['id_brand', 'article_name', "uniqid"]);
+            //Placing the article name
+            $basket['name'] = $articleInfos['article_name'];
+
+            //Retrieving the brand name
+            $brandId = $articleInfos['id_brand'];
+            $dbBrand = new DBBrand();
+            $basket['brand'] = $dbBrand->getElementById($brandId, ['brand_label'])['brand_label'];
+
+            //Retrieving the price
+            $dbPrice = new DBPriceHistory();
+            $basket['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
+
+            $basket['image'] = $this->getBasketImage($articleInfos['uniqid']);
+
+            return $basket;
+        } catch (PDOException $e) {
+            $basket['error'] = "Une erreur est survenue lors de l'ajout de l'article";
+            return $basket;
+        }
+    }
+
+    /**
+     *  Note : The image path returned will be the first one in alphabetic order. If a modification of the images naming pattern is done, this function has to be updated too.
+     * @param string $uniqid The uniqid where the image is stored
+     * 
+     * @return string The path to the image
+     */
+    private function getBasketImage(string $uniqid): string
+    {
+
+        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid)) {
+
+            $dir = ARTICLES_IMAGES . "/" . $uniqid;
+            $allImagesPath = array_diff(scandir($dir), ["..", "."]);
+
+            print_r($allImagesPath);
+
+            $image = IMAGE_LINK . "/" . $uniqid . "/" . $allImagesPath[2];
+            var_dump($allImagesPath);
+            return $image;
+        } else {
+            return ""; //TODO: add non found image path
+        }
     }
 }

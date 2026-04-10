@@ -11,7 +11,6 @@ abstract class CoreModel
 
     protected string $tableName;
     protected string $idName;
-    protected array $formNameToDbName;
     protected \PDO  $db;
 
     public function __construct()
@@ -22,17 +21,7 @@ abstract class CoreModel
     public function getAllElements(array $attrsToGet = []): array
     {
         try {
-            if (!empty($attrsToGet)) {
-                $sqlQuery = "SELECT ";
-                //adding each parameter to the query
-                foreach ($attrsToGet as $attr) {
-                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
-                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-
-                }
-            } else {
-                $sqlQuery = "SELECT *";
-            }
+            $sqlQuery = $this->prepareSelectQuery($attrsToGet);
             //Finalising the query
             $sqlQuery .= " FROM {$this->tableName}";
             $query = $this->db->prepare($sqlQuery);
@@ -84,17 +73,7 @@ abstract class CoreModel
     public function getElementById(string $id, array $attrsToGet = []): array|bool
     {
         try {
-            if (!empty($attrsToGet)) {
-                $sqlQuery = "SELECT ";
-                //adding each parameter to the query
-                foreach ($attrsToGet as $attr) {
-                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
-                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-
-                }
-            } else {
-                $sqlQuery = "SELECT *";
-            }
+            $sqlQuery = $this->prepareSelectQuery($attrsToGet);
             //Finalising the query
             $sqlQuery .= " FROM {$this->tableName} WHERE id_{$this->idName} = :id";
 
@@ -112,17 +91,7 @@ abstract class CoreModel
     {
         try {
             //Prepering the select section of the querry
-            if (!empty($attrsToGet)) {
-                $sqlQuery = "SELECT ";
-                //adding each parameter to the query
-                foreach ($attrsToGet as $attr) {
-                    $sqlQuery .= "{$this->formNameToDbName[$attr]},";
-                    $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-
-                }
-            } else {
-                $sqlQuery = "SELECT *";
-            }
+            $sqlQuery = $this->prepareSelectQuery($attrsToGet);
             //Finalising the query
             $sqlQuery .= " FROM {$this->tableName} WHERE
                     {$this->formNameToDbName[$elementName]} = :elemToGet";
@@ -150,18 +119,7 @@ abstract class CoreModel
 
     public function getAllElementsForValues(string $elementName, array $values, array $attrsToGet = [])
     {
-        //Prepering the select section of the querry
-        if (!empty($attrsToGet)) {
-            $sqlQuery = "SELECT ";
-            //adding each parameter to the query
-            foreach ($attrsToGet as $attr) {
-                $sqlQuery .= "{$this->formNameToDbName[$attr]},";
-                $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
 
-            }
-        } else {
-            $sqlQuery = "SELECT *";
-        }
         $sqlQuery .= " FROM {$this->tableName} WHERE
                     {$this->formNameToDbName[$elementName]} IN (";
 
@@ -224,4 +182,17 @@ abstract class CoreModel
     }
 
     protected function prepareModifyQuery(array $params): \PDOStatement|false {}
+
+    private function prepareSelectQuery(array $attrsToGet): string
+    {
+        //Prepering the select section of the querry
+        if (!empty($attrsToGet)) {
+            $selectQuery = "SELECT " . implode(', ', $attrsToGet); //adding each parameter to the query
+            
+        } else {
+            $selectQuery = "SELECT *";
+        }
+
+        return $selectQuery;
+    }
 }

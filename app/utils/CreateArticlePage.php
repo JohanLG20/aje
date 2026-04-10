@@ -75,7 +75,7 @@ class CreateArticlePage
         //Preparing the label
         $dbFiltType = new DBFilterType();
         foreach ($choiceInfos as $key => $infos) {
-            $choiceInfos[$key]['label'] = $dbFiltType->getElementById($key, ["filterTypeLabel"])["filter_type_label"];
+            $choiceInfos[$key]['label'] = $dbFiltType->getElementById($key, ["filter_type_label"])["filter_type_label"];
         }
 
         return $choiceInfos;
@@ -121,7 +121,7 @@ class CreateArticlePage
             $dir = ARTICLES_IMAGES . "/" . $uniqid;
             $allImagesPath = array_diff(scandir($dir), ["..", "."]);
             $allImages = [];
-            var_dump($allImagesPath);
+
             //Creating the array of path and alt
             foreach($allImagesPath as $path){
                 $image['path'] = IMAGE_LINK . "/" . $uniqid . "/" . $path;

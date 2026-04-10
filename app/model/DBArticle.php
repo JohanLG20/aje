@@ -10,12 +10,6 @@ class DBArticle extends CoreModel
         parent::__construct();
         $this->tableName = "ARTICLE";
         $this->idName = strtolower($this->tableName);
-        $this->formNameToDbName = [
-            'articleName' => 'article_name',
-            'description' => 'description',
-            'idBrand' => 'id_brand',
-            'idCat' => 'id_category'
-        ];
     }
 
     public function getCommentsForArticle(string $articleId): array

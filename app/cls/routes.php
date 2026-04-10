@@ -36,12 +36,14 @@ const ROUTES = [
         'method' => 'prepareAndDisplayView'
     ],
     'basket/add/{id}' => [
-        'controller' => AJE\Controller\BasketManager::class,
+        'controller' => AJE\Controller\BasketController::class,
         'method' => 'addToBasket'
     ],
     'basket/remove/{id}' => [
-        'controller' => AJE\Controller\BasketManager::class,
+        'controller' => AJE\Controller\BasketController::class,
         'method' => 'removeFromBasket'
     ]
+
+    //TODO: Add contact page + validation RGPD
 
 ];
