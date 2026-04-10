@@ -2,6 +2,7 @@
 
 namespace AJE\Model;
 
+use PDOException;
 
 class DBUser extends CoreModel
 {
@@ -37,5 +38,19 @@ class DBUser extends CoreModel
 
 
         return $addProdQuery;
+    }
+
+    public function getUserByMail(string $mail) : array{
+        try{
+            $query = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE mail = :mail");
+            $query->bindParam(":mail", $mail);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e){
+            throw $e;
+        }
+
     }
 }

@@ -4,10 +4,10 @@
         <div>
             <p>Bonjour <?= $_SESSION['name'] ?></p>
             <a href="index.php?action=myprofil">Voir mon profil</a>
-            <a href="index.php?action=logout">Se déconnecter</a>
+            <a href="index.php?path=/logout/">Se déconnecter</a>
         </div>
     <?php else: ?>
-        <form action="?action=login" method="post">
+        <form action="index.php?path=/login/" method="post">
             <input type="text" name="mail" id="mail" placeholder="Entrez votre email">
             <input type="password" name="passwd" id="passwd" placeholder="Entrez votre mot de passe">
 

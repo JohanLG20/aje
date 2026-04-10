@@ -2,7 +2,7 @@
 
 const ROUTES = [
     '/' => [
-        'controller' => AJE\Controller\ProductManagementController::class,
+        'controller' => AJE\Controller\HomeController::class,
         'method' => 'home'
     ],
     '/usermanagement/{action}' => [
@@ -42,6 +42,14 @@ const ROUTES = [
     'basket/remove/{id}' => [
         'controller' => AJE\Controller\BasketController::class,
         'method' => 'removeFromBasket'
+    ],
+    '/login/' => [
+        'controller' => AJE\Controller\AuthentificationController::class,
+        'method' => 'login'
+    ],
+    '/logout/' => [
+        'controller' => AJE\Controller\AuthentificationController::class,
+        'method' => 'logout'
     ]
 
     //TODO: Add contact page + validation RGPD

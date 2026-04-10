@@ -42,14 +42,14 @@
                 <div class="navItem">
                     <i class="fa-solid fa-basket-shopping menuIcon"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
-                        <?php require (LAYOUT . '/basket.php') ?>
+                        <?php require (TEMPLATES . '/basket.php') ?>
                     </div>
                 </div>
 
                 <div class="navItem">
                     <i class="fa-solid fa-user menuIcon "></i>
                     
-                    <?php require(LAYOUT . '/login-form.php') ?>
+                    <?php require(TEMPLATES . '/login-form.php') ?>
                 </div>
 
             </div>

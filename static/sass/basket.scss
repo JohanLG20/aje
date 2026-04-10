@@ -1,0 +1,45 @@
+@use "col";
+
+#basket {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    
+    
+    align-items: center;
+    color: black;
+    .basketItemCard {
+        display: flex;
+        gap: 16px;
+        width: 100%;
+        margin: auto 1%;
+        border: 2px solid col.$color-primary;
+        align-items: center;
+        img {
+            max-width: 100px;
+            max-height: 100px;
+            height: auto;
+        }
+
+        .basketDescriptionSection{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 18px;
+            margin-right: 16px;
+
+            .basketQuantity{
+                display: flex;
+                text-align: center;
+                margin-top: 8px;
+                width: 100%;
+                gap: 32px;
+            }
+        }
+    }
+
+    #basketPaymentButton{
+        width: fit-content;
+
+    }
+}
