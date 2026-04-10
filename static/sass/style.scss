@@ -152,14 +152,11 @@ hr {
                     position: absolute;
                     background-color: col.$color-third;
                     padding: 24px;
-                    //left: 80%;
                     border: 2px solid col.$color-primary;
-                    border-radius: 16px;
+                    border-bottom-left-radius: 16px;
+                    border-bottom-right-radius: 16px;
+                    left: 0;
                     z-index: 2;
-                    -webkit-border-radius: 16px;
-                    -moz-border-radius: 16px;
-                    -ms-border-radius: 16px;
-                    -o-border-radius: 16px;
                 }
 
             }
@@ -182,6 +179,8 @@ hr {
         flex-direction: column;
         padding-top: 16px;
         background-color: col.$color-primary;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
 
         .navItem {
             display: flex;
@@ -383,7 +382,13 @@ hr {
             justify-content: center;
             gap: 48px;
             background-color: col.$color-secondary;
+            border-radius: 0px;
             padding-top: 0;
+
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            -ms-border-radius: 0px;
+            -o-border-radius: 0px;
 
             .navItem {
                 position: relative;

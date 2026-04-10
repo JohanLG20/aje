@@ -5,17 +5,19 @@
                 <img src=<?= $bask['image'] ?> alt=<?= $bask['name'] ?>>
                 <div class="basketDescriptionSection">
                     <p class="basketArticleName"><?= $bask['name'] ?></p>
-                    <p class="basketArticlePrice"><?= $bask['price'] ?>€</p>
+                    <p class="basketArticlePrice">Prix unitaire : <?= $bask['price'] ?>€</p>
+                    <div class="basketQuantity">
+                        <p>Quantité</p>
+                        <p><?= $bask['quantity'] ?></p>
+                    </div>
                 </div>
-                <div class="basketQuantity">
-                    <p><?= $bask['quantity'] ?></p>
-                </div>
+
             </div>
         <?php endforeach; ?>
-        <a href="index.php?path=/payement/" class="btn1">Payer</a>
+        <a id="basketPaymentButton" href="index.php?path=/payment/" class="btn1">Payer</a>
     </div>
 
-    
+
 <?php else: ?>
     <p id="noArticleInBasket">Aucun article dans le panier</p>
 <?php endif; ?>
