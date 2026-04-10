@@ -16,7 +16,6 @@ use PDOException;
  *                      'quantity' => 1
  *                      'image' => imagePath
  *                      'name' => nameOfArticle
- *                      'brand' => brandOfArticle
  *                      'price' => priceOfArticle
  *     '                 error' => //Filled with string if an error occured or null if not
  *                          ]
@@ -65,7 +64,6 @@ class BasketController
      *  'quantity' => 1
      *  'image' => imagePath
      *  'name' => nameOfArticle
-     *  'brand' => brandOfArticle
      *  'price' => priceOfArticle
      *  'error' => //Filled with string if an error occured or null if not
      * ]
@@ -83,11 +81,6 @@ class BasketController
             $articleInfos = $dbArticle->getElementById($id, ['id_brand', 'article_name', "uniqid"]);
             //Placing the article name
             $basket['name'] = $articleInfos['article_name'];
-
-            //Retrieving the brand name
-            $brandId = $articleInfos['id_brand'];
-            $dbBrand = new DBBrand();
-            $basket['brand'] = $dbBrand->getElementById($brandId, ['brand_label'])['brand_label'];
 
             //Retrieving the price
             $dbPrice = new DBPriceHistory();

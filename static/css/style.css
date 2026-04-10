@@ -6,6 +6,19 @@
   font-family: "LucioleBold";
   src: url(../fonts/Luciole-Bold.woff) format("woff");
 }
+#basket {
+  display: flex;
+  flex-direction: column;
+}
+#basket .basketItemCard {
+  display: flex;
+  gap: 16px;
+}
+#basket .basketItemCard img {
+  max-width: 100px;
+  height: auto;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -138,7 +151,6 @@ hr {
   position: absolute;
   background-color: #d9d9d9;
   padding: 24px;
-  left: 80%;
   border: 2px solid #096a09;
   border-radius: 16px;
   z-index: 2;
