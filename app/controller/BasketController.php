@@ -26,6 +26,19 @@ use PDOException;
  */
 class BasketController
 {
+    private ?array $articles;
+
+    public function __construct()
+    {
+        $this->articles = $_SESSION['basket'] ?? null;
+    }
+
+    /**
+     * @return array|null Return null if there are no articles, the articles list if there are
+     */
+    public function getArticles(): array|null{
+        return $this->articles;
+    }
     /**
      * Add an article to the basket. If there already is an occurence of this article, add one to the quantity. Else, create the line.
      * @param string $id The id of the article we want to add
@@ -59,6 +72,13 @@ class BasketController
     }
 
     /**
+     * Unset the variable $_SESSION['basket']
+     */
+    public function resetBasket(){
+        unset($_SESSION['basket']);
+    }
+
+    /**
      * Return an array in the form of
      * [
      *  'quantity' => 1
@@ -76,9 +96,11 @@ class BasketController
     private function createBasketItem(string $id): array
     {
         try {
+            //For now, we can only add one article when creating the item
             $basket['quantity'] = 1;
+
             $dbArticle = new DBArticle();
-            $articleInfos = $dbArticle->getElementById($id, ['id_brand', 'article_name', "uniqid"]);
+            $articleInfos = $dbArticle->getElementById($id, ['article_name', "uniqid"]);
             //Placing the article name
             $basket['name'] = $articleInfos['article_name'];
 
@@ -86,6 +108,7 @@ class BasketController
             $dbPrice = new DBPriceHistory();
             $basket['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
 
+            //Retrieving the principal image
             $basket['image'] = $this->getBasketImage($articleInfos['uniqid']);
 
             return $basket;

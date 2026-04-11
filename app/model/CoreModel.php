@@ -94,7 +94,7 @@ abstract class CoreModel
             $sqlQuery = $this->prepareSelectQuery($attrsToGet);
             //Finalising the query
             $sqlQuery .= " FROM {$this->tableName} WHERE
-                    {$this->formNameToDbName[$elementName]} = :elemToGet";
+                    {$elementName} = :elemToGet";
 
             $query = $this->db->prepare($sqlQuery);
             $query->bindParam(":elemToGet", $elementVal);
@@ -143,41 +143,33 @@ abstract class CoreModel
 
     protected function prepareAddQuery(array $params): \PDOStatement|false
     {
-        if (empty(array_diff_key($this->formNameToDbName, $params))) {
-            try {
-                $sqlQuery = "INSERT INTO {$this->tableName}(";
+        try {
+            $keys = array_keys($params);
+            $keyString = implode(",", $keys);
 
-                //adding each column name into the query
-                foreach ($params as $key => $val) {
-                    $sqlQuery .= $this->formNameToDbName[$key] . ",";
-                }
+            $sqlQuery = "INSERT INTO {$this->tableName}({$keyString})";
+            $sqlQuery .= " VALUES ("; //Preparing the second part of the query
 
-                $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-                $sqlQuery .= ") VALUES ("; //Preparing the second part of the query
-
-                //Creating the ids 
-                foreach ($params as $key => $val) {
-                    $sqlQuery .= ":{$key},";
-                }
-
-                $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-                $sqlQuery .= ")"; //Ending the query
-
-                //sqlQuery now look like INSERT INTO tableName(col1,col2...) VALUES (:postName,:otherPostName...)
-                $query = $this->db->prepare($sqlQuery);
-
-                //We now bind the parameters
-                foreach ($params as $key => $val) {
-                    //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
-                    $query->bindValue(":{$key}", $val);
-                }
-
-                return $query;
-            } catch (\PDOException $e) {
-                throw $e;
+            //Creating the ids 
+            foreach ($params as $key => $val) {
+                $sqlQuery .= ":{$key},";
             }
-        } else {
-            throw new Exception("Erreur de correspondance entre les paramètres fournis et les valeurs entrées pour la base de donnée");
+
+            $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
+            $sqlQuery .= ")"; //Ending the query
+
+            //sqlQuery now look like INSERT INTO tableName(col1,col2...) VALUES (:postName,:otherPostName...)
+            $query = $this->db->prepare($sqlQuery);
+
+            //We now bind the parameters
+            foreach ($params as $key => $val) {
+                //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
+                $query->bindValue(":{$key}", $val);
+            }
+
+            return $query;
+        } catch (\PDOException $e) {
+            throw $e;
         }
     }
 
@@ -188,7 +180,7 @@ abstract class CoreModel
         //Prepering the select section of the querry
         if (!empty($attrsToGet)) {
             $selectQuery = "SELECT " . implode(', ', $attrsToGet); //adding each parameter to the query
-            
+
         } else {
             $selectQuery = "SELECT *";
         }

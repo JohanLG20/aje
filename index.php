@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(isset($_SESSION['showLogin'])) unset($_SESSION['showLogin']);
 
 use AJE\Config\Router;
 use Dotenv\Dotenv;

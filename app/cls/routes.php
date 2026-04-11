@@ -50,6 +50,18 @@ const ROUTES = [
     '/logout/' => [
         'controller' => AJE\Controller\AuthentificationController::class,
         'method' => 'logout'
+    ],
+    '/payment/' => [
+        'controller' => AJE\Controller\PaymentController::class,
+        'method' => 'displayPaymentPage',
+        'minPermission' => 'client',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+    '/pay/' => [
+        'controller' => AJE\Controller\PaymentController::class,
+        'method' => 'proceedToPayment',
+        'minPermission' => 'client',
+        'denyAccessMethod' => 'permissionDenied'
     ]
 
     //TODO: Add contact page + validation RGPD

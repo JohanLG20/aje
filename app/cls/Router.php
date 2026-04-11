@@ -2,6 +2,8 @@
 
 namespace AJE\Config;
 
+use AJE\Controller\AuthentificationController;
+
 require(CONFIG . '/routes.php');
 
 //TODO :Comment class
@@ -46,17 +48,30 @@ class Router
 
         if (isset($route)) {
             $controller = new $route['controller'];
-            $controller->{$route['method']}(...$params);
+
+            //Checking if any permission is needed
+            if (!isset($route['minPermission'])) {
+                $controller->{$route['method']}(...$params);
+            } else {
+                
+                $autController = new AuthentificationController();
+                //Cheking if the user as sufficiant permission
+                if ($autController->hasPermission($route['minPermission'])) {
+                    $controller->{$route['method']}(...$params);
+                } else {
+                    $controller->{$route['denyAccessMethod']}(...$params);
+                }
+            }
         }
     }
 
-private function explodePath(string $path): array {
-		return explode('/', rtrim(ltrim($path, '/'), '/'));
-	}
+    private function explodePath(string $path): array
+    {
+        return explode('/', rtrim(ltrim($path, '/'), '/'));
+    }
 
     private function isParam(string $candidatePathPart): bool
     {
         return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
     }
 }
-

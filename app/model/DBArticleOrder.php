@@ -2,13 +2,12 @@
 
 namespace AJE\Model;
 
-class DBArticleOrder extends AssociativeTable
+class DBArticleOrder extends CoreAssociativeTable
 {
     public function __construct()
     {
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "ARTICLE_ORDER";
-        $this->idName = strtolower($this->tableName);
     }
 
     public function getElementsForId(string $id, string $elementToGet): array|bool

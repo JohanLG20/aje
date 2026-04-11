@@ -1,5 +1,5 @@
 <div id="connexionMenu"
-    class="dropDownMenu topMenuIcon <?= isset($_GET['action']) && $_GET['action'] === 'login' ? 'visible' : 'hidden' ?>">
+    class="dropDownMenu topMenuIcon <?= isset($_SESSION['showLogin']) && $_SESSION['showLogin'] ? 'visible' : 'hidden' ?>">
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
         <div>
             <p>Bonjour <?= $_SESSION['name'] ?></p>

@@ -40,7 +40,7 @@ class DBUser extends CoreModel
         return $addProdQuery;
     }
 
-    public function getUserByMail(string $mail) : array{
+    public function getUserByMail(string $mail) : array|bool{
         try{
             $query = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE mail = :mail");
             $query->bindParam(":mail", $mail);

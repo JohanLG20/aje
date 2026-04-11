@@ -14,7 +14,11 @@
 
             </div>
         <?php endforeach; ?>
-        <a id="basketPaymentButton" href="index.php?path=/payment/" class="btn1">Payer</a>
+        <?php if (isset($validatePayment)): ?>
+            <a href="index.php?path=/pay/" class="btn1">Valider le paiement</a>
+        <?php else: ?>
+            <a id="basketPaymentButton" href="index.php?path=/payment/" class="btn1">Payer</a>
+        <?php endif; ?>
     </div>
 
 
