@@ -129,7 +129,7 @@ class AuthentificationController
     }
 
     /**
-     * Check if the connected user can delete the comment. It can be done only if the connected user is an administrator, a moderator or the one that posted the comment. Returns true if he can delete the comment, false if not.
+     * Check if the connected user can delete the comment. It can be done only if the connected user is an admin, a moderator or the one that posted the comment. Returns true if he can delete the comment, false if not.
      * @param string $id The id of the user that posted the comment
      * 
      * @return bool Returns true if he can delete the comment, false if not.
@@ -138,7 +138,7 @@ class AuthentificationController
     {
         if (
             $this->permissionLevel === "moderator" ||
-            $this->permissionLevel === "administrator" ||
+            $this->permissionLevel === "admin" ||
             $this->id === $id
         ) {
             return true;

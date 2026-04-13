@@ -40,11 +40,20 @@
         <?php if (!empty($articleInfos['comments'])): ?>
             <!-- Comments --->
             <div id="commentSection">
-                <h3 class="articleInfos">
+                <h3 id="articleInfos">
                     Commentaires
                 </h3>
                 <?php foreach ($articleInfos['comments'] as $comment): ?>
-                    <h4><?= $comment['fullname'] ?></h4>
+                    <div class="commentHeader">
+                        <h4><?= $comment['fullname'] ?></h4>
+                        <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
+                            <p>Editer</p>
+                        <?php endif; ?>
+                        <?php if (isset($comment['canDelete'])&& $comment['canDelete']): ?>
+                            <p>Supprimer</p>
+                        <?php endif; ?>
+                    </div>
+
                     <p><?= $comment['comment'] ?></p>
 
                 <?php endforeach; ?>

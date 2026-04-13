@@ -15,14 +15,3 @@ require("app/cls/config.php");
 new Router;
 
 
-
-/*
-if (isset($_GET['action'])) {
-    if (isset($_GET['params'])) {
-        Router::redirect($_GET['action'], $_GET['params']);
-    } else {
-        Router::redirect($_GET['action']);
-    }
-} else {
-    require(VIEW . '/firstview_view.php');
-}*/
