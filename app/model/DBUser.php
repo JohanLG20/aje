@@ -53,4 +53,25 @@ class DBUser extends CoreModel
         }
 
     }
+
+    /**
+     * Return the full name of the user in the form "UserFirstName UserLastName". The array form is [] => ['fullname'] => The full name of the user
+     * 
+     * @param string $id The id of the user
+     * 
+     * @return array|bool An associative array if the user is found, false if not
+     */
+    public function getUserFullName(string $id) : array|bool{
+        try{
+            $query = $this->db->prepare("SELECT CONCAT(first_name, ' ', last_name) as 'fullname' FROM
+                                        {$this->tableName} WHERE {$this->idName} = :idUser");
+            $query->bindValue(":idUser", $id);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        }
+        catch(\PDOException $e){
+            throw $e;
+        }
+    }
 }

@@ -1,11 +1,12 @@
 <div class="container">
-    <?php //var_dump($articleInfos); ?>
+    <?php //var_dump($articleInfos); 
+    ?>
 
     <div id="productOverview">
         <div>
             <h2><?= $articleInfos['name'] ?></h2>
             <div id="images">
-                <?php foreach($articleInfos['images'] as $img): ?>
+                <?php foreach ($articleInfos['images'] as $img): ?>
                     <img src=<?= $img['path'] ?> alt="<?= $img['alt'] ?>">
                 <?php endforeach ?>
             </div>
@@ -16,38 +17,39 @@
         </div>
 
         <!-- Description -->
-         <div>
+        <div>
             <h3 class="articleInfos">
                 Description du produit
             </h3>
             <p><?= $articleInfos['description'] ?></p>
-         </div>
+        </div>
 
-         <!-- Specifications techniques -->
-          <div>
+        <!-- Specifications techniques -->
+        <div>
             <h3 class="articleInfos">
                 Spécifications
             </h3>
-            <?php foreach($articleInfos['filerInfos'] as $specif): ?>
+            <?php foreach ($articleInfos['filerInfos'] as $specif): ?>
                 <p>
-                    
-                    <?=  $specif['label'] ?> : <?= implode(', ', $specif['values']) ?>
+
+                    <?= $specif['label'] ?> : <?= implode(', ', $specif['values']) ?>
                 </p>
             <?php endforeach; ?>
-          </div>
-        <?php if(!empty($articleInfos['comments'])): ?>
-        <!-- Comments --->
-         <div id="commentSection">
-            <h3 class="articleInfos">
-                Commentaires
-            </h3>
-            <?php foreach($articleInfos['comments'] as $comment): ?>
-                <h4><?= $comment['fullname'] ?></h4>
-                <p><?= $comment['comment'] ?></p>
+        </div>
 
-            <?php endforeach; ?>
-         </div>
-         <?php endif; ?>
+        <?php if (!empty($articleInfos['comments'])): ?>
+            <!-- Comments --->
+            <div id="commentSection">
+                <h3 class="articleInfos">
+                    Commentaires
+                </h3>
+                <?php foreach ($articleInfos['comments'] as $comment): ?>
+                    <h4><?= $comment['fullname'] ?></h4>
+                    <p><?= $comment['comment'] ?></p>
+
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
     </div>
 

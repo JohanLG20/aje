@@ -8,6 +8,7 @@ use AJE\Model\DBFilterType;
 use AJE\Model\DBPriceHistory;
 use AJE\Model\DBValues_;
 use AJE\Model\VFilterValuesAssociations;
+use AJE\Controller\CommentController;
 
 class CreateArticlePage
 {
@@ -30,7 +31,9 @@ class CreateArticlePage
         $infos['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
 
         $infos['filerInfos'] = $this->retriveFilterValues($id);
-        $infos['comments'] = $this->retrieveComments($id);
+
+        $commentController = new CommentController();
+        $infos['comments'] = $commentController->retrieveComments($id);
 
         $infos['id'] = $id;
 
@@ -41,6 +44,7 @@ class CreateArticlePage
     {
         $articleInfos = $this->loadArticleInformation($id);
         require(LAYOUT . "/header.php");
+        var_dump($articleInfos['comments']);
         require(TEMPLATES . "/articlePage.php");
         require(LAYOUT . "/footer.php");
     }
@@ -81,25 +85,6 @@ class CreateArticlePage
         return $choiceInfos;
     }
 
-    /**
-     * Return all the comment of the queried article
-     *
-     * @param string $idArticle The id of the article
-     * 
-     * @return array An array with all the comments in the form of :
-     * [0] => [
-     *          ['fullname'] => nameOfCommentator,
-     *          ['comment'] => theComment
-     *         ]
-     * ....
-     */
-    private function retrieveComments(string $idArticle): array
-    {
-        $dbArticle = new DBArticle();
-        $allIdsComments = $dbArticle->getCommentsForArticle($idArticle);
-
-        return $allIdsComments;
-    }
 
     /**
      * Retrieve all the images in the given directory name

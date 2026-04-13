@@ -6,6 +6,14 @@ use AJE\Utils\DataTransformer;
 use AJE\Model\DBUser;
 use AJE\Model\DBUserLevel;
 
+/*
+Class that allows the login, the logout and is in charge of checking the permissions. It contains 4 attributes that are stored in the $_SESSION superglobal : 
+    - name : The full name of the user in the form "UserFirstName UserLastName"
+    - permissionLevel : The label of the permission level. For now can be "client", "moderator", "administrator"
+    - userId : The user id
+    - connected : Boolean that say if the user is connected
+*/
+
 class AuthentificationController
 {
     private ?string $name;
@@ -46,7 +54,7 @@ class AuthentificationController
 
                         //Retrieving the user level label
                         $dbUserLevel = new DBUserLevel();
-                        $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label'];
+                        $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label']; // Setting the permissions level
                         $_SESSION['userId'] = $requieredUser['id_user_'];
                     } else {
                         $errors['login'] = "Identifiant ou mot de passe incorrect";
@@ -61,13 +69,11 @@ class AuthentificationController
             $errors['login'] = "Veuillez remplir tous les champs du formulaire";
         }
 
-        if(isset($errors['login'])){
+        if (isset($errors['login'])) {
             $_SESSION['showLogin'] = true;
-        }
-        else{
+        } else {
             unset($_SESSION['showLogin']);
         }
-
     }
 
     /*
@@ -88,27 +94,56 @@ class AuthentificationController
      * 
      * @return bool True if has equals or higher permission level, false otherwise
      */
-    public function hasPermission(string $requierement) : bool{
-        if($this->connected){
-            switch($requierement){
+    public function hasPermission(string $requierement): bool
+    {
+        if ($this->connected) {
+            switch ($requierement) {
                 case 'client':
                     return !is_null($this->permissionLevel);
                     break;
                 default:
                     return false;
             }
-            
-        }
-        else{
+        } else {
             return false;
         }
-        
     }
 
     /**
      * @return string|null Return the id of the authentificated user
      */
-    public function getId() : ?string {
+    public function getId(): ?string
+    {
         return $this->id;
+    }
+
+    /**
+     * Check if the connected user can edit the comment by comparing his id to the id of the user that posted the comment. Return true if he can edit the comment, false if he can't.
+     * @param string $id The id of the user that posted the comment
+     * 
+     * @return bool Returns true if the connected user can edit the comment, false if not
+     */
+    public function canEditComment(string $id): bool
+    {
+        return $this->id === $id;
+    }
+
+    /**
+     * Check if the connected user can delete the comment. It can be done only if the connected user is an administrator, a moderator or the one that posted the comment. Returns true if he can delete the comment, false if not.
+     * @param string $id The id of the user that posted the comment
+     * 
+     * @return bool Returns true if he can delete the comment, false if not.
+     */
+    public function canDeleteComment(string $id): bool
+    {
+        if (
+            $this->permissionLevel === "moderator" ||
+            $this->permissionLevel === "administrator" ||
+            $this->id === $id
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
