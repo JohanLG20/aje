@@ -1,4 +1,4 @@
-<div class="container">
+<article class="container">
     <?php //var_dump($articleInfos); 
     ?>
 
@@ -36,34 +36,104 @@
                 </p>
             <?php endforeach; ?>
         </div>
+        <div id="commentSection">
+            <?php if (isset($articleInfos['commentError'])): ?>
+                <p><?= $articleInfos['commentError'] ?></p>
+            <?php endif; ?>
 
-        <?php if (!empty($articleInfos['comments'])): ?>
-            <!-- Comments --->
-            <div id="commentSection">
-                <h3 id="articleInfos">
-                    Commentaires
-                </h3>
-                <?php foreach ($articleInfos['comments'] as $comment): ?>
-                    <div class="commentHeader">
-                        <h4><?= $comment['fullname'] ?></h4>
-                        <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
-                            <p>Editer</p>
-                        <?php endif; ?>
-                        <?php if (isset($comment['canDelete'])&& $comment['canDelete']): ?>
-                            <p>Supprimer</p>
-                        <?php endif; ?>
-                    </div>
+            <?php if (!empty($articleInfos['comments'])): ?>
+                <!-- Comments --->
 
-                    <p><?= $comment['comment'] ?></p>
+                <div id="commentSectionHeader">
+                    <h3 id="articleInfos">
+                        Commentaires
+                    </h3>
+                    <?php if (isset($articleInfos['canAddComment']) && $articleInfos['canAddComment']): ?>
+                        <p id="addComment">Ajouter un commentaire</p>
+                    <?php endif; ?>
+                </div>
+                <div id="allComments">
+                    <?php foreach ($articleInfos['comments'] as $comment): ?>
+                        <div id="<?= $comment['idComment'] ?>" class="comment">
+                            <div class="commentHeader">
+                                <h4><?= $comment['fullname'] ?></h4>
+                                <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
+                                    <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
+                                <?php endif; ?>
+                                <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
+                                     <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                                <?php endif; ?>
+                            </div>
 
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+                            <p><?= $comment['comment'] ?></p>
+                        </div>
 
+
+                    <?php endforeach; ?>
+                </div>
+
+
+
+            <?php endif; ?>
+        </div>
     </div>
 
 
     <div id="relatedArticles">
 
     </div>
-</div>
+</article>
+
+<script>
+    let addCommentButton = document.querySelector("#addComment")
+    if (addCommentButton !== null) {
+        addCommentButton.addEventListener("click", () => {
+            let commentSection = document.querySelector("#allComments")
+            let addSectionComment = document.querySelector('#addCommentSection')
+
+            //Checking if the section is already openned
+            if (addSectionComment === null) {
+                let commentForm = createCommentForm("Ajouter")
+                commentSection.prepend(commentForm)
+            }
+
+
+        })
+    
+    let deleteCommentButton = document.querySelector("#deleteComment")
+    if(addCommentButton !== null){
+
+    }
+    }
+
+
+    /**
+     * @return [type] Return a div that contains the form to add the comment
+     */
+    function createCommentForm(action, preloadedDatas = "") {
+        let addCommentSection = document.createElement("div")
+        addCommentSection.id = "addCommentSection"
+
+        let addCommentForm = document.createElement("form")
+        addCommentForm.action = "index.php?path=/addComment/"
+        addCommentForm.method = "POST"
+
+        let addCommentFormTitle = document.createElement("h4")
+        addCommentFormTitle.id = "addCommentFormTitle"
+        addCommentFormTitle.textContent = "Ajouter un commentaire"
+
+        let addCommentFormText = document.createElement("textarea")
+        addCommentFormText.name = "comment"
+
+        let addCommentFormSubmit = document.createElement("button")
+        addCommentFormSubmit.type = "submit"
+        addCommentFormSubmit.textContent = "Envoyer le commentaire"
+
+        addCommentSection.append(addCommentForm)
+        addCommentForm.append(addCommentFormTitle)
+        addCommentForm.append(addCommentFormText)
+        addCommentForm.append(addCommentFormSubmit)
+        return addCommentSection
+
+    }
+</script>

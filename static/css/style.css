@@ -44,9 +44,33 @@
   width: fit-content;
 }
 
+#commentSection #commentSectionHeader {
+  display: flex;
+}
+#commentSection #commentSectionHeader #addComment {
+  color: rgb(56, 72, 163);
+}
+#commentSection #commentSectionHeader #addComment:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 #commentSection .commentHeader {
   display: flex;
   width: 100%;
+}
+#commentSection .commentHeader .editComment {
+  color: rgb(56, 72, 163);
+}
+#commentSection .commentHeader .editComment:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#commentSection .commentHeader .deleteComment {
+  color: rgb(56, 72, 163);
+}
+#commentSection .commentHeader .deleteComment:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 * {

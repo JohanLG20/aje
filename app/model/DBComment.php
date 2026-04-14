@@ -4,27 +4,46 @@ namespace AJE\Model;
 
 use PDOException;
 
-class DBComment extends CoreAssociativeTable
+class DBComment extends CoreModel
 {
     public function __construct()
     {
         parent::__construct();
         $this->tableName = "COMMENT";
-        $this->associativeArray = [
-            "id_user_" => "id_article",
-            "id_article" => "id_user_"
-        ];
+        $this->idName = strtolower($this->tableName);
     }
 
-    public function getCommentsForArticle(string $articleId): array
+    public function getCommentsAndUserInfosForArticle(string $articleId): array
     {
         try {
-            $query = $this->db->prepare("SELECT id_user_,comment FROM {$this->tableName}
-                                        WHERE id_article = :idArticle");
-            $query->bindParam(':id', $articleId);
+            $query = $this->db->prepare("SELECT id_{$this->idName}, CONCAT(first_name, ' ', last_name) as fullname, comment_label as comment, USER_.id_user_ 
+            FROM (SELECT * FROM {$this->tableName} WHERE id_article = :idArticle) comments
+            
+            INNER JOIN USER_ ON comments.id_user_ = USER_.id_user_
+            ");
+
+
+            $query->bindParam(':idArticle', $articleId);
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+
+    public function getCommentByIdByAuthorByArticle (string $idComment, string $idUser, string $idArticle){
+        try{
+            $query = $this->db->prepare("SELECT * FROM {$this->tableName} 
+                        WHERE id_user_ = :idUser AND id_article = :idArticle AND id_{$this->idName} = :idComment");
+
+            $query->bindParam(":idUser", $idUser);
+            $query->bindParam(":idArticle", $idArticle);
+            $query->bindParam(":idComment", $idComment);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        }
+        catch(\PDOException $e){
             throw $e;
         }
     }

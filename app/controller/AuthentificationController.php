@@ -20,9 +20,11 @@ class AuthentificationController
     private ?string $id;
     private ?string $permissionLevel;
     private bool $connected;
+    private DBUser $db;
 
     public function __construct()
     {
+        $this->db = new DBUser();
         $this->name = $_SESSION['name'] ?? null;
         $this->permissionLevel = $_SESSION['permissionLevel'] ?? null;
         $this->connected = $_SESSION['connected'] ?? false;
@@ -42,8 +44,8 @@ class AuthentificationController
             //Each values of the post is trimmed and filtered by htmlspecialchars
             $postVal = DataTransformer::escapeValues($_POST);
             try {
-                $user = new DBUser();
-                $requieredUser = $user->getUserByMail($postVal['mail']);
+            
+                $requieredUser = $this->db->getUserByMail($postVal['mail']);
 
                 //Checking if a user with this mail exists
                 if ($requieredUser) {
@@ -129,21 +131,35 @@ class AuthentificationController
     }
 
     /**
-     * Check if the connected user can delete the comment. It can be done only if the connected user is an admin, a moderator or the one that posted the comment. Returns true if he can delete the comment, false if not.
-     * @param string $id The id of the user that posted the comment
+     * Check if the connected user has the enough permission to delete a comment
      * 
      * @return bool Returns true if he can delete the comment, false if not.
      */
-    public function canDeleteComment(string $id): bool
+    public function canDeleteComment(): bool
     {
         if (
             $this->permissionLevel === "moderator" ||
-            $this->permissionLevel === "admin" ||
-            $this->id === $id
+            $this->permissionLevel === "admin"
         ) {
             return true;
-        } else {
+            
+        } 
+        return false;
+    
+    }
+
+    /**
+     * @param string $idArticle The article id we want to check
+     * 
+     * @return bool True if the connected user can connect, false otherwise
+     */
+    public function canCommentArticle(string $idArticle) : bool{
+        if(!is_null($this->id)){
+            return true;
+        }
+        else{
             return false;
         }
+        
     }
 }

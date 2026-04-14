@@ -12,17 +12,23 @@ abstract class CoreAssociativeTable
     protected \PDO  $db;
     protected array $associativeArray;
 
+    public function __construct()
+    {
+        $this->db = DBConnexion::getInstance()->getConnexion();
+    }
+
+
     /**
      * @param array $params An array that contains the values to add. Its keys must be the same as the attributes of the table
      * 
      * @return bool
      */
-    public function addNewElement(array $params) : bool {
-        try{
+    public function addNewElement(array $params): bool
+    {
+        try {
             $query = $this->prepareAddQuery($params);
             return $query->execute();
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             throw $e;
         }
     }
@@ -76,13 +82,14 @@ abstract class CoreAssociativeTable
      * 
      * @return PDOStatement The query, ready to be executed
      */
-    public function prepareAddQuery(array $params): PDOStatement{
+    public function prepareAddQuery(array $params): PDOStatement
+    {
         $keys = array_keys($params); // The string containing all keys
         $keysString = implode(", ", $keys);
 
         $valuesString = "";
         //Preparing the values string
-        foreach($keys as $key){
+        foreach ($keys as $key) {
             $valuesString .= ":{$key},";
         }
         $valuesString = substr($valuesString, 0, -1); //Removing the last comma
@@ -90,11 +97,10 @@ abstract class CoreAssociativeTable
         $sqlQuery = "INSERT INTO {$this->tableName}({$keysString}) VALUES({$valuesString})";
         $query = $this->db->prepare($sqlQuery);
 
-        foreach($keys as $key){
+        foreach ($keys as $key) {
             $query->bindValue(":{$key}", $params[$key]); //Binding each key to its value
         }
 
         return $query;
-        
     }
 }

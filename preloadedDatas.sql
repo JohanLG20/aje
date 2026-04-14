@@ -87,7 +87,7 @@ SELECT *, CASE
         	    WHEN EXISTS(SELECT *
                          FROM   CHOICE_RANGE AS CR
                          WHERE  CR.id_choice_ = C.id_choice_) 
-                THEN (SELECT CR.max_
+                THEN (SELECT CONCAT(CR.min, " - ", CR.max_)
                       FROM CHOICE_RANGE AS CR WHERE CR.id_choice_ = C.id_choice_)
              ELSE NULL
           END AS filter_value

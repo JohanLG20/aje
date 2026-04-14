@@ -63,7 +63,7 @@ class DBUser extends CoreModel
      */
     public function getUserFullName(string $id) : array|bool{
         try{
-            $query = $this->db->prepare("SELECT CONCAT(first_name, ' ', last_name) as 'fullname' FROM
+            $query = $this->db->prepare("SELECT CONCAT(first_name, ' ', last_name) as fullname FROM
                                         {$this->tableName} WHERE {$this->idName} = :idUser");
             $query->bindValue(":idUser", $id);
             $query->execute();
@@ -74,4 +74,53 @@ class DBUser extends CoreModel
             throw $e;
         }
     }
+
+    /**
+     * @param string $idUser The id of the user we want to check
+     * @param string $idArticle The id of the article we want to check
+     * 
+     * @return array Returns an associative array that contains the comment of the user on the article at ['comment'] => theComment or an empty array if not comments is found. Can also return false if the query failed.
+     */
+    public function getUserCommentForArticle(string $idUser, string $idArticle) : array|bool {
+        try{
+            $query = $this->db->prepare("SELECT comment_label FROM {$this->tableName}
+            INNER JOIN COMMENT ON COMMENT.id_user_ = {$this->tableName}.id_{$this->idName}
+             WHERE id_article = :idArticle AND {$this->tableName}.id_{$this->idName} = :idUser");
+
+             $query->bindValue(":idArticle", $idArticle);
+             $query->bindValue(":idUser", $idUser);
+             $query->execute();
+
+             return $query->fetch(\PDO::FETCH_ASSOC);
+        }
+        catch(\PDOException $e){
+            throw $e;
+        }
+        
+    }
+
+    /**
+     * Return the list of the user purchases. It can also be filtered with a list of articles. If no parameters are given, return the whole list of articles purchased by the given user.
+     * @param string $idUser The id of the user we want the purchases
+     * 
+     * @return array An array that contains the list of the articles id that the user purchased
+     */
+    public function getUserPurchases(string $idUser) : array{
+        try{
+            $query = $this->db->prepare("SELECT ARTICLE.id_article FROM {$this->tableName}
+            INNER JOIN ORDER_ ON ORDER_.{$this->idName} = {$this->tableName}.{$this->idName}
+            INNER JOIN ARTICLE_ORDER ON ORDER_.id_order_ = ARTICLE_ORDER.id_order_
+            WHERE {$this->idName} = :idUser");
+
+            $query->bindValue(":idUser", $idUser);
+            $query->execute();
+
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch (\PDOException $e){
+            throw $e;
+        }
+    }
+
+
 }

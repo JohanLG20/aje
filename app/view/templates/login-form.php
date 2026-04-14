@@ -3,7 +3,7 @@
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
         <div>
             <p>Bonjour <?= $_SESSION['name'] ?></p>
-            <a href="index.php?action=myprofil">Voir mon profil</a>
+            <a href="index.php?path=/usermanagement/update">Modifier mon profil</a>
             <a href="index.php?path=/logout/">Se déconnecter</a>
         </div>
     <?php else: ?>

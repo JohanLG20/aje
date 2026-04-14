@@ -17,34 +17,45 @@ class CreateArticlePage
 
     public function loadArticleInformation(string $id): array
     {
-        $dbArticle = new DBArticle;
-        $artInfo = $dbArticle->getElementById($id);
-        $infos['name'] = $artInfo['article_name'];
-        $infos['description'] = $artInfo['description'];
+        try {
+            $dbArticle = new DBArticle;
+            $artInfo = $dbArticle->getElementById($id);
+            $infos['name'] = $artInfo['article_name'];
+            $infos['description'] = $artInfo['description'];
 
-        $infos['images'] = $this->retrieveImages($artInfo['uniqid'], $infos['name']);
+            $infos['images'] = $this->retrieveImages($artInfo['uniqid'], $infos['name']);
 
-        $dbBrand = new DBBrand();
-        $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
+            $dbBrand = new DBBrand();
+            $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
 
-        $dbPrice = new DBPriceHistory();
-        $infos['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
+            $dbPrice = new DBPriceHistory();
+            $infos['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
 
-        $infos['filerInfos'] = $this->retriveFilterValues($id);
+            $infos['filerInfos'] = $this->retriveFilterValues($id);
 
-        $commentController = new CommentController();
-        $infos['comments'] = $commentController->retrieveComments($id);
+            $commentController = new CommentController();
+            $infos['canAddComment'] = $commentController->canAddComment($id);
+            $infos['comments'] = $commentController->getComments($id);
 
-        $infos['id'] = $id;
+            //We check if an error has occured
+            if(isset($infos['comments']['error'])){
+                $infos['commentError'] = $infos['comments']['error'];
+                unset($infos['comments']['error']); //We unset the variable to not disturb the display of the comments
+            }
 
-        return $infos;
+
+            $infos['id'] = $id;//TODO::check if still usefull
+
+            return $infos;
+        } catch (\Exception) {
+            return [];
+        }
     }
 
     public function prepareAndDisplayView(string $id)
     {
         $articleInfos = $this->loadArticleInformation($id);
         require(LAYOUT . "/header.php");
-        var_dump($articleInfos['comments']);
         require(TEMPLATES . "/articlePage.php");
         require(LAYOUT . "/footer.php");
     }
@@ -101,22 +112,21 @@ class CreateArticlePage
      */
     public function retrieveImages(string $uniqid, string $articleName): array
     {
-        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid )) {
+        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid)) {
 
             $dir = ARTICLES_IMAGES . "/" . $uniqid;
             $allImagesPath = array_diff(scandir($dir), ["..", "."]);
             $allImages = [];
 
             //Creating the array of path and alt
-            foreach($allImagesPath as $path){
+            foreach ($allImagesPath as $path) {
                 $image['path'] = IMAGE_LINK . "/" . $uniqid . "/" . $path;
                 $image['alt'] = $articleName;
                 array_push($allImages, $image);
             }
 
             return $allImages;
-        }
-        else{
+        } else {
             return [];
         }
     }

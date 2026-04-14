@@ -62,6 +62,28 @@ const ROUTES = [
         'method' => 'proceedToPayment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
+    ],
+    "/addComment/" => [
+        'controller' => AJE\Controller\CommentController::class,
+        'method' => 'addComment',
+        'minPermission' => 'client',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+    "/deleteComment/{idComment}" => [
+        'controller' => AJE\Controller\CommentController::class,
+        'method' => 'deleteComment',
+        'minPermission' => 'client',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+    "/edit/{idComment}" => [
+        'controller' => AJE\Controller\CommentController::class,
+        'method' => 'deleteComment',
+        'minPermission' => 'client',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+    "/debug/" => [
+        'controller' => AJE\Controller\Debug::class,
+        'method' => 'launchDebug',
     ]
 
     //TODO: Add contact page + validation RGPD

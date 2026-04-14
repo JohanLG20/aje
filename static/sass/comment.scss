@@ -1,8 +1,33 @@
 @use 'col';
 
-#commentSection{
-    .commentHeader{
+@mixin commentActionButton {
+    color: col.$commentActionButtonColor;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+#commentSection {
+    #commentSectionHeader {
+        display: flex;
+
+        #addComment {
+            @include commentActionButton;
+        }
+    }
+
+    .commentHeader {
         display: flex;
         width: 100%;
+
+        .editComment {
+            @include commentActionButton;
+        }
+
+        .deleteComment {
+            @include commentActionButton;
+        }
     }
 }
