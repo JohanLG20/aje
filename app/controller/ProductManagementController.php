@@ -24,26 +24,7 @@ class ProductManagementController extends CRUDController
     protected function create(array $params): string
     {
         try {
-            // ----------------- Creating the article in the ARTICLE db ------------
-            $artDb = new DBArticle();
-            $artParams = [
-                'articleName' => $params['articleName'],
-                'description' => $params['description'],
-                'idCat' => $params['idCat'],
-                'idBrand' => $params['idBrand']
-            ];
-            $artDb->addNewElement($artParams);
-            $idLastArticle = $artDb->getLastAddedElement()['id_article'];
 
-            // -------------- Adding the line in the price history ------------
-            $phDb = new DBPriceHistory();
-            $phParams = [
-                'idArticle' => $idLastArticle,
-                'price' => $params['price']
-            ];
-            $phDb->addNewElement($phParams);
-
-            // ------------ Adding the values ------------
             /* Post format of the fileters values
             *
             * [id_filter_type] => [
@@ -62,13 +43,36 @@ class ProductManagementController extends CRUDController
                 }
             }
 
+
+            // ----------------- Creating the article in the ARTICLE db ------------
+            $artDb = new DBArticle();
+            $artParams = [
+                'articleName' => $params['article_name'],
+                'description' => $params['description'],
+                'idCat' => $params['id_cat'],
+                'idBrand' => $params['id_brand']
+            ];
+            $artDb->addNewElement($artParams);
+            $idLastArticle = $artDb->getLastAddedElement()['id_article'];
+
+            // -------------- Adding the line in the price history ------------
+            $phDb = new DBPriceHistory();
+            $phParams = [
+                'idArticle' => $idLastArticle,
+                'price' => $params['price']
+            ];
+            $phDb->addNewElement($phParams);
+
+            // ------------ Adding the values ------------
+
+
             //Adding all the values in the table
             foreach ($filterValues as $filterKey => $filterVal) {
                 foreach ($filterVal as $val) {
                     $valDb->addNewElement([
-                        'idArticle' => $idLastArticle,
-                        'idFilterType' => $filterKey,
-                        'idChoice' => $val
+                        'id_article_' => $idLastArticle,
+                        'id_filter_type' => $filterKey,
+                        'id_choice' => $val
                     ]);
                 }
             }
@@ -90,7 +94,6 @@ class ProductManagementController extends CRUDController
             }
 
             return "Article ajouté avec succès";
-
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);
         }

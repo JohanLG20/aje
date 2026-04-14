@@ -44,7 +44,7 @@ class CreateArticlePage
             }
 
 
-            $infos['id'] = $id;//TODO::check if still usefull
+            $infos['id'] = $id;//TODO: check if still usefull
 
             return $infos;
         } catch (\Exception) {
