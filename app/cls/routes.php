@@ -32,7 +32,7 @@ const ROUTES = [
     ],
 
     '/test/{id}' => [
-        'controller' => AJE\Utils\CreateArticlePage::class,
+        'controller' => AJE\Controller\ArticlePageController::class,
         'method' => 'prepareAndDisplayView'
     ],
     'basket/add/{id}' => [

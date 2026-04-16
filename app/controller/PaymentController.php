@@ -10,23 +10,24 @@ use PDOException;
 class PaymentController
 {
     /**
-     * Called when a non-user tries to access to the payment page
+     * Called when a non-client tries to access to the payment page
      */
     public function permissionDenied()
     {
+        echo "Vous devez être connecté pour pouvoir payer un panier";
         //TODO: Display the login form to make people connect/create an account
     }
 
 
     /**
-     * Called when a user tries to access to the payment page
+     * Called when a client tries to access to the payment page
      */
     public function displayPaymentPage()
     {
         $validatePayment = true; // This variable is used to know which button to display in the view
         require(VIEW . "/payment_view.php");
         $client = new AuthentificationController();
-        var_dump($client->getId());
+
     }
 
     public function proceedToPayment()
