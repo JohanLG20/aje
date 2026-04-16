@@ -161,12 +161,19 @@ LEFT JOIN VALUES_ v
     ON v.id_article = a.id_article
 LEFT JOIN CHOICE_TXT ct
     ON ct.id_choice_ = v.id_choice_
+LEFT JOIN CHOICE_COLOR cc
+    ON cc.id_choice_ = v.id_choice_
+LEFT JOIN CHOICE_NUMBER cn
+    ON cn.id_choice_ = v.id_choice_
+    
 WHERE
     ai.article_name LIKE :research
     OR ai.description LIKE :research
     OR b.brand_label LIKE :research
     OR c.cat_label LIKE :research
-    OR ct.choice LIKE :research;";
+    OR ct.choice LIKE :research
+    OR cc.color_choice_label LIKE :research
+    OR CAST(cn.choice AS CHAR) LIKE :research";
 
         $query = $this->db->prepare($sqlQuery);
         $query->execute([':research' => '%' . $research . '%']);

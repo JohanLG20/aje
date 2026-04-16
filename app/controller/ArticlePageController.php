@@ -36,9 +36,6 @@ class ArticlePageController
             $dbBrand = new DBBrand();
             $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
 
-
-            var_dump($infos['price']);
-
             //All the filters infos
             $infos['filerInfos'] = $this->retriveAllChoices($id);
 
