@@ -110,7 +110,7 @@ class BasketController
 
             //Retrieving the price
             $dbPrice = new DBPriceHistory();
-            $basket['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
+            $basket['price'] = $dbPrice->getArticlePrice($id)['price'];
 
             //Retrieving the principal image
             $basket['image'] = $this->getBasketImage($articleInfos['image_repertory']);

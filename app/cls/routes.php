@@ -81,7 +81,7 @@ const ROUTES = [
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
-    "/debug/" => [
+    "/debug/{query}" => [
         'controller' => AJE\Controller\Debug::class,
         'method' => 'launchDebug',
     ]

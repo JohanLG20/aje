@@ -11,7 +11,12 @@
                 <?php endforeach ?>
             </div>
             <p><?= $articleInfos['brand'] ?></p>
-            <p><?= $articleInfos['price'] ?>€</p>
+            <div class=price>
+                <p class="<?php !is_null($articleInfos['price']["promo_price"]) ? 'promotion' : '' ?>"><?= $articleInfos['price']["normal_price"] ?>€</p>
+                <?php if (isset($articleInfos['price']['promo_price'])): ?>
+                    <p><?= $articleInfos['price']['promo_price'] ?>€</p>
+                <?php endif; ?>
+            </div>
             <p>DATE DE LIVRAISON</p>
             <a href="index.php?path=/basket/add/<?= $articleInfos['id'] ?>" class="addBasketButton btn1">Ajouter au panier</a>
         </div>
@@ -72,8 +77,8 @@
 
                     <?php endforeach; ?>
                 </div>
-            <?php else:?>
-                <p>Aucun commentaire sur l'article pour le moment.</p>                        
+            <?php else: ?>
+                <p>Aucun commentaire sur l'article pour le moment.</p>
             <?php endif; ?>
         </div>
     </div>

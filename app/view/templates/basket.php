@@ -1,10 +1,10 @@
 <?php if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])):  ?>
     <div id="basket">
-        <?php foreach ($_SESSION['basket'] as $bask): ?>
+        <?php foreach ($_SESSION['basket'] as $idArticle => $bask): ?>
             <div class="basketItemCard">
                 <img src=<?= $bask['image'] ?> alt=<?= $bask['name'] ?>>
                 <div class="basketDescriptionSection">
-                    <p class="basketArticleName"><?= $bask['name'] ?></p>
+                    <a href="index.php?path=/test/<?= $idArticle ?>" class="basketArticleLink"><?= $bask['name'] ?></a>
                     <p class="basketArticlePrice">Prix unitaire : <?= $bask['price'] ?>€</p>
                     <div class="basketQuantity">
                         <p>Quantité</p>

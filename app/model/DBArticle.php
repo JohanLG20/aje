@@ -93,4 +93,89 @@ class DBArticle extends CoreModel
             throw $e;
         }
     }
+
+    /**
+     * Returns an associative array that contains the price and the promotion price. If there are no promotions, the promotion price is null
+     * @param string $id The id of the article
+     * 
+     * @return array an associative that looks like
+     * [
+     *      ['normal_price'] => price, 
+     *      ['promo_price'] => promoPrice|null
+     * ]
+     */
+    public function getArticlePrice(string $id): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT
+    normal.price as normal_price,
+    promo.price as promo_price
+FROM (SELECT * FROM {$this->tableName} WHERE id_article = :id) a
+
+JOIN PRICE_HISTORY normal
+    ON normal.id_article = a.id_article
+    AND normal.end_date IS NULL
+
+LEFT JOIN PRICE_HISTORY promo
+    ON promo.id_article = a.id_article
+    AND promo.end_date IS NOT NULL
+    AND promo.end_date >= CURDATE()
+    AND promo.start_date <= CURDATE();
+    
+    WHERE ");
+            $query->bindValue(":id", $id);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    public function searchForArticle(string $research): array
+    {
+        try{
+        $sqlQuery = "SELECT DISTINCT
+    a.id_article as id_article,
+    ai.article_name as article_name,
+    ai.image_repertory as image_repertory,
+    b.brand_label    AS brand,
+    normal.price     AS normal_price,
+    promo.price      AS promo_price
+FROM ARTICLE a
+JOIN ARTICLE_INFORMATIONS ai
+    ON ai.id_article_informations = a.id_article_informations
+JOIN CATEGORY c
+    ON c.id_category = ai.id_category
+JOIN BRAND b
+    ON b.id_brand = ai.id_brand
+JOIN PRICE_HISTORY normal
+    ON normal.id_article = a.id_article
+    AND normal.end_date IS NULL
+LEFT JOIN PRICE_HISTORY promo
+    ON promo.id_article = a.id_article
+    AND promo.end_date IS NOT NULL
+    AND promo.end_date >= CURDATE()
+    AND promo.start_date <= CURDATE()
+LEFT JOIN VALUES_ v
+    ON v.id_article = a.id_article
+LEFT JOIN CHOICE_TXT ct
+    ON ct.id_choice_ = v.id_choice_
+WHERE
+    ai.article_name LIKE :research
+    OR ai.description LIKE :research
+    OR b.brand_label LIKE :research
+    OR c.cat_label LIKE :research
+    OR ct.choice LIKE :research;";
+
+        $query = $this->db->prepare($sqlQuery);
+        $query->execute([':research' => '%' . $research . '%']);
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        catch(\PDOException $e){
+            throw $e;
+        }
+
+    }
 }

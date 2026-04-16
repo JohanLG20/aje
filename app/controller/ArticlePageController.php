@@ -27,13 +27,17 @@ class ArticlePageController
             $infos['name'] = $artInfo['article_name'];
             $infos['description'] = $artInfo['description'];
 
+            //Creating an that looks like ['normal_price'] => price, ['promo_price'] => promoPrice|null
+            $infos['price'] = $dbArticle->getArticlePrice($id);
+
+
             $infos['images'] = $this->retrieveImages($artInfo['image_repertory'], $infos['name']);
 
             $dbBrand = new DBBrand();
             $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
 
-            $dbPrice = new DBPriceHistory();
-            $infos['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
+
+            var_dump($infos['price']);
 
             //All the filters infos
             $infos['filerInfos'] = $this->retriveAllChoices($id);
@@ -51,8 +55,8 @@ class ArticlePageController
             $infos['id'] = $id;
 
             return $infos;
-        } catch (\Exception) {
-            return [];
+        } catch (\Exception $e) {
+            return ["name" => $e->getMessage()];
         }
     }
 
@@ -73,8 +77,7 @@ class ArticlePageController
      * [idFilterType] => [
      *                      'label' => the label of the filter,
      *                      'values' => [
-     *                                      [0] => choice1,
-     *                                      [1] => choice2 ...
+     *                                      [0] => choice,
      *                                  ]
      * ]...
      * 
