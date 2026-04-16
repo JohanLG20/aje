@@ -3,6 +3,7 @@
 namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
+use AJE\Model\DBArticleInformations;
 use AJE\Model\DBBrand;
 use AJE\Model\DBPriceHistory;
 use PDOException;
@@ -100,7 +101,10 @@ class BasketController
             $basket['quantity'] = 1;
 
             $dbArticle = new DBArticle();
-            $articleInfos = $dbArticle->getElementById($id, ['article_name', "uniqid"]);
+            $idArtInfo = $dbArticle->getElementById($id)['id_article_informations'];
+            $dbArtInfo = new DBArticleInformations();
+            $articleInfos = $dbArtInfo->getElementById($idArtInfo);
+
             //Placing the article name
             $basket['name'] = $articleInfos['article_name'];
 
@@ -109,7 +113,7 @@ class BasketController
             $basket['price'] = $dbPrice->getCurrentArticlePrice($id)['price'];
 
             //Retrieving the principal image
-            $basket['image'] = $this->getBasketImage($articleInfos['uniqid']);
+            $basket['image'] = $this->getBasketImage($articleInfos['image_repertory']);
 
             return $basket;
         } catch (PDOException $e) {

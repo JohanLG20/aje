@@ -9,6 +9,7 @@ use AJE\Model\DBPriceHistory;
 use AJE\Model\DBValues_;
 use AJE\Model\VFilterValuesAssociations;
 use AJE\Controller\CommentController;
+use AJE\Model\DBArticleInformations;
 
 class CreateArticlePage
 {
@@ -18,12 +19,17 @@ class CreateArticlePage
     public function loadArticleInformation(string $id): array
     {
         try {
-            $dbArticle = new DBArticle;
-            $artInfo = $dbArticle->getElementById($id);
+            $dbArticle = new DBArticle();
+            $idArtInfo = $dbArticle->getElementById($id)['id_article_informations'];
+            
+            $dbArtInfo = new DBArticleInformations();
+            $artInfo = $dbArtInfo->getElementById($idArtInfo);
+            var_dump($artInfo);
+
             $infos['name'] = $artInfo['article_name'];
             $infos['description'] = $artInfo['description'];
 
-            $infos['images'] = $this->retrieveImages($artInfo['uniqid'], $infos['name']);
+            $infos['images'] = $this->retrieveImages($artInfo['image_repertory'], $infos['name']);
 
             $dbBrand = new DBBrand();
             $infos['brand'] = $dbBrand->getElementById($artInfo['id_brand'])["brand_label"];
@@ -44,7 +50,7 @@ class CreateArticlePage
             }
 
 
-            $infos['id'] = $id;//TODO: check if still usefull
+            $infos['id'] = $id;
 
             return $infos;
         } catch (\Exception) {
@@ -67,8 +73,8 @@ class CreateArticlePage
 
     private function retriveFilterValues(string $id): array
     {
-        $dbVal = new DBValues_();
-        $allChoices = $dbVal->getAllChoicesForArticle($id);
+        $dbArticle = new DBArticle();
+        $allChoices = $dbArticle->getAllChoicesForArticle($id);
 
         $choiceInfos = array();
         $vAssoc = new VFilterValuesAssociations();

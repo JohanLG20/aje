@@ -49,18 +49,6 @@
             <p class="error"><?= $view['errors']['price'] ?></p>
         <?php endif; ?>
 
-        <!-- Colors -->
-        <div class="form-item">
-            <label for="idColor">Couleur de l'article</label>
-            <select name="idColor" id="idColor" value="<?= $values['idColor'] ?? '' ?>">
-                <option value="-1">Sélectionnez une couleur</option>
-                <?php //Creating the options with all the colors in the database
-                foreach ($view['colorsList'] as $color):
-                ?>
-                    <option value=<?= $color['id_choice_'] ?>> <?= $color['color_choice_label'] ?></option>
-                <?php endforeach ?>
-            </select>
-        </div>
         <?php if (isset($view['errors']["idColor"])): ?>
             <p class="error"><?= $view['errors']["idColor"] ?></p>
         <?php endif; ?>

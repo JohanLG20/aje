@@ -3,14 +3,14 @@
 namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
+use AJE\Model\DBArticleInformations;
 use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
-use AJE\Model\DBChoiceColor;
 use AJE\Model\DBPriceHistory;
 use AJE\Model\DBValues_;
 use AJE\Utils\ProductErrorHelper;
 use AJE\Utils\SaveImageHanddler;
-use AJE\Utils\CreateArticlePage;
+use AJE\Utils\DataTransformer;
 use Exception;
 
 class ProductManagementController extends CRUDController
@@ -25,17 +25,42 @@ class ProductManagementController extends CRUDController
     {
         try {
 
-            /* Post format of the fileters values
+            $imageRepertory = uniqid();
+
+            // ----------------- Creating the article informations ------------
+            $artInfoDb = new DBArticleInformations();
+
+            $artInfoParams = [
+                'article_name' => $params['articleName'],
+                'description' => $params['description'],
+                'id_category' => $params['idCat'],
+                'id_brand' => $params['idBrand'],
+                'image_repertory' => $imageRepertory
+            ];
+
+            $artInfoDb->addNewElement($artInfoParams);
+            $artInfoId = $artInfoDb->getLastAddedElement()['id_article_informations'];
+
+
+            // -------------- Creating the price history parameter ------------
+            $phDb = new DBPriceHistory();
+            $phParams = [
+                'price' => $params['price']
+            ];
+
+            /* ------------- Creating the filters value array ---------------
+            * Post format of the fileters values
             *
             * [id_filter_type] => [
-            *                    [0] => id_choice_
+            *                    [0] => id_choice_,
             *                    [1] => id_choice_ ...
             *                    ]
             */
-            $valDb = new DBValues_();
+            
             $filterValues = [];
             //Retrieving all the filters and their values
             foreach ($params as $key => $val) {
+                //The filter have numeric keys while the other values doesn't
                 if (is_numeric($key)) {
                     if (is_array($val)) {
                         $filterValues[$key] = $val;
@@ -44,54 +69,47 @@ class ProductManagementController extends CRUDController
             }
 
 
-            // ----------------- Creating the article in the ARTICLE db ------------
+            $allFiltersValuesAssociations = DataTransformer::cartesianProduct($filterValues);
+
             $artDb = new DBArticle();
-            $artParams = [
-                'articleName' => $params['article_name'],
-                'description' => $params['description'],
-                'idCat' => $params['id_cat'],
-                'idBrand' => $params['id_brand']
-            ];
-            $artDb->addNewElement($artParams);
-            $idLastArticle = $artDb->getLastAddedElement()['id_article'];
+            $valDb = new DBValues_();
+            $allCreatedArticles = []; //Used to create the pages of the new articles
 
-            // -------------- Adding the line in the price history ------------
-            $phDb = new DBPriceHistory();
-            $phParams = [
-                'idArticle' => $idLastArticle,
-                'price' => $params['price']
-            ];
-            $phDb->addNewElement($phParams);
+            foreach ($allFiltersValuesAssociations as $val) {
+                //Adding the price and the article
+                $artDb->addNewElement(["id_article_informations" => $artInfoId]);
+                $idLastArticle = $artDb->getLastAddedElement()['id_article'];
+                $phParams['id_article'] = $idLastArticle;
+                $phDb->addNewElement($phParams);
+                
+                //Creating the all the articles
+                array_push($allCreatedArticles, $idLastArticle);
 
-            // ------------ Adding the values ------------
+                //Adding all the values for each article
+                foreach ($val as $filterKey => $choice) {
 
-
-            //Adding all the values in the table
-            foreach ($filterValues as $filterKey => $filterVal) {
-                foreach ($filterVal as $val) {
                     $valDb->addNewElement([
-                        'id_article_' => $idLastArticle,
+                        'id_article' => $idLastArticle,
                         'id_filter_type' => $filterKey,
-                        'id_choice' => $val
+                        'id_choice_' => $choice
                     ]);
                 }
             }
 
             //--------------------- Saving the image -------------
 
-            $sih = new SaveImageHanddler($artParams['articleName'], $idLastArticle);
-            if ($sih->saveImage($_FILES['images'])) {
-            } else {
+            $sih = new SaveImageHanddler($imageRepertory);
+            if (!$sih->saveImages($_FILES['images'])) {
                 throw new Exception("Impossible de créer la page de l'article");
             }
 
             //--------------------- Creating the page ---------------
-            $cap = new CreateArticlePage();
+            /*  $cap = new CreateArticlePage();
             $fileContent = $cap->loadArticleInformation($idLastArticle);
             if ($cap->saveFile($fileContent)) {
             } else {
                 throw new Exception("Impossible de créer la page de l'article");
-            }
+            }*/
 
             return "Article ajouté avec succès";
         } catch (\PDOException $e) {
@@ -130,10 +148,8 @@ class ProductManagementController extends CRUDController
     protected function completeViewInformations(): array
     {
         $catDb = new DBCategory();
-        $colorDb = new DBChoiceColor();
         $brandDb = new DBBrand();
         $extraInformations['categoriesList'] = $catDb->getAllElements();
-        $extraInformations['colorsList'] = $colorDb->getAllElements();
         $extraInformations['brandList'] = $brandDb->getAllElements();
 
 

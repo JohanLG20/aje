@@ -156,6 +156,7 @@ class AuthentificationController
     public function canCommentArticle(string $idArticle) : bool{
         if(!is_null($this->id)){
             return true;
+            //TODO: make function
         }
         else{
             return false;

@@ -70,7 +70,6 @@
                             <p><?= $comment['comment'] ?></p>
                         </div>
 
-
                     <?php endforeach; ?>
                 </div>
             <?php else:?>

@@ -33,15 +33,24 @@ CREATE TABLE BRAND(
    UNIQUE(brand_label)
 );
 
+CREATE TABLE ARTICLE_INFORMATIONS(
+   id_article_informations INT AUTO_INCREMENT,
+   article_name VARCHAR(50) NOT NULL,
+   description VARCHAR(120) NOT NULL,
+   image_repertory VARCHAR(15) NOT NULL,
+   id_category INT NOT NULL,
+   id_brand INT NOT NULL,
+   PRIMARY KEY(id_article_informations),
+   UNIQUE(image_repertory),
+   FOREIGN KEY(id_category) REFERENCES CATEGORY(id_category),
+   FOREIGN KEY(id_brand) REFERENCES BRAND(id_brand)
+);
+
 CREATE TABLE ARTICLE(
    id_article INT AUTO_INCREMENT,
-   article_name VARCHAR(50),
-   description VARCHAR(255) NOT NULL,
-   id_brand INT,
-   id_category INT,
+   id_article_informations INT NOT NULL,
    PRIMARY KEY(id_article),
-   FOREIGN KEY(id_brand) REFERENCES BRAND(id_brand),
-   FOREIGN KEY(id_category) REFERENCES CATEGORY(id_category)
+   FOREIGN KEY(id_article_informations) REFERENCES ARTICLE_INFORMATIONS(id_article_informations)
 );
 
 CREATE TABLE USER_(
@@ -53,7 +62,7 @@ CREATE TABLE USER_(
    postal_code INT NOT NULL,
    city VARCHAR(50) NOT NULL,
    address VARCHAR(50) NOT NULL,
-   phone_number VARCHAR(50) DEFAULT NULL,
+   phone_number VARCHAR(50),
    id_user_level INT NOT NULL,
    PRIMARY KEY(id_user_),
    UNIQUE(mail),
@@ -80,7 +89,7 @@ CREATE TABLE CHOICE_TXT(
 
 CREATE TABLE CHOICE_NUMBER(
    id_choice_ INT,
-   choice INT NOT NULL,
+   choice DECIMAL(8,3) NOT NULL,
    PRIMARY KEY(id_choice_),
    FOREIGN KEY(id_choice_) REFERENCES CHOICE_(id_choice_)
 );
@@ -112,6 +121,16 @@ CREATE TABLE VALUES_(
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
 
+CREATE TABLE COMMENT(
+   id_comment INT AUTO_INCREMENT,
+   comment_label VARCHAR(180),
+   id_user_ INT NOT NULL,
+   id_article INT NOT NULL,
+   PRIMARY KEY(id_comment),
+   FOREIGN KEY(id_user_) REFERENCES USER_(id_user_),
+   FOREIGN KEY(id_article) REFERENCES ARTICLE(id_article)
+);
+
 CREATE TABLE ORDER_(
    id_order_ INT AUTO_INCREMENT,
    date_ VARCHAR(50) NOT NULL,
@@ -129,15 +148,6 @@ CREATE TABLE ARTICLE_ORDER(
    FOREIGN KEY(id_order_) REFERENCES ORDER_(id_order_)
 );
 
-CREATE TABLE COMMENT(
-   id_article INT,
-   id_user_ INT,
-   comment_label VARCHAR(180),
-   PRIMARY KEY(id_article, id_user_),
-   FOREIGN KEY(id_article) REFERENCES ARTICLE(id_article),
-   FOREIGN KEY(id_user_) REFERENCES USER_(id_user_)
-);
-
 CREATE TABLE FILTERED_BY(
    id_category INT,
    id_filter_type INT,
@@ -145,5 +155,4 @@ CREATE TABLE FILTERED_BY(
    FOREIGN KEY(id_category) REFERENCES CATEGORY(id_category),
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
-
 

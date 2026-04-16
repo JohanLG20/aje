@@ -4,7 +4,6 @@ namespace AJE\Utils;
 
 use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
-use AJE\Model\DBChoiceColor;
 
 class ProductErrorHelper
 {
@@ -15,7 +14,6 @@ class ProductErrorHelper
         $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
         $errors['description'] = self::checkDescriptionErrors($values['description']);
         $errors['price'] = self::checkPriceErrors($values['price']);
-        $errors['idColor'] = self::checkColorErrors($values['idColor']);
         $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
 
         //Checking filters values integrity
@@ -124,20 +122,6 @@ class ProductErrorHelper
             }
         } else {
             return 'Veuillez choisir une catégorie';
-        }
-    }
-
-    private static function checkColorErrors(string $idColor): ?string
-    {
-        if (is_numeric($idColor) && $idColor >= 0) {
-            $col = new DBChoiceColor();
-            if ($col->getElementById($idColor)) {
-                return null;
-            } else {
-                return "La couleur demandée n'est pas disponible";
-            }
-        } else {
-            return 'Veuillez choisir une couleur';
         }
     }
 

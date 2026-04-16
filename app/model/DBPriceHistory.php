@@ -26,7 +26,7 @@ class DBPriceHistory extends CoreModel
                             VALUES (:idArticle, :price, :endDate)");
         }
 
-        $query->bindValue(":idArticle", $params['idArticle']);
+        $query->bindValue(":idArticle", $params['id_article']);
         $query->bindValue(":price", $params['price']);
         $query->bindValue(":endDate", $params['endDate'] ?? null);
 

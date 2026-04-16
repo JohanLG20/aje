@@ -43,7 +43,29 @@ abstract class DataTransformer
         return $camel;
     }
 
-    public static function removeWhitespaces(string $str) : string {
+    public static function removeWhitespaces(string $str): string
+    {
         return preg_replace("/\s/", "", $str);
+    }
+
+    /*
+    Function that make the cartesian product of a 2 dimensionnal array
+    Thanks Claude.ai
+    */
+    public static function cartesianProduct(array $tableaux): array
+    {
+        $resultat = [[]];
+
+        foreach ($tableaux as $indice => $valeurs) {
+            $nouvelleListe = [];
+            foreach ($resultat as $combinaisonExistante) {
+                foreach ($valeurs as $valeur) {
+                    $nouvelleListe[] = $combinaisonExistante + [$indice => $valeur];
+                }
+            }
+            $resultat = $nouvelleListe;
+        }
+
+        return $resultat;
     }
 }
