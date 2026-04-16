@@ -39,7 +39,7 @@ class DBArticle extends CoreModel
     }
 
     /**
-     * Return all the id of choices available for this article
+     * Return all the id of choices available for all the linked articles
      * [0] =>[
      *         ['id_choice_] => The id of the choice
      *        ],
@@ -48,7 +48,7 @@ class DBArticle extends CoreModel
      * 
      * @return array An array list that contains all the distinct values of other choices available for the article 
      */
-    public function getAllChoicesForArticle(string $id): array
+    public function getAllChoicesForLinkedArticle(string $id): array
     {
         try {
             $query = $this->db->prepare("SELECT DISTINCT id_choice_ 
@@ -58,7 +58,34 @@ class DBArticle extends CoreModel
                                                             FROM `ARTICLE` 
                                                             WHERE id_article = :id)) art
                           INNER JOIN VALUES_ ON VALUES_.id_article = art.id_article");
-            
+
+            $query->bindParam(":id", $id);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Return all the id of choices available for this article only
+     * [0] =>[
+     *         ['id_choice_] => The id of the choice
+     *        ],
+     * [1] => ...
+     * @param string $id The id of the given article
+     * 
+     * @return array An array list that contains all the distinct values of other choices available for the article 
+     */
+    public function getChoicesForArticle(string $id): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT DISTINCT id_choice_ 
+                    FROM (SELECT id_article 
+                          FROM ARTICLE 
+                          WHERE id_article = :id) art
+                    INNER JOIN VALUES_ ON VALUES_.id_article = art.id_article");
+
             $query->bindParam(":id", $id);
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
