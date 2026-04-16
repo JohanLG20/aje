@@ -120,8 +120,9 @@ abstract class CoreModel
     public function getAllElementsForValues(string $elementName, array $values, array $attrsToGet = [])
     {
 
+        $sqlQuery = $this->prepareSelectQuery($attrsToGet);
         $sqlQuery .= " FROM {$this->tableName} WHERE
-                    {$this->formNameToDbName[$elementName]} IN (";
+                    {$elementName} IN (";
 
         //Preparing the query with the keys of the array
         foreach ($values as $key => $val) {

@@ -28,11 +28,10 @@
                 <div class="navItem">
                     <i class="fa-solid fa-magnifying-glass-plus mobileMenuItem"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
-                        <form action="index.php">
+                        <form onsubmit="redirectSearch(event)">
                             <div class="searchForm">
-                                <input type="search" id="menuSearchInput" name="s">
+                                <input type="search" id="q" name="q">
                                 <button id="menuSearchIcon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-
                             </div>
                         </form>
                     </div>
@@ -42,13 +41,13 @@
                 <div class="navItem">
                     <i class="fa-solid fa-basket-shopping menuIcon"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
-                        <?php require (TEMPLATES . '/basket.php') ?>
+                        <?php require(TEMPLATES . '/basket.php') ?>
                     </div>
                 </div>
 
                 <div class="navItem">
                     <i class="fa-solid fa-user menuIcon "></i>
-                    
+
                     <?php require(TEMPLATES . '/login-form.php') ?>
                 </div>
 
@@ -117,3 +116,13 @@
         </nav>
 
     </header>
+
+    <script>
+        //This function is used to redirect the search towards the router. It correct the path to be compatible with the router taxonomy
+        function redirectSearch(event) {
+            event.preventDefault();
+            console.log("test");
+            const query = document.getElementById('q').value.trim();
+            window.location.href = `index.php?path=/search/${encodeURIComponent(query)}`;
+        }
+    </script>

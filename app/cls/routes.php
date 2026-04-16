@@ -81,9 +81,9 @@ const ROUTES = [
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
-    "/debug/{query}" => [
-        'controller' => AJE\Controller\Debug::class,
-        'method' => 'launchDebug',
+    "/search/{query}" => [
+        'controller' => AJE\Controller\SearchPageController::class,
+        'method' => 'search',
     ]
 
     //TODO: Add contact page + validation RGPD

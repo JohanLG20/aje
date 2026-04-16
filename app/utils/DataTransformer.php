@@ -17,7 +17,7 @@ abstract class DataTransformer
                 if (is_array($val)) {
                     $escapedValues[$key] = self::escapeValues($val);
                 } else {
-                    $escapedValues[$key] = trim(htmlspecialchars($val));
+                    $escapedValues[$key] = self::escapeValue($val);
                 }
             }
 
@@ -25,6 +25,13 @@ abstract class DataTransformer
         } else {
             return [];
         }
+    }
+        /**
+     * @return array Returns the escaped values of an array, if there are no values in post, returns an empty array
+     */
+    public static function escapeValue(string $val): string
+    {
+        return trim(htmlspecialchars($val));
     }
 
     public static function toCamelCase(string $str): string
