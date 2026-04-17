@@ -4,7 +4,7 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
-
+use AJE\Model\DBPriceHistory;
 
 class ArticleController
 {
@@ -50,8 +50,14 @@ class ArticleController
 
             $dbArticleInformations = new DBArticleInformations();
             $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
+            $productInfo['price'] = $dbArticle->getArticlePrice($idArticle);
             $rawVariants = $dbArticleInformations->getProductVariants($idArticleInformations);
-            $variants    = $this->formatVariants($rawVariants);
+            $formatted = $this->formatVariants($rawVariants);
+
+            // On extrait les deux parties du résultat
+            $commonModalities = $formatted['commonModalities'];
+            $variants         = $formatted['variants'];
+
 
             $productInfo['imagesPath'] = $this->retrieveImages($productInfo['image_repertory']);
             $commentController = new CommentController();
@@ -95,7 +101,7 @@ class ArticleController
 
         $variants = array_values($variants);
 
-        // On regroupe toutes les valeurs par type de modalité pour détecter les doublons
+        // On regroupe toutes les valeurs par type de modalité
         $modalitiesByType = [];
         foreach ($variants as $variant) {
             foreach ($variant['modalities'] as $label => $modality) {
@@ -103,10 +109,14 @@ class ArticleController
             }
         }
 
-        // On identifie les types qui ont plusieurs valeurs distinctes
-        $variantTypes = [];
+        // On sépare les modalités communes des modalités variables
+        $commonModalities  = [];
+        $variantTypes      = [];
         foreach ($modalitiesByType as $label => $values) {
-            if (count(array_unique($values)) > 1) {
+            if (count(array_unique($values)) === 1) {
+                // Même valeur pour toutes les variantes → modalité commune
+                $commonModalities[$label] = $variants[0]['modalities'][$label];
+            } else {
                 $variantTypes[] = $label;
             }
         }
@@ -120,8 +130,12 @@ class ArticleController
             );
         }
 
-        return $variants;
+        return [
+            'commonModalities' => $commonModalities,
+            'variants'         => $variants
+        ];
     }
+
 
     private function notFound(): void
     {

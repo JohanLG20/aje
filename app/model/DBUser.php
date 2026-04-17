@@ -40,18 +40,17 @@ class DBUser extends CoreModel
         return $addProdQuery;
     }
 
-    public function getUserByMail(string $mail) : array|bool{
-        try{
+    public function getUserByMail(string $mail): array|bool
+    {
+        try {
             $query = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE mail = :mail");
             $query->bindParam(":mail", $mail);
             $query->execute();
 
             return $query->fetch(\PDO::FETCH_ASSOC);
-        }
-        catch(PDOException $e){
+        } catch (PDOException $e) {
             throw $e;
         }
-
     }
 
     /**
@@ -61,16 +60,16 @@ class DBUser extends CoreModel
      * 
      * @return array|bool An associative array if the user is found, false if not
      */
-    public function getUserFullName(string $id) : array|bool{
-        try{
+    public function getUserFullName(string $id): array|bool
+    {
+        try {
             $query = $this->db->prepare("SELECT CONCAT(first_name, ' ', last_name) as fullname FROM
                                         {$this->tableName} WHERE {$this->idName} = :idUser");
             $query->bindValue(":idUser", $id);
             $query->execute();
 
             return $query->fetch(\PDO::FETCH_ASSOC);
-        }
-        catch(\PDOException $e){
+        } catch (\PDOException $e) {
             throw $e;
         }
     }
@@ -81,46 +80,54 @@ class DBUser extends CoreModel
      * 
      * @return array Returns an associative array that contains the comment of the user on the article at ['comment'] => theComment or an empty array if not comments is found. Can also return false if the query failed.
      */
-    public function getUserCommentForArticle(string $idUser, string $idArticle) : array|bool {
-        try{
+    public function getUserCommentForArticle(string $idUser, string $idArticle): array|bool
+    {
+        try {
             $query = $this->db->prepare("SELECT comment_label FROM {$this->tableName}
             INNER JOIN COMMENT ON COMMENT.id_user_ = {$this->tableName}.id_{$this->idName}
              WHERE id_article = :idArticle AND {$this->tableName}.id_{$this->idName} = :idUser");
 
-             $query->bindValue(":idArticle", $idArticle);
-             $query->bindValue(":idUser", $idUser);
-             $query->execute();
+            $query->bindValue(":idArticle", $idArticle);
+            $query->bindValue(":idUser", $idUser);
+            $query->execute();
 
-             return $query->fetch(\PDO::FETCH_ASSOC);
-        }
-        catch(\PDOException $e){
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
             throw $e;
         }
-        
     }
 
     /**
      * Return the list of the user purchases. It can also be filtered with a list of articles. If no parameters are given, return the whole list of articles purchased by the given user.
      * @param string $idUser The id of the user we want the purchases
+     * @param string $idArticle Optionnal: The id of a specific article
      * 
      * @return array An array that contains the list of the articles id that the user purchased
      */
-    public function getUserPurchases(string $idUser) : array{
-        try{
-            $query = $this->db->prepare("SELECT ARTICLE.id_article FROM {$this->tableName}
-            INNER JOIN ORDER_ ON ORDER_.{$this->idName} = {$this->tableName}.{$this->idName}
-            INNER JOIN ARTICLE_ORDER ON ORDER_.id_order_ = ARTICLE_ORDER.id_order_
-            WHERE {$this->idName} = :idUser");
+    public function getUserPurchases(string $idUser, string $idArticle = ""): array
+    {
+        try {
+            $sqlQuery = "SELECT ARTICLE.id_article FROM {$this->tableName}
+            INNER JOIN ORDER_ o ON o.id_{$this->idName} = {$this->tableName}.id_{$this->idName}
+            INNER JOIN ARTICLE_ORDER ao ON o.id_order_ = ao.id_order_
+            WHERE {$this->idName} = :idUser";
+
+            if ($idArticle !== "") {
+                $sqlQuery .= " AND ao.id_article = :idArticle";
+            }
+
+            $query = $this->db->prepare($sqlQuery);
 
             $query->bindValue(":idUser", $idUser);
+
+            if ($idArticle !== "") {
+                $query->bindValue(":idArticle", $idArticle);
+            }
             $query->execute();
 
             return $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        catch (\PDOException $e){
+        } catch (\PDOException $e) {
             throw $e;
         }
     }
-
-
 }

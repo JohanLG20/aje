@@ -1,6 +1,4 @@
-<article class="container">
-    <?php //var_dump($articleInfos); 
-    ?>
+<article class="container">    ?>
 
     <div id="productOverview">
         <div>
@@ -21,13 +19,7 @@
             <a href="index.php?path=/basket/add/<?= $articleInfos['id'] ?>" class="addBasketButton btn1">Ajouter au panier</a>
         </div>
 
-        <!-- Description -->
-        <div>
-            <h3 class="articleInfos">
-                Description du produit
-            </h3>
-            <p><?= $articleInfos['description'] ?></p>
-        </div>
+
 
         <!-- Specifications techniques -->
         <div>
@@ -41,10 +33,6 @@
                 </p>
             <?php endforeach; ?>
         </div>
-        <div id="commentSection">
-            <?php if (isset($articleInfos['commentError'])): ?>
-                <p><?= $articleInfos['commentError'] ?></p>
-            <?php endif; ?>
 
     </div>
 

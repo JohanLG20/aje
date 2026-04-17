@@ -5,7 +5,7 @@
             <div class="basketItemCard">
                 <img src=<?= $bask['image'] ?> alt=<?= $bask['name'] ?>>
                 <div class="basketDescriptionSection">
-                    <a href="index.php?path=/test/<?= $idArticle ?>" class="basketArticleLink"><?= $bask['name'] ?></a>
+                    <a href="index.php?path=/article/<?= $idArticle ?>" class="basketArticleLink"><?= $bask['name'] ?></a>
                     <div class=price>
                         <p class="<?php !is_null($bask['price']["promo_price"]) ? 'promotion' : '' ?>"><?= $bask['price']["normal_price"] ?>€</p>
                         <?php if (isset($bask['price']['promo_price'])): ?>

@@ -4,94 +4,136 @@
 
     <!-- Informations générales -->
     <div class="product-header">
+        <h1><?= $productInfo['article_name'] ?></h1>
+
         <?php foreach ($productInfo['imagesPath'] as $imagePath): ?>
             <img src="<?= $imagePath ?>"
                 alt="<?= $productInfo['article_name'] ?>">
         <?php endforeach ?>
         <div class="product-details">
             <span class="product-brand"><?= $productInfo['brand'] ?></span>
-            <h1><?= $productInfo['article_name'] ?></h1>
-            <p><?= $productInfo['description'] ?></p>
-            <span class="product-category"><?= $productInfo['category'] ?></span>
+
+            <div class=price>
+                <p class="<?php !is_null($productInfo['price']["promo_price"]) ? 'promotion' : '' ?>"><?= $productInfo['price']["normal_price"] ?>€</p>
+                <?php if (isset($productInfo['price']['promo_price'])): ?>
+                    <p><?= $productInfo['price']['promo_price'] ?>€</p>
+                <?php endif; ?>
+            </div>
         </div>
+        <a href="index.php?path=/basket/add/<?= $idArticle ?>" class="addBasketButton btn1">Ajouter au panier</a>
+
     </div>
+</div>
+<!-- Description -->
+<div>
+    <h3 class="articleInfos">
+        Description du produit
+    </h3>
+    <p><?= $productInfo['description'] ?></p>
+</div>
 
-    <!-- Variantes -->
-    <div class="product-variants">
 
-        <?php foreach ($variants as $variant): ?>
-            <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
-                class="variant-card">
 
-                <!-- Modalités -->
-                <div class="variant-modalities">
-                    <?php foreach ($variant['modalities'] as $label => $modality): ?>
-                        <div class="modality">
-                            <span class="modality-label">
-                                <?= $label ?>
-                            </span>
+<!-- Variantes -->
 
-                            <?php if ($modality['hexa']): ?>
-                                <!-- Affichage spécial pour les couleurs -->
-                                <span class="modality-color"
-                                    style="background-color: <?= $modality['hexa'] ?>"
-                                    title="<?= $modality['value'] ?>">
-                                </span>
-                            <?php else: ?>
-                                <span class="modality-value">
-                                    <?= $modality['value'] ?>
-                                </span>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+<div class="product-variants">
+    <h3 class="articleInfos">
+        Spécifications
+    </h3>
 
-            </a>
+    <!-- Modalités communes à toutes les variantes -->
+    <div class="product-common-modalities">
+        <?php foreach ($commonModalities as $label => $modality): ?>
+            <div class="modality">
+                <span class="modality-label"><?= $label ?></span>
+                <?php if ($modality['hexa']): ?>
+                    <span class="modality-color"
+                        style="background-color: <?= $modality['hexa'] ?>"
+                        title="<?= $modality['value'] ?>">
+                    </span>
+                <?php else: ?>
+                    <span class="modality-value"><?= $modality['value'] ?></span>
+                <?php endif; ?>
+            </div>
         <?php endforeach; ?>
-
     </div>
+    <h3 class="articleInfos">
+        Tous les modèles disponibles :
+    </h3>
+    <?php foreach ($variants as $variant): ?>
+        <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
+            class="variant-card">
 
-    <div id="commentSection">
-        <?php if (isset($productInfo['commentError'])): ?>
-            <p><?= $productInfo['commentError'] ?></p>
-        <?php endif; ?>
 
+            <!-- Modalités -->
+            <div class="variant-modalities">
+                <?php foreach ($variant['modalities'] as $label => $modality): ?>
+                    <div class="modality">
+                        <span class="modality-label">
+                            <?= $label ?>
+                        </span>
 
-        <!-- Comments --->
-
-        <div id="commentSectionHeader">
-            <h3 id="productInfo">
-                Commentaires
-            </h3>
-            <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
-                <p id="addComment">Ajouter un commentaire</p>
-            <?php endif; ?>
-        </div>
-
-        <?php if (!empty($productInfo['comments'])): ?>
-            <div id="allComments">
-                <?php foreach ($productInfo['comments'] as $comment): ?>
-                    <div id="<?= $comment['idComment'] ?>" class="comment">
-                        <div class="commentHeader">
-                            <h4><?= $comment['fullname'] ?></h4>
-                            <?php if (isset($comment['canEdit']) && $comment['canEdit']): 
-                            ?>
-                                <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
-                            <?php endif; ?>
-                            <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
-                            <?php endif; ?>
-                        </div>
-
-                        <p><?= $comment['comment'] ?></p>
+                        <?php if ($modality['hexa']): ?>
+                            <!-- Affichage spécial pour les couleurs -->
+                            <span class="modality-color"
+                                style="background-color: <?= $modality['hexa'] ?>"
+                                title="<?= $modality['value'] ?>">
+                            </span>
+                        <?php else: ?>
+                            <span class="modality-value">
+                                <?= $modality['value'] ?>
+                            </span>
+                        <?php endif; ?>
                     </div>
-
                 <?php endforeach; ?>
             </div>
-        <?php else: ?>
-            <p>Aucun commentaire sur l'article pour le moment.</p>
+
+        </a>
+    <?php endforeach; ?>
+
+</div>
+
+<div id="commentSection">
+    <?php if (isset($productInfo['commentError'])): ?>
+        <p><?= $productInfo['commentError'] ?></p>
+    <?php endif; ?>
+
+
+    <!-- Comments --->
+
+    <div id="commentSectionHeader">
+        <h3 id="articleInfos">
+            Commentaires
+        </h3>
+        <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
+            <p id="addComment">Ajouter un commentaire</p>
         <?php endif; ?>
     </div>
+
+    <?php if (!empty($productInfo['comments'])): ?>
+        <div id="allComments">
+            <?php foreach ($productInfo['comments'] as $comment): ?>
+                <div id="<?= $comment['idComment'] ?>" class="comment">
+                    <div class="commentHeader">
+                        <h4><?= $comment['fullname'] ?></h4>
+                        <?php if (isset($comment['canEdit']) && $comment['canEdit']):
+                        ?>
+                            <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
+                        <?php endif; ?>
+                        <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
+                            <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                        <?php endif; ?>
+                    </div>
+
+                    <p><?= $comment['comment'] ?></p>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>Aucun commentaire sur l'article pour le moment.</p>
+    <?php endif; ?>
+</div>
 </div>
 
 

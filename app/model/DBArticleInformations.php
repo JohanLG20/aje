@@ -36,20 +36,10 @@ class DBArticleInformations extends CoreModel{
         $query = $this->db->prepare("
             SELECT
                 a.id_article,
-                normal.price AS normal_price,
-                promo.price AS promo_price,
                 ft.filter_type_label,
                 COALESCE(ct.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
                 cc.color_choice_hexa
             FROM ARTICLE a
-            JOIN PRICE_HISTORY normal
-                ON normal.id_article = a.id_article
-                AND normal.end_date IS NULL
-            LEFT JOIN PRICE_HISTORY promo
-                ON promo.id_article = a.id_article
-                AND promo.end_date IS NOT NULL
-                AND promo.end_date >= CURDATE()
-                AND promo.start_date <= CURDATE()
             LEFT JOIN VALUES_ v ON v.id_article = a.id_article
             LEFT JOIN FILTER_TYPE ft ON ft.id_filter_type = v.id_filter_type
             LEFT JOIN CHOICE_TXT ct ON ct.id_choice_ = v.id_choice_
