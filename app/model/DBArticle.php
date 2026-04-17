@@ -134,9 +134,9 @@ LEFT JOIN PRICE_HISTORY promo
 
     public function searchForArticle(string $research): array
     {
-        try{
-        $sqlQuery = "SELECT DISTINCT
-    ai.id_article_informations as id_article_informations,
+        try {
+            $sqlQuery = "SELECT DISTINCT
+    a.id_article as id_article,
     ai.article_name as article_name,
     ai.image_repertory as image_repertory,
     b.brand_label    AS brand,
@@ -183,14 +183,23 @@ WHERE
         AND CAST(:research AS DECIMAL(8,3)) <= cr.max_
     )"; //For the last or condition, we need to check that the research is a number before compare it to the CHOICE_RANGE values to avoid getting undesired results
 
-        $query = $this->db->prepare($sqlQuery);
-        $query->execute([':research' => '%' . $research . '%']);
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-
-        catch(\PDOException $e){
+            $query = $this->db->prepare($sqlQuery);
+            $query->execute([':research' => '%' . $research . '%']);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
             throw $e;
         }
+    }
 
+    public function getArticleInformationsId(int $idArticle): ?int
+    {
+        $query = $this->db->prepare("
+        SELECT id_article_informations 
+        FROM {$this->tableName}
+        WHERE id_{$this->idName} = :id
+    ");
+        $query->execute([':id' => $idArticle]);
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
+        return $result ? (int) $result['id_article_informations'] : null;
     }
 }

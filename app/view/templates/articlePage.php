@@ -46,41 +46,6 @@
                 <p><?= $articleInfos['commentError'] ?></p>
             <?php endif; ?>
 
-
-            <!-- Comments --->
-
-            <div id="commentSectionHeader">
-                <h3 id="articleInfos">
-                    Commentaires
-                </h3>
-                <?php if (isset($articleInfos['canAddComment']) && $articleInfos['canAddComment']): ?>
-                    <p id="addComment">Ajouter un commentaire</p>
-                <?php endif; ?>
-            </div>
-            <?php if (!empty($articleInfos['comments'])): ?>
-                <div id="allComments">
-                    <?php foreach ($articleInfos['comments'] as $comment): ?>
-                        <div id="<?= $comment['idComment'] ?>" class="comment">
-                            <div class="commentHeader">
-                                <h4><?= $comment['fullname'] ?></h4>
-                                <?php if (isset($comment['canEdit']) && $comment['canEdit'] && false):  //Decomment &&false when the function is done
-                                ?>
-                                    <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
-                                <?php endif; ?>
-                                <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                    <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
-                                <?php endif; ?>
-                            </div>
-
-                            <p><?= $comment['comment'] ?></p>
-                        </div>
-
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <p>Aucun commentaire sur l'article pour le moment.</p>
-            <?php endif; ?>
-        </div>
     </div>
 
 

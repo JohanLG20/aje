@@ -30,10 +30,14 @@ const ROUTES = [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getAllFiltersValueForFilterType'
     ],
+    '/article/info/{idArticleInformations}' => [
+        'controller' => AJE\Controller\ArticleController::class,
+        'method' => 'show'
+    ],
 
-    '/test/{id}' => [
-        'controller' => AJE\Controller\ArticlePageController::class,
-        'method' => 'prepareAndDisplayView'
+    '/article/{idArticle}' => [
+        'controller' => AJE\Controller\ArticleController::class,
+        'method' => 'showVariant'
     ],
     'basket/add/{id}' => [
         'controller' => AJE\Controller\BasketController::class,
@@ -83,8 +87,10 @@ const ROUTES = [
     ],
     "/search/{query}" => [
         'controller' => AJE\Controller\SearchPageController::class,
-        'method' => 'search',
-    ]
+        'method' => 'displayView',
+    ],
+
+
 
     //TODO: Add contact page + validation RGPD
 

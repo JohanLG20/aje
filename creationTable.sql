@@ -36,8 +36,8 @@ CREATE TABLE BRAND(
 CREATE TABLE ARTICLE_INFORMATIONS(
    id_article_informations INT AUTO_INCREMENT,
    article_name VARCHAR(50) NOT NULL,
-   description VARCHAR(120) NOT NULL,
-   image_repertory VARCHAR(15) NOT NULL,
+   description VARCHAR(255) NOT NULL,
+   image_repertory VARCHAR(50) NOT NULL,
    id_category INT NOT NULL,
    id_brand INT NOT NULL,
    PRIMARY KEY(id_article_informations),
@@ -89,7 +89,7 @@ CREATE TABLE CHOICE_TXT(
 
 CREATE TABLE CHOICE_NUMBER(
    id_choice_ INT,
-   choice DECIMAL(8,3) NOT NULL,
+   choice INT NOT NULL,
    PRIMARY KEY(id_choice_),
    FOREIGN KEY(id_choice_) REFERENCES CHOICE_(id_choice_)
 );
@@ -123,12 +123,12 @@ CREATE TABLE VALUES_(
 
 CREATE TABLE COMMENT(
    id_comment INT AUTO_INCREMENT,
-   comment_label VARCHAR(180),
+   comment_label VARCHAR(120),
+   id_article_informations INT NOT NULL,
    id_user_ INT NOT NULL,
-   id_article INT NOT NULL,
    PRIMARY KEY(id_comment),
-   FOREIGN KEY(id_user_) REFERENCES USER_(id_user_),
-   FOREIGN KEY(id_article) REFERENCES ARTICLE(id_article)
+   FOREIGN KEY(id_article_informations) REFERENCES ARTICLE_INFORMATIONS(id_article_informations),
+   FOREIGN KEY(id_user_) REFERENCES USER_(id_user_)
 );
 
 CREATE TABLE ORDER_(

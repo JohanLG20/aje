@@ -2,13 +2,13 @@
 
 namespace AJE\Controller;
 
+use AJE\Model\DBArticle;
+use AJE\Model\DBArticleInformations;
 use AJE\Model\DBComment;
 use AJE\Model\DBUser;
 use AJE\Utils\DataTransformer;
 
 use PDOException;
-
-use function PHPSTORM_META\elementType;
 
 class CommentController
 {
@@ -117,11 +117,14 @@ class CommentController
 
             //Checking the length of the comment is valid
             if (isset($comment['comment_label']) && strlen($comment['comment_label']) < 120 && !empty($comment['comment_label'])) {
+                $dbArt = new DBArticle();
+                //Retrieving the article informations id of the article to add the comment
+                $idArtInfo = $dbArt->getElementById($idArticle)['id_article_informations'];
                 if ($this->db->addNewElement(
                     [
                         'comment_label' => $comment['comment_label'],
                         'id_user_' => $this->connectedUser->getId(),
-                        'id_article' => $idArticle
+                        'id_article_informations' => $idArtInfo
                     ]
                 )) {
                 } else {
