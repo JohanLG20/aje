@@ -59,11 +59,7 @@
   width: 100%;
 }
 #commentSection .commentHeader .editComment {
-  color: rgb(56, 72, 163);
-}
-#commentSection .commentHeader .editComment:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  color: grey;
 }
 #commentSection .commentHeader .deleteComment {
   color: rgb(56, 72, 163);

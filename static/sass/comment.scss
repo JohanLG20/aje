@@ -23,7 +23,7 @@
         width: 100%;
 
         .editComment {
-            @include commentActionButton;
+            color: grey;
         }
 
         .deleteComment {
