@@ -40,7 +40,11 @@
     <h3 class="articleInfos">
         Spécifications
     </h3>
+    <div class="active-variant">
+        <span class="modality-label"><?= $activeVariantLabel ?></span>
+        <span class="modality-value"><?= $activeVariantValue ?></span>
 
+    </div>
     <!-- Modalités communes à toutes les variantes -->
     <div class="product-common-modalities">
         <?php foreach ($commonModalities as $label => $modality): ?>

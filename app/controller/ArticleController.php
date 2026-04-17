@@ -52,12 +52,12 @@ class ArticleController
             $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
             $productInfo['price'] = $dbArticle->getArticlePrice($idArticle);
             $rawVariants = $dbArticleInformations->getProductVariants($idArticleInformations);
-            $formatted = $this->formatVariants($rawVariants);
+
+            $formatted   = $this->formatVariants($rawVariants);
 
             // On extrait les deux parties du résultat
             $commonModalities = $formatted['commonModalities'];
             $variants         = $formatted['variants'];
-
 
             $productInfo['imagesPath'] = $this->retrieveImages($productInfo['image_repertory']);
             $commentController = new CommentController();
@@ -71,6 +71,13 @@ class ArticleController
             );
             $activeVariant = array_values($activeVariant)[0] ?? null;
 
+            //Retrieving the label
+            $activeVariantLabel = array_key_first($activeVariant['modalities']);
+            //Retrieving the associated value
+            $activeVariantValue = 
+                    is_null($activeVariant['modalities'][$activeVariantLabel]['hexa']) ?
+                        $activeVariant['modalities'][$activeVariantLabel]['value'] :
+                        $activeVariant['modalities'][$activeVariantLabel]['hexa'];
             require(VIEW . '/articleView.php');
         } catch (\PDOException $e) {
             // TODO: gérer l'erreur
@@ -135,7 +142,6 @@ class ArticleController
             'variants'         => $variants
         ];
     }
-
 
     private function notFound(): void
     {

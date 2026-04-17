@@ -39,7 +39,7 @@ class DBArticle extends CoreModel
     }
 
     /**
-     * Return all the id of choices available for all the linked articles
+     * Return all the id of choices available for the linked article
      * [0] =>[
      *         ['id_choice_] => The id of the choice
      *        ],
