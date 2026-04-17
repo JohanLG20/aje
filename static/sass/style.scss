@@ -2,14 +2,18 @@
 @use 'fonts';
 @use 'basket';
 @use 'comment';
+@use 'articleCard';
+@use 'homePage';
+@use 'loginForm';
+@use 'slider';
 
 * {
     margin: 0;
     padding: 0;
+    accent-color: col.$color-primary;
 }
 
 body {
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -36,8 +40,9 @@ hr {
 
 .container {
     width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto ;
+    padding-top: 90px;
 }
 
 .visible {
@@ -106,12 +111,30 @@ hr {
 
 }
 
+.price {
+    display: flex;
+    gap: 8px;
+
+    .promotion {
+        text-decoration: line-through;
+    }
+
+    .promotionNewPrice {
+        color: col.$color-primary;
+    }
+}
+
 
 
 
 #banner {
+
+    position: fixed; //Becomes relatives when desktop mode
     background-color: col.$color-primary;
     color: col.$color-secondary;
+    margin-bottom: 90px;
+    width: 100%;
+    z-index: 50; //Avoid any elements top be over the menus
 
     #baseMenu {
         display: flex;
@@ -157,7 +180,7 @@ hr {
                     border-bottom-left-radius: 16px;
                     border-bottom-right-radius: 16px;
                     left: 0;
-                    z-index: 2;
+                    z-index: 10;
                 }
 
             }
@@ -195,6 +218,7 @@ hr {
                 background-color: col.$color-secondary;
                 width: 100vw;
                 gap: 8px;
+
 
 
                 .droppingList {
@@ -330,6 +354,7 @@ hr {
 @media screen and (min-width:1024px) {
 
     #banner {
+        position: relative;
         #baseMenu {
             padding: 16px 0;
 

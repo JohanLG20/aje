@@ -69,13 +69,126 @@
   cursor: pointer;
 }
 
+.articleCardSlider {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 16px;
+  /* Pour ne pas couper la scrollbar */
+}
+.articleCardSlider .articleCard {
+  display: flex;
+  flex: 0 0 350px;
+  width: 350px;
+  max-height: 130px;
+  border: 2px solid #096a09;
+}
+.articleCardSlider .articleCard .articleCardLink {
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+}
+.articleCardSlider .articleCard .articleCardLink .articleCardImage {
+  width: 35%;
+  height: 100%;
+}
+.articleCardSlider .articleCard .articleCardLink .articleCardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.articleCardSlider .articleCard .articleCardLink .articleCardDescription {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.articleCardSlider .articleCard .articleCardLink .articleCardDescription .articleCardTitle,
+.articleCardSlider .articleCard .articleCardLink .articleCardDescription .articleCardBrand,
+.articleCardSlider .articleCard .articleCardLink .articleCardDescription .promotion,
+.articleCardSlider .articleCard .articleCardLink .articleCardDescription .normalPrice {
+  text-align: center;
+  color: black;
+}
+
+#homePage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#connexionMenu {
+  max-width: 300px;
+  flex-direction: column;
+  gap: 16px;
+}
+#connexionMenu #welcomeMenu {
+  display: flex;
+  flex-direction: column;
+}
+#connexionMenu #loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#connexionMenu #loginForm #loginInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#connexionMenu #accountCreationLink {
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+  text-align: center;
+}
+
+.slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.slider #sliderWrapper {
+  position: relative;
+  width: 100%;
+}
+.slider #sliderWrapper #sliderImages {
+  display: flex;
+  width: 100%;
+}
+.slider #sliderWrapper #sliderImages .sliderImage {
+  min-width: 100%;
+  width: 100%;
+}
+.slider #sliderWrapper #sliderImages .sliderImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slider #sliderWrapper #leftButton,
+.slider #sliderWrapper #rightButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+}
+.slider #sliderWrapper #leftButton {
+  left: 16px;
+}
+.slider #sliderWrapper #rightButton {
+  right: 16px;
+}
+
 * {
   margin: 0;
   padding: 0;
+  accent-color: #096a09;
 }
 
 body {
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -101,8 +214,9 @@ hr {
 
 .container {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding-top: 90px;
 }
 
 .visible {
@@ -164,9 +278,24 @@ hr {
   background-color: black;
 }
 
+.price {
+  display: flex;
+  gap: 8px;
+}
+.price .promotion {
+  text-decoration: line-through;
+}
+.price .promotionNewPrice {
+  color: #096a09;
+}
+
 #banner {
+  position: fixed;
   background-color: #096a09;
   color: #eeeeee;
+  margin-bottom: 90px;
+  width: 100%;
+  z-index: 50;
 }
 #banner #baseMenu {
   display: flex;
@@ -205,7 +334,7 @@ hr {
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   left: 0;
-  z-index: 2;
+  z-index: 10;
 }
 #banner #baseMenu #menuIcons #menuContactLink {
   display: none;
@@ -332,6 +461,9 @@ hr {
 }
 
 @media screen and (min-width: 1024px) {
+  #banner {
+    position: relative;
+  }
   #banner #baseMenu {
     padding: 16px 0;
   }

@@ -1,5 +1,5 @@
 <?php require(LAYOUT . '/header.php') ?>
-<main>
+<main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
     <form action="index.php?path=/usermanagement/<?= $view['action'] ?>" method="post">
         <!-- Last name -->

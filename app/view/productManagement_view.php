@@ -1,6 +1,6 @@
 <?php require(LAYOUT . '/header.php'); ?>
 
-<main>
+<main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
     <form action="index.php?path=/productmanagement/<?= $view['action'] ?>" method="post" enctype="multipart/form-data">
         <!-- Article name -->

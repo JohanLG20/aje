@@ -1,0 +1,58 @@
+@use "col";
+@use "fonts";
+
+@mixin captionStyle {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+    align-items: center;
+    gap: 16px;
+    width: 500px;
+    background-color: grey;
+}
+
+
+.slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    #sliderWrapper {
+        position: relative;
+        width: 100%;
+
+        #sliderImages {
+            display: flex;
+            width: 100%;
+
+            .sliderImage {
+                min-width: 100%;
+                width: 100%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        #leftButton,
+        #rightButton {
+
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        #leftButton {
+            left: 16px;
+        }
+
+        #rightButton {
+            right: 16px;
+        }
+    }
+}

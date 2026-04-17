@@ -41,12 +41,20 @@
 </footer>
 
 </body>
-<script>
 
-        console.log(document.getElementById('connexionMenu') )
+<script>
+    //This function is used to redirect the search towards the router. It correct the path to be compatible with the router taxonomy
+    function redirectSearch(event) {
+        event.preventDefault();
+        const query = document.getElementById('q').value.trim();
+        window.location.href = `index.php?path=/search/${encodeURIComponent(query)}`;
+    }
+</script>
+
+<script defer>
     //This variable will track which top menu is currently openned
-    let lastOpenedTopMenu = document.getElementById('connexionMenu').classList.contains('visible') 
-    ? document.getElementById('connexionMenu') : null        
+    let lastOpenedTopMenu = document.getElementById('connexionMenu').classList.contains('visible') ?
+        document.getElementById('connexionMenu') : null
 
 
     //Burger listener

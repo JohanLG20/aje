@@ -1,8 +1,55 @@
-.articleCardSlider{
-    display: flex;
-    gap: 16px;
+@use 'col';
 
-    .articleCard{
+.articleCardSlider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 16px;
+
+    /* Pour ne pas couper la scrollbar */
+
+
+    .articleCard {
         display: flex;
+        flex: 0 0 350px;
+        width: 350px;
+        max-height: 130px;
+        border: 2px solid col.$color-primary;
+
+        .articleCardLink {
+            display: flex;
+            width: 100%;
+            text-decoration: none;
+
+            .articleCardImage {
+                width: 35%;
+                height: 100%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+
+                }
+            }
+
+            .articleCardDescription {
+                width: 65%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                margin: 16px 0;
+
+                .articleCardTitle,
+                .articleCardBrand,
+                .promotion,
+                .normalPrice {
+                    text-align: center;
+                    color: black;
+                }
+            }
+        }
     }
 }
