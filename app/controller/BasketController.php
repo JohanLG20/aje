@@ -4,8 +4,7 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
-use AJE\Model\DBBrand;
-use AJE\Model\DBPriceHistory;
+use AJE\Utils\SaveImageHanddler;
 use PDOException;
 
 /**
@@ -112,7 +111,8 @@ class BasketController
             $basket['price'] = $dbArticle->getArticlePrice($id);
 
             //Retrieving the principal image
-            $basket['image'] = $this->getBasketImage($articleInfos['image_repertory']);
+            $image = SaveImageHanddler::getFirstImage($articleInfos['image_repertory']);
+            $basket['image'] = $image ?? IMAGE_NOT_FOUND_LINK;
 
             return $basket;
         } catch (PDOException $e) {
@@ -121,27 +121,4 @@ class BasketController
         }
     }
 
-    /**
-     *  Note : The image path returned will be the first one in alphabetic order. If a modification of the images naming pattern is done, this function has to be updated too.
-     * @param string $uniqid The uniqid where the image is stored
-     * 
-     * @return string The path to the image
-     */
-    private function getBasketImage(string $uniqid): string
-    {
-
-        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid)) {
-
-            $dir = ARTICLES_IMAGES . "/" . $uniqid;
-            $allImagesPath = array_diff(scandir($dir), ["..", "."]);
-
-            print_r($allImagesPath);
-
-            $image = IMAGE_LINK . "/" . $uniqid . "/" . $allImagesPath[2];
-            var_dump($allImagesPath);
-            return $image;
-        } else {
-            return ""; //TODO: add non found image path
-        }
-    }
 }

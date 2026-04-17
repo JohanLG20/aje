@@ -9,3 +9,4 @@ define("CONTROLLER", ROOT . "/controller");
 define("SERVICES", ROOT . "/services");
 define("ARTICLES_IMAGES", dirname(ROOT) . "/images");
 define("IMAGE_LINK", "http://localhost/web/aje/images");
+define("IMAGE_NOT_FOUND_LINK", "http://localhost/web/aje/images/notfound/notfound.png");

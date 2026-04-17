@@ -40,10 +40,11 @@
     <h3 class="articleInfos">
         Spécifications
     </h3>
+    <?php if(isset($activeVariantLabel)) : ?>
     <div class="active-variant">
         <span class="modality-label"><?= $activeVariantLabel ?></span>
         <span class="modality-value"><?= $activeVariantValue ?></span>
-
+    <?php endif; ?>
     </div>
     <!-- Modalités communes à toutes les variantes -->
     <div class="product-common-modalities">

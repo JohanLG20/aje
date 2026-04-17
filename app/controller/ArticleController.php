@@ -59,7 +59,8 @@ class ArticleController
             $commonModalities = $formatted['commonModalities'];
             $variants         = $formatted['variants'];
 
-            $productInfo['imagesPath'] = $this->retrieveImages($productInfo['image_repertory']);
+            $images = $this->retrieveImages($productInfo['image_repertory']);
+            $productInfo['imagesPath'] = !empty($images) ? $images : [IMAGE_NOT_FOUND_LINK];
             $commentController = new CommentController();
             $productInfo['canAddComment'] = $commentController->canAddComment($idArticleInformations);
             $productInfo['comments'] = $commentController->getComments($idArticleInformations);
@@ -71,13 +72,16 @@ class ArticleController
             );
             $activeVariant = array_values($activeVariant)[0] ?? null;
 
-            //Retrieving the label
-            $activeVariantLabel = array_key_first($activeVariant['modalities']);
-            //Retrieving the associated value
-            $activeVariantValue = 
+            if (!empty($activeVariant['modalities'])) {
+                //Retrieving the label
+                $activeVariantLabel = array_key_first($activeVariant['modalities']);
+                //Retrieving the associated value
+                $activeVariantValue =
                     is_null($activeVariant['modalities'][$activeVariantLabel]['hexa']) ?
-                        $activeVariant['modalities'][$activeVariantLabel]['value'] :
-                        $activeVariant['modalities'][$activeVariantLabel]['hexa'];
+                    $activeVariant['modalities'][$activeVariantLabel]['value'] :
+                    $activeVariant['modalities'][$activeVariantLabel]['hexa'];
+            }
+
             require(VIEW . '/articleView.php');
         } catch (\PDOException $e) {
             // TODO: gérer l'erreur

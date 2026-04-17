@@ -21,7 +21,7 @@ class SaveImageHanddler
         if (!is_dir(ARTICLES_IMAGES . "/" . $uniqid)) {
             mkdir(ARTICLES_IMAGES . "/" . $uniqid);
         }
-        return ARTICLES_IMAGES . "/" . $uniqid ."/";
+        return ARTICLES_IMAGES . "/" . $uniqid . "/";
     }
 
     public function saveImages(array $images): bool
@@ -33,7 +33,7 @@ class SaveImageHanddler
             $fileName = "image" . $i . $extenstion;
             if (!move_uploaded_file($tempName, $this->imageDirectory . $fileName)) {
                 return false;
-            } 
+            }
         }
 
         return true;
@@ -43,5 +43,32 @@ class SaveImageHanddler
         $ext = ".";
         $ext .= preg_replace("/image\//", "", $type);
         return $ext;
+    }
+
+    /**
+     *  Note : The image path returned will be the first one in alphabetic order. If a modification of the images naming pattern is done, this function has to be updated too. Can return null
+     * @param string $uniqid The uniqid where the image is stored
+     * 
+     * @return ?string The path to the image
+     */
+    public static function getFirstImage(string $uniqid): ?string
+    {
+
+        if (is_dir(ARTICLES_IMAGES . "/" . $uniqid)) {
+
+            $dir = ARTICLES_IMAGES . "/" . $uniqid;
+            $allImagesPath = array_diff(scandir($dir), ["..", "."]);
+
+            if(isset($allImagesPath[2])){
+                $image = IMAGE_LINK . "/" . $uniqid . "/" . $allImagesPath[2];
+            }
+            else{
+                $image = null;
+            }
+            
+            return $image;
+        } else {
+            return null; //TODO: add non found image path
+        }
     }
 }
