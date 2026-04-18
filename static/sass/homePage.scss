@@ -3,3 +3,12 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.articleCardSlider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 16px;
+    /* Pour ne pas couper la scrollbar */
+}

@@ -69,36 +69,28 @@
   cursor: pointer;
 }
 
-.articleCardSlider {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 16px;
-  padding-bottom: 16px;
-  /* Pour ne pas couper la scrollbar */
-}
-.articleCardSlider .articleCard {
+.articleCard {
   display: flex;
   flex: 0 0 350px;
-  width: 350px;
+  width: 100%;
   max-height: 130px;
   border: 2px solid #096a09;
 }
-.articleCardSlider .articleCard .articleCardLink {
+.articleCard .articleCardLink {
   display: flex;
   width: 100%;
   text-decoration: none;
 }
-.articleCardSlider .articleCard .articleCardLink .articleCardImage {
+.articleCard .articleCardLink .articleCardImage {
   width: 35%;
   height: 100%;
 }
-.articleCardSlider .articleCard .articleCardLink .articleCardImage img {
+.articleCard .articleCardLink .articleCardImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.articleCardSlider .articleCard .articleCardLink .articleCardDescription {
+.articleCard .articleCardLink .articleCardDescription {
   width: 65%;
   display: flex;
   flex-direction: column;
@@ -106,10 +98,10 @@
   gap: 8px;
   margin: 16px 0;
 }
-.articleCardSlider .articleCard .articleCardLink .articleCardDescription .articleCardTitle,
-.articleCardSlider .articleCard .articleCardLink .articleCardDescription .articleCardBrand,
-.articleCardSlider .articleCard .articleCardLink .articleCardDescription .promotion,
-.articleCardSlider .articleCard .articleCardLink .articleCardDescription .normalPrice {
+.articleCard .articleCardLink .articleCardDescription .articleCardTitle,
+.articleCard .articleCardLink .articleCardDescription .articleCardBrand,
+.articleCard .articleCardLink .articleCardDescription .promotion,
+.articleCard .articleCardLink .articleCardDescription .normalPrice {
   text-align: center;
   color: black;
 }
@@ -118,6 +110,15 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.articleCardSlider {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 16px;
+  /* Pour ne pas couper la scrollbar */
 }
 
 #connexionMenu {
@@ -180,6 +181,91 @@
 }
 .slider #sliderWrapper #rightButton {
   right: 16px;
+}
+
+#searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#searchResults #filterBar {
+  display: flex;
+  justify-content: center;
+}
+#searchResults #filterBar #filterButton {
+  background: none;
+  border: 1px solid #096a09;
+  border-radius: 16px;
+  padding: 4px 16px;
+  cursor: pointer;
+  color: #096a09;
+}
+#searchResults #filterBar #filterButton:hover {
+  background-color: #096a09;
+  color: #eeeeee;
+}
+#searchResults #articleList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0 32px;
+}
+@media screen and (min-width: 750px) {
+  #searchResults #articleList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+#filterOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+#filterModal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #eeeeee;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 101;
+}
+#filterModal #filterModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#filterModal #filterModalContent #closeModal {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+#filterModal #filterModalContent .filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@media screen and (min-width: 1024px) {
+  #filterModal {
+    width: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 * {
@@ -389,6 +475,7 @@ hr {
 #footer {
   background-color: #096a09;
   padding: 32px 0;
+  margin-top: 32px;
 }
 #footer #footerContainer {
   display: flex;

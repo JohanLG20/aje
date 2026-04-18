@@ -45,6 +45,17 @@ class SaveImageHanddler
         return $ext;
     }
 
+    public static function addFirstImageToArray(array $arr): array
+    {
+        //We use the index to modify the array by referencing it
+        foreach ($arr as $index => $val) {
+            $image = SaveImageHanddler::getFirstImage($val['image_repertory']);
+            $arr[$index]['image'] = $image ?? IMAGE_NOT_FOUND_LINK;
+        }
+
+        return $arr;
+    }
+
     /**
      *  Note : The image path returned will be the first one in alphabetic order. If a modification of the images naming pattern is done, this function has to be updated too. Can return null
      * @param string $uniqid The uniqid where the image is stored
@@ -59,13 +70,12 @@ class SaveImageHanddler
             $dir = ARTICLES_IMAGES . "/" . $uniqid;
             $allImagesPath = array_diff(scandir($dir), ["..", "."]);
 
-            if(isset($allImagesPath[2])){
+            if (isset($allImagesPath[2])) {
                 $image = IMAGE_LINK . "/" . $uniqid . "/" . $allImagesPath[2];
-            }
-            else{
+            } else {
                 $image = null;
             }
-            
+
             return $image;
         } else {
             return null; //TODO: add non found image path

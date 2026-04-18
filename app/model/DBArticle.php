@@ -134,6 +134,7 @@ LEFT JOIN PRICE_HISTORY promo
         }
     }
 
+    /*Fonction 1 
     public function searchForArticle(string $research): array
     {
         try {
@@ -192,7 +193,7 @@ WHERE
             throw $e;
         }
     }
-
+*/
     public function getArticleInformationsId(int $idArticle): ?int
     {
         $query = $this->db->prepare("
@@ -205,13 +206,96 @@ WHERE
         return $result ? (int) $result['id_article_informations'] : null;
     }
 
+    public function searchForArticle(string $research, array $filters = []): array
+    {
+        try {
+            $sqlQuery = "SELECT DISTINCT
+            a.id_article as id,
+            ai.article_name as article_name,
+            ai.image_repertory as image_repertory,
+            b.brand_label    AS brand,
+            normal.price     AS normal_price,
+            promo.price      AS promo_price
+        FROM ARTICLE a
+        JOIN ARTICLE_INFORMATIONS ai
+            ON ai.id_article_informations = a.id_article_informations
+        JOIN CATEGORY c
+            ON c.id_category = ai.id_category
+        JOIN BRAND b
+            ON b.id_brand = ai.id_brand
+        JOIN PRICE_HISTORY normal
+            ON normal.id_article = a.id_article
+            AND normal.end_date IS NULL
+        LEFT JOIN PRICE_HISTORY promo
+            ON promo.id_article = a.id_article
+            AND promo.end_date IS NOT NULL
+            AND promo.end_date >= CURDATE()
+            AND promo.start_date <= CURDATE()
+        LEFT JOIN VALUES_ v
+            ON v.id_article = a.id_article
+        LEFT JOIN CHOICE_TXT ct
+            ON ct.id_choice_ = v.id_choice_
+        LEFT JOIN CHOICE_COLOR cc
+            ON cc.id_choice_ = v.id_choice_
+        LEFT JOIN CHOICE_NUMBER cn
+            ON cn.id_choice_ = v.id_choice_
+        LEFT JOIN CHOICE_RANGE cr
+            ON cr.id_choice_ = v.id_choice_
+        WHERE (
+            ai.article_name LIKE :research
+            OR ai.description LIKE :research
+            OR b.brand_label LIKE :research
+            OR c.cat_label LIKE :research
+            OR ct.choice LIKE :research
+            OR cc.color_choice_label LIKE :research
+            OR CAST(cn.choice AS CHAR) LIKE :research
+            OR (
+                :research REGEXP '^[0-9]+(\\.[0-9]+)?$'
+                AND CAST(:research AS DECIMAL(8,3)) >= cr.min_
+                AND CAST(:research AS DECIMAL(8,3)) <= cr.max_
+            )
+        )";
+
+            $params = [':research' => '%' . $research . '%'];
+
+            // Pour chaque type de filtre, on ajoute une condition
+            foreach ($filters as $idFilterType => $choiceIds) {
+                if (empty($choiceIds)) continue;
+
+                // On génère des placeholders pour chaque id_choice_
+                $placeholders = [];
+                foreach ($choiceIds as $i => $idChoice) {
+                    $placeholder = ":choice_{$idFilterType}_{$i}";
+                    $placeholders[] = $placeholder;
+                    $params[$placeholder] = $idChoice;
+                }
+
+                // On force l'article à avoir au moins une des valeurs choisies pour ce type de filtre
+                $placeholderList = implode(', ', $placeholders);
+                $sqlQuery .= " AND a.id_article IN (
+                SELECT id_article FROM VALUES_
+                WHERE id_filter_type = :filter_type_{$idFilterType}
+                AND id_choice_ IN ({$placeholderList})
+            )";
+                $params[":filter_type_{$idFilterType}"] = $idFilterType;
+            }
+
+            $query = $this->db->prepare($sqlQuery);
+            $query->execute($params);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+
     /**
      * @param string $limit The number of article we want, 10 is set by default
      * 
      * @return array
      */
-    public function getArticlesInPromotions(string $limit = "10"): array{
-        try{
+    public function getArticlesInPromotions(string $limit = "10"): array
+    {
+        try {
             $query = $this->db->prepare("SELECT
     a.id_article as id,
     ai.article_name as article_name,
@@ -236,8 +320,7 @@ LIMIT :limit");
             $query->bindValue(":limit", $limit, \PDO::PARAM_INT);
             $query->execute();
             return $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        catch (\PDOException $e){
+        } catch (\PDOException $e) {
             throw $e;
         }
     }

@@ -1,0 +1,92 @@
+@use 'col';
+@use 'articleCard';
+
+#searchResults {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    #filterBar {
+        display: flex;
+        justify-content: center;
+
+        #filterButton {
+            background: none;
+            border: 1px solid col.$color-primary;
+            border-radius: 16px;
+            padding: 4px 16px;
+            cursor: pointer;
+            color: col.$color-primary;
+
+            &:hover {
+                background-color: col.$color-primary;
+                color: col.$color-secondary;
+            }
+        }
+    }
+
+    #articleList {
+        display: grid;
+        grid-template-columns: 1fr; // 1 colonne par défaut sur mobile
+        gap: 16px;
+        margin: 0 32px;
+
+        @media screen and (min-width: 750px) {
+            grid-template-columns: repeat(2, 1fr); // 2 colonnes au dessus de 750px
+        }
+    }
+}
+
+#filterOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+#filterModal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 80vh; // Limite la hauteur à 80% de l'écran
+    overflow-y: auto; // Scroll si le contenu dépasse
+    background-color: col.$color-secondary;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box; // Évite que le padding fasse dépasser la modal
+    z-index: 101;
+
+    #filterModalContent {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        #closeModal {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .filterSection {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        width: 400px; // Largeur fixe sur desktop
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
