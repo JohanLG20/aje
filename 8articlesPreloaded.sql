@@ -134,3 +134,76 @@ INSERT INTO VALUES_ (id_article, id_choice_, id_filter_type) VALUES
 INSERT INTO VALUES_ (id_article, id_choice_, id_filter_type) VALUES
 (8, 11, 2), -- Couleur Bleu
 (8, 10, 4); -- Pointure 44
+
+
+
+INSERT INTO BRAND (brand_label) VALUES ('Jordan');
+
+-- Informations communes à toutes les variantes
+INSERT INTO ARTICLE_INFORMATIONS (article_name, description, image_repertory, id_category, id_brand)
+VALUES ('Air Jordan 1 Retro High', 'La légendaire basket montante Air Jordan 1 dans son coloris Chicago', 'img/baskets/air-jordan-1', 5, 6);
+
+-- 10 variantes (une par pointure)
+INSERT INTO ARTICLE (id_article_informations) VALUES
+(2), (2), (2), (2), (2), (2), (2), (2), (2), (2);
+
+-- Prix normaux pour chaque variante (id_article 13 à 22)
+INSERT INTO PRICE_HISTORY (start_date, end_date, price, id_article) VALUES
+('2024-01-01', NULL, 180.00, 9),
+('2024-01-01', NULL, 180.00, 10),
+('2024-01-01', NULL, 180.00, 11),
+('2024-01-01', NULL, 180.00, 12),
+('2024-01-01', NULL, 180.00, 13),
+('2024-01-01', NULL, 180.00, 14),
+('2024-01-01', NULL, 180.00, 15),
+('2024-01-01', NULL, 180.00, 16),
+('2024-01-01', NULL, 180.00, 17),
+('2024-01-01', NULL, 180.00, 18);
+
+-- Promotion sur quelques pointures
+INSERT INTO PRICE_HISTORY (start_date, end_date, price, id_article) VALUES
+('2026-04-01', '2026-06-30', 149.99, 13),
+('2026-04-01', '2026-06-30', 149.99, 14);
+
+-- Types de filtres (si pas déjà présents)
+-- Pointure id 4, Couleur id 2 (déjà existants dans notre script précédent)
+
+-- Choix de pointures
+INSERT INTO CHOICE_ (id_filter_type) VALUES
+(4), (4), (4), (4), (4), (4), (4), (4), (4), (4);
+
+INSERT INTO CHOICE_NUMBER (id_choice_, choice) VALUES
+(11, 38),
+(12, 39),
+(13, 40),
+(14, 41),
+(15, 42),
+(16, 43),
+(17, 44),
+(18, 45),
+(19, 46),
+(20, 47);
+
+-- Choix de couleurs (rouge et blanc, coloris Chicago)
+INSERT INTO CHOICE_ (id_filter_type) VALUES (2), (2);
+INSERT INTO CHOICE_COLOR (id_choice_, color_choice_label, color_choice_hexa) VALUES
+(21, 'Rouge', '#FF0000'),
+(22, 'Blanc', '#FFFFFF');
+
+-- Association pointure + couleur à chaque variante
+INSERT INTO VALUES_ (id_article, id_choice_, id_filter_type) VALUES
+(9, 11, 4), (9, 21, 2), -- Pointure 38, Rouge/Blanc
+(10, 12, 4), (10, 21, 2), -- Pointure 39, Rouge/Blanc
+(11, 13, 4), (11, 21, 2), -- Pointure 40, Rouge/Blanc
+(12, 14, 4), (12, 21, 2), -- Pointure 41, Rouge/Blanc
+(13, 15, 4), (13, 21, 2), -- Pointure 42, Rouge/Blanc
+(14, 16, 4), (14, 21, 2), -- Pointure 43, Rouge/Blanc
+(15, 17, 4), (15, 21, 2), -- Pointure 44, Rouge/Blanc
+(16, 18, 4), (16, 21, 2), -- Pointure 45, Rouge/Blanc
+(17, 19, 4), (17, 21, 2), -- Pointure 46, Rouge/Blanc
+(18, 20, 4), (18, 21, 2); -- Pointure 47, Rouge/Blanc
+
+-- Filtre pointure pour la catégorie Baskets si pas déjà présent
+INSERT IGNORE INTO FILTERED_BY (id_category, id_filter_type) VALUES (5, 4);
+
+

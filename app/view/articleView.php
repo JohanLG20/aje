@@ -75,9 +75,6 @@
                     <div class="variant-modalities">
                         <?php foreach ($variant['modalities'] as $label => $modality): ?>
                             <div class="modality">
-                                <span class="modality-label">
-                                    <?= $label ?>
-                                </span>
 
                                 <?php if ($modality['hexa']): ?>
                                     <!-- Affichage spécial pour les couleurs -->

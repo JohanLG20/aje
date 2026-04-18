@@ -206,16 +206,22 @@ WHERE
         return $result ? (int) $result['id_article_informations'] : null;
     }
 
-    public function searchForArticle(string $research, array $filters = []): array
+    public function searchForArticles(string $research): array
     {
         try {
             $sqlQuery = "SELECT DISTINCT
             a.id_article as id,
             ai.article_name as article_name,
             ai.image_repertory as image_repertory,
-            b.brand_label    AS brand,
-            normal.price     AS normal_price,
-            promo.price      AS promo_price
+            b.brand_label AS brand,
+            normal.price AS normal_price,
+            promo.price AS promo_price,
+            c.cat_label AS category,
+            v.id_filter_type,
+            v.id_choice_,
+            ft.filter_type_label,
+            COALESCE(ct.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
+            cc.color_choice_hexa
         FROM ARTICLE a
         JOIN ARTICLE_INFORMATIONS ai
             ON ai.id_article_informations = a.id_article_informations
@@ -241,7 +247,9 @@ WHERE
             ON cn.id_choice_ = v.id_choice_
         LEFT JOIN CHOICE_RANGE cr
             ON cr.id_choice_ = v.id_choice_
-        WHERE (
+        LEFT JOIN FILTER_TYPE ft
+            ON ft.id_filter_type = v.id_filter_type
+        WHERE
             ai.article_name LIKE :research
             OR ai.description LIKE :research
             OR b.brand_label LIKE :research
@@ -253,35 +261,10 @@ WHERE
                 :research REGEXP '^[0-9]+(\\.[0-9]+)?$'
                 AND CAST(:research AS DECIMAL(8,3)) >= cr.min_
                 AND CAST(:research AS DECIMAL(8,3)) <= cr.max_
-            )
-        )";
-
-            $params = [':research' => '%' . $research . '%'];
-
-            // Pour chaque type de filtre, on ajoute une condition
-            foreach ($filters as $idFilterType => $choiceIds) {
-                if (empty($choiceIds)) continue;
-
-                // On génère des placeholders pour chaque id_choice_
-                $placeholders = [];
-                foreach ($choiceIds as $i => $idChoice) {
-                    $placeholder = ":choice_{$idFilterType}_{$i}";
-                    $placeholders[] = $placeholder;
-                    $params[$placeholder] = $idChoice;
-                }
-
-                // On force l'article à avoir au moins une des valeurs choisies pour ce type de filtre
-                $placeholderList = implode(', ', $placeholders);
-                $sqlQuery .= " AND a.id_article IN (
-                SELECT id_article FROM VALUES_
-                WHERE id_filter_type = :filter_type_{$idFilterType}
-                AND id_choice_ IN ({$placeholderList})
             )";
-                $params[":filter_type_{$idFilterType}"] = $idFilterType;
-            }
 
             $query = $this->db->prepare($sqlQuery);
-            $query->execute($params);
+            $query->execute([':research' => '%' . $research . '%']);
             return $query->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             throw $e;

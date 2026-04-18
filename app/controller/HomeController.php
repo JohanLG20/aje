@@ -10,7 +10,7 @@ class HomeController
     public function home()
     {
         $dbArt = new DBArticle();
-        $latestArticles = $dbArt->searchForArticle("Basket");
+        $latestArticles = $dbArt->searchForArticles("Basket");
         $latestArticles = SaveImageHanddler::addFirstImageToArray($latestArticles);
 
         $promotions = $dbArt->getArticlesInPromotions();

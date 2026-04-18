@@ -42,7 +42,7 @@ hr {
 .container {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto ;
+    margin: 0 auto;
     padding-top: 90px;
 }
 
@@ -165,6 +165,8 @@ hr {
             display: flex;
 
             .navItem {
+                position: relative;
+
                 .menuIcon {
                     width: 50%;
 
@@ -180,8 +182,11 @@ hr {
                     border: 2px solid col.$color-primary;
                     border-bottom-left-radius: 16px;
                     border-bottom-right-radius: 16px;
-                    left: 0;
+                    top: 100%; // Se place juste en dessous de l'icône
+                    right: 0; // Aligné sur la droite du navItem
+                    left: auto; // On retire le left: 0 qui le collait au bord
                     z-index: 10;
+
                 }
 
             }
@@ -357,6 +362,7 @@ hr {
 
     #banner {
         position: relative;
+
         #baseMenu {
             padding: 16px 0;
 

@@ -406,6 +406,9 @@ hr {
 #banner #baseMenu #menuIcons {
   display: flex;
 }
+#banner #baseMenu #menuIcons .navItem {
+  position: relative;
+}
 #banner #baseMenu #menuIcons .navItem .menuIcon {
   width: 50%;
 }
@@ -419,7 +422,9 @@ hr {
   border: 2px solid #096a09;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
-  left: 0;
+  top: 100%;
+  right: 0;
+  left: auto;
   z-index: 10;
 }
 #banner #baseMenu #menuIcons #menuContactLink {
