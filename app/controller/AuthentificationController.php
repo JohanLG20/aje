@@ -44,7 +44,7 @@ class AuthentificationController
             //Each values of the post is trimmed and filtered by htmlspecialchars
             $postVal = DataTransformer::escapeValues($_POST);
             try {
-            
+
                 $requieredUser = $this->db->getUserByMail($postVal['mail']);
 
                 //Checking if a user with this mail exists
@@ -58,6 +58,8 @@ class AuthentificationController
                         $dbUserLevel = new DBUserLevel();
                         $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label']; // Setting the permissions level
                         $_SESSION['userId'] = $requieredUser['id_user_'];
+
+                        header("Location: {$_SERVER['HTTP_REFERER']}");
                     } else {
                         $errors['login'] = "Identifiant ou mot de passe incorrect";
                     }
@@ -80,6 +82,7 @@ class AuthentificationController
 
     /*
     * Allow the user to logout, unset the $_SESSION values linked the user
+    * 
     */
     public function logout()
     {
@@ -87,7 +90,13 @@ class AuthentificationController
         unset($_SESSION['name']);
         unset($_SESSION['permissionLevel']);
         unset($_SESSION['userId']);
-        header("Location: {$_SERVER['HTTP_REFERER']}");
+
+        //We check if the user has suppressed his account
+        if (isset($_POST['account_deleted'])) {
+            header("Location: index.php"); //We redirect him at the index
+        } else {
+            header("Location: {$_SERVER['HTTP_REFERER']}");
+        }
     }
 
     /**
@@ -142,10 +151,8 @@ class AuthentificationController
             $this->permissionLevel === "admin"
         ) {
             return true;
-            
-        } 
+        }
         return false;
-    
     }
 
     /**
@@ -153,14 +160,13 @@ class AuthentificationController
      * 
      * @return bool True if the connected user can connect, false otherwise
      */
-    public function canCommentArticle(string $idArticle) : bool{
-        if(!is_null($this->id)){
+    public function canCommentArticle(string $idArticle): bool
+    {
+        if (!is_null($this->id)) {
             return true;
             //TODO: make function
-        }
-        else{
+        } else {
             return false;
         }
-        
     }
 }

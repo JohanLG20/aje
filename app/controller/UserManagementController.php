@@ -13,11 +13,11 @@ class UserManagementController extends CRUDController
     {
         return UserErrorHelper::checkForErrors($values, $action);
     }
-    
+
     protected function handdleSqlErrors(\Exception $e, string $action, array $values): string
     {
         $errorMessage = "Une erreur inconnue s'est produite, veuillez réessayer ou contacter le support si le problème persiste.";
-        if($e->getCode() == 0){
+        if ($e->getCode() == 0) {
             $errorMessage = "Cette adresse email est déjà utilisée.";
         }
         return $e->getMessage();
@@ -29,16 +29,14 @@ class UserManagementController extends CRUDController
     protected function create(array $params): string
     {
         $params['passwd']  = password_hash($params['passwd'], PASSWORD_DEFAULT);
-        try{
+        try {
             $user = new DBUser();
-            if($user->addNewElement($params)){
+            if ($user->addNewElement($params)) {
                 return 'Votre compte à été créer avec succès. Vous pouvez maintenant vous identifier.';
-            }
-            else{
+            } else {
                 return 'Une erreur est survenue lors de la création de votre compte, veuillez réessayer.';
             }
-        }
-        catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);
         }
     }
@@ -46,14 +44,31 @@ class UserManagementController extends CRUDController
     {
         throw new \Exception("Not implemented yet");
     }
-    protected function delete(int $id): string
+    protected function delete(array $params): string
     {
-        throw new \Exception("Not implemented yet");
+        try {
+            $userDb = new DBUser();
+            //We retrieve the id of the connected user.
+            $authController = new AuthentificationController();
+            $userId = $authController->getId();
+            var_dump($userId);
+            if ($userDb->deleteElementById($userId)) {
+                //We send back the user to the home page
+                header("Location: index.php");
+                $authController->logout();
+                return "";
+
+            } else {
+                return "Impossible de supprimer l'utilisateur";
+            }
+        } catch (\PDOException $e) {
+            return "Une erreur est survenue lors de l'opération";
+        }
     }
     protected function getSuccessMessage(string $action): string
     {
         $result = "";
-        switch($action){
+        switch ($action) {
             case 'create':
                 $result = "Votre compte a été crée avec succès !";
                 break;
@@ -62,9 +77,8 @@ class UserManagementController extends CRUDController
     }
     protected function callView(array $view, array $values): void
     {
-        
+
         include(VIEW . '/userManagement_view.php');
-    
     }
 
 

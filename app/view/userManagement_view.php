@@ -89,17 +89,42 @@
 
 
         <input type="hidden" name="form_submitted">
-        <button type="submit" class="btn1"><?= explode(" " ,$view['operationLabel'])[0] ?></button>
+        <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
 
         <?php if (isset($view['operationResult'])) : ?>
             <p><?= $view['operationResult'] ?></p>
         <?php endif; ?>
     </form>
 
-    <?php if($view['action'] === "update"): ?>
-        <a href="index.php?path=/usermanagement/delete">Supprimer mon compte</a>
+    <?php if ($view['action'] === "update"): ?>
+        <button id="deleteButton">Supprimer mon compte</button>
     <?php endif; ?>
 </main>
 
+<script>
+    let deleteButton = document.getElementById("deleteButton")
+    if (deleteButton) {
+        deleteButton.addEventListener("click", () => {
+            if (confirm("Souhaitez vous réelement supprimer votre compte ?")) {
+                //We create a form to send the informations    
+                let form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'index.php?path=/usermanagement/delete';
+
+                let formSubmitted = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'form_submitted';
+                let accountDeleted = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'account_deleted';
+
+                form.appendChild(formSubmitted);
+                form.appendChild(accountDeleted);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        })
+    }
+</script>
 
 <?php require(LAYOUT . '/footer.php') ?>

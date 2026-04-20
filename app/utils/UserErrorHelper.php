@@ -4,25 +4,28 @@ namespace AJE\Utils;
 
 abstract class UserErrorHelper
 {
-    public static function checkForErrors(array $values): array|bool
+    public static function checkForErrors(array $values, string $action): array|bool
     {
-        $errors['lastname'] = self::checkLastnameErrors($values['lastname']);
-        $errors['firstname'] = self::checkFirstnameErrors($values['firstname']);
-        $errors['email'] = self::checkEmailErrors($values['email']);
-        $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
-        $errors['city'] = self::checkCityErrors($values['city']);
-        $errors['postCode'] = self::checkPostaCodeErrors($values['postCode']);
-        $errors['address'] = self::checkAddressErrors($values['address']);
-        $errors['phoneNumber'] = self::checkPhoneNumberErrors($values['phoneNumber']);
-
-        //We remove all the values that dont have any errors
-        foreach ($errors as $key => $val) {
-            if (is_null($val)) {
-                unset($errors[$key]);
+        if ($action !== "delete") {
+            $errors['lastname'] = self::checkLastnameErrors($values['lastname']);
+            $errors['firstname'] = self::checkFirstnameErrors($values['firstname']);
+            $errors['email'] = self::checkEmailErrors($values['email']);
+            $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
+            $errors['city'] = self::checkCityErrors($values['city']);
+            $errors['postCode'] = self::checkPostaCodeErrors($values['postCode']);
+            $errors['address'] = self::checkAddressErrors($values['address']);
+            $errors['phoneNumber'] = self::checkPhoneNumberErrors($values['phoneNumber']);
+            //We remove all the values that dont have any errors
+            foreach ($errors as $key => $val) {
+                if (is_null($val)) {
+                    unset($errors[$key]);
+                }
             }
+            return !empty($errors) ? $errors : false;
         }
-
-        return !empty($errors) ? $errors : false;
+        else{
+            return false;
+        }
     }
     /**
      * @param string $lastName The last name we want to check
@@ -234,10 +237,9 @@ abstract class UserErrorHelper
 
                 ))
             )) {
-                    //No errors has been encountered so we return null
-                    return null;
-                }
-             else {
+                //No errors has been encountered so we return null
+                return null;
+            } else {
                 return 'Veuillez entrer un numéro de téléphone valide (01.02.03.04.05)';
             }
         }

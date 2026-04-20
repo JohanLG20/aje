@@ -3,7 +3,6 @@ namespace AJE\Utils;
 
 use AJE\Model\DBChoice_;
 use AJE\Model\DBFilteredBy;
-use AJE\Model\DBFilterValues;
 
 class TableCorrelation{
     private const CORRELATIONS = [
