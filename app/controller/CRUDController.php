@@ -10,7 +10,7 @@ abstract class CRUDController
     abstract protected function handdleSqlErrors(\Exception $e, string $action, array $values): string;
     abstract protected function create(array $params): string;
     abstract protected function update(array $params): string;
-    abstract protected function delete(int $id): string;
+    abstract protected function delete(array $params): string;
     abstract protected function getSuccessMessage(string $action): string;
     abstract protected function setOperationLabel(string $action): string;
     abstract protected function callView(array $view, array $values): void;
@@ -19,7 +19,8 @@ abstract class CRUDController
 
     public function prepareAndDisplayView(string $action)
     {
-        if ($action !== "create" && $action !== "modify" && $action !== "delete") {
+        //Checking if the asked action are available
+        if ($action !== "create" && $action !== "update" && $action !== "delete") {
             require(VIEW . "/404.php");
         } else {
             $view['action'] = $action;
@@ -69,7 +70,7 @@ abstract class CRUDController
                 break;
 
             case 'delete':
-                $operationResult = $this->delete(0); //TODO: Mettre à jour le int
+                $operationResult = $this->delete($values); //TODO: Mettre à jour le int
                 break;
         }
 

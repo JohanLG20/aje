@@ -18,7 +18,7 @@ class ProductManagementController extends CRUDController
 
     protected function getPostValuesErrors($action, $values): array|bool
     {
-        return ProductErrorHelper::checkForErrors($values);
+        return ProductErrorHelper::checkForErrors($values, $action);
     }
 
     protected function create(array $params): string
@@ -120,9 +120,21 @@ class ProductManagementController extends CRUDController
     {
         throw new \Exception("Not implemented yet");
     }
-    protected function delete(int $id): string
+    protected function delete(array $params): string
     {
-        throw new \Exception("Not implemented yet");
+        try{
+            $artDb = new DBArticle();
+            if($artDb->deleteElementById($params['idArticle'])){
+                return "Article supprimé avec succès";
+            }else{
+                return "Impossible de supprimer l'article";
+            }
+        }
+        catch(\PDOException $e){
+            return "Une erreur est survenue lors de l'opération";
+        }
+
+
     }
     protected function getSuccessMessage(string $action): string
     {
@@ -139,12 +151,16 @@ class ProductManagementController extends CRUDController
             case 'create':
                 $operationLabel = "Ajouter un nouveau produit";
                 break;
-            case 'modify':
+            case 'update':
                 $operationLabel = "Modifier un produit déjà existant";
+                break;
+            case 'delete':
+                $operationLabel = "Supprimer un produit";
                 break;
         }
         return $operationLabel;
     }
+
     protected function completeViewInformations(string $action): array
     {
         $catDb = new DBCategory();
@@ -154,10 +170,11 @@ class ProductManagementController extends CRUDController
         $extraInformations['categoriesList'] = $this->flattenTree($allCategories);
         $extraInformations['brandList'] = $brandDb->getAllElements();
 
-        if($action !== "create"){
+        if ($action !== "create") {
             $artDb = new DBArticle();
-            $allArticles = $artDb->getAllElements();
-            $extraInformations['articlesList'] = $allArticles;
+            $allArticles = $artDb->getAllArticlesWithModalities();
+            $allArticles = $this->groupArticles($allArticles);
+            $extraInformations['articlesList'] = $this->flattenArticlesForSelect($allArticles);
         }
 
 
@@ -234,24 +251,96 @@ class ProductManagementController extends CRUDController
      * ]
      *  
      */
-    public function groupArticlesByInformations(array $articles): array
-{
-    $grouped = [];
+    private function groupArticles(array $rows): array
+    {
+        $grouped = [];
 
-    foreach ($articles as $article) {
-        $idInfos = $article['id_article_informations'];
+        foreach ($rows as $row) {
+            $idInfos   = $row['id_article_informations'];
+            $idArticle = $row['id_article'];
 
-        if (!isset($grouped[$idInfos])) {
-            $grouped[$idInfos] = [
-                'id_article_informations' => $idInfos,
-                'article_name'            => $article['article_name'],
-                'variants'                => []
-            ];
+            if (!isset($grouped[$idInfos])) {
+                $grouped[$idInfos] = [
+                    'article_name' => $row['article_name'],
+                    'variants'     => []
+                ];
+            }
+
+            if (!isset($grouped[$idInfos]['variants'][$idArticle])) {
+                $grouped[$idInfos]['variants'][$idArticle] = [];
+            }
+
+            if (!empty($row['filter_type_label']) && !empty($row['choice_value'])) {
+                $grouped[$idInfos]['variants'][$idArticle][$row['filter_type_label']] = $row['choice_value'];
+            }
         }
 
-        $grouped[$idInfos]['variants'][] = $article['id_article'];
+        return $grouped;
     }
 
-    return array_values($grouped);
-}
+    private function flattenArticlesForSelect(array $grouped): array
+    {
+        $result = [];
+
+        foreach ($grouped as $idInfos => $product) {
+            $variants = $product['variants'];
+
+            // Produit sans variante
+            if (count($variants) === 1) {
+                $idArticle = array_key_first($variants);
+                $result[] = [
+                    'id'       => $idArticle,
+                    'label'    => $product['article_name'],
+                    'depth'    => 0,
+                    'disabled' => false
+                ];
+                continue;
+            }
+
+            // On identifie les modalités qui diffèrent entre les variantes
+            $allModalities = [];
+            foreach ($variants as $modalities) {
+                foreach ($modalities as $label => $value) {
+                    $allModalities[$label][] = $value;
+                }
+            }
+
+            $varyingModalities = [];
+            foreach ($allModalities as $label => $values) {
+                if (count(array_unique($values)) > 1) {
+                    $varyingModalities[] = $label;
+                }
+            }
+
+            // Produit parent désactivé
+            $result[] = [
+                'id'       => null,
+                'label'    => $product['article_name'],
+                'depth'    => 0,
+                'disabled' => true
+            ];
+
+            // Variantes avec uniquement les modalités qui diffèrent
+            foreach ($variants as $idArticle => $modalities) {
+                $variantLabel = implode(
+                    ' - ',
+                    array_filter(
+                        array_map(
+                            fn($label) => $modalities[$label] ?? null,
+                            $varyingModalities
+                        )
+                    )
+                );
+
+                $result[] = [
+                    'id'       => $idArticle,
+                    'label'    => $product['article_name'] . ' — ' . $variantLabel ?: 'Variante #' . $idArticle,
+                    'depth'    => 1,
+                    'disabled' => false
+                ];
+            }
+        }
+
+        return $result;
+    }
 }

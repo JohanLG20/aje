@@ -11,7 +11,7 @@ class UserManagementController extends CRUDController
 
     protected function getPostValuesErrors($action, $values): array|bool
     {
-        return UserErrorHelper::checkForErrors($values);
+        return UserErrorHelper::checkForErrors($values, $action);
     }
     
     protected function handdleSqlErrors(\Exception $e, string $action, array $values): string
@@ -22,7 +22,7 @@ class UserManagementController extends CRUDController
         }
         return $e->getMessage();
     }
-    protected function completeViewInformations(): array
+    protected function completeViewInformations(string $action): array
     {
         return [];
     }

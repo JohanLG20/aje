@@ -95,6 +95,10 @@
             <p><?= $view['operationResult'] ?></p>
         <?php endif; ?>
     </form>
+
+    <?php if($view['action'] === "update"): ?>
+        <a href="index.php?path=/usermanagement/delete">Supprimer mon compte</a>
+    <?php endif; ?>
 </main>
 
 

@@ -998,6 +998,119 @@
   border-radius: 50%;
 }
 
+main {
+  padding: 16px;
+  box-sizing: border-box;
+}
+main h2 {
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+main form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+main form .form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+main form .form-item label {
+  font-size: 13px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+main form .form-item input,
+main form .form-item select {
+  padding: 12px 16px;
+  border: 2px solid rgb(78.947826087, 240.052173913, 78.947826087);
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #d9d9d9;
+  color: black;
+  box-sizing: border-box;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+main form .form-item input:focus,
+main form .form-item select:focus {
+  outline: none;
+  border-color: #096a09;
+}
+main form .form-item input::placeholder,
+main form .form-item select::placeholder {
+  color: grey;
+  font-size: 13px;
+}
+main form .form-item select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23808080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+main form .form-item select option {
+  background-color: #d9d9d9;
+  color: black;
+  padding: 8px;
+}
+main form .form-item select option:disabled {
+  color: grey;
+  font-family: "LucioleBold", "sans-serif";
+}
+main form .error {
+  font-size: 12px;
+  color: red;
+  margin-top: -4px;
+  padding-left: 4px;
+}
+main form .error::before {
+  content: "⚠ ";
+}
+main form button[type=submit] {
+  margin-top: 16px;
+  align-self: center;
+  width: 60%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 24px;
+  text-align: center;
+}
+main form p:last-child {
+  text-align: center;
+  font-size: 14px;
+  color: grey;
+  margin-top: 8px;
+}
+@media screen and (min-width: 750px) {
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  main form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  main form .form-item:nth-child(5),
+  main form .form-item:nth-last-child(1),
+  main form button[type=submit],
+  main form input[type=hidden],
+  main form p {
+    grid-column: 1/-1;
+  }
+  main form h2 {
+    grid-column: 1/-1;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

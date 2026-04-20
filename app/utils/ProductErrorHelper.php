@@ -2,34 +2,42 @@
 
 namespace AJE\Utils;
 
+use AJE\Model\DBArticle;
 use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
 
 class ProductErrorHelper
 {
 
-    public static function checkForErrors(array $values): array|bool
+    public static function checkForErrors(array $values, string $action): array|bool
     {
-        $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
-        $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
-        $errors['description'] = self::checkDescriptionErrors($values['description']);
-        $errors['price'] = self::checkPriceErrors($values['price']);
-        $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
-
-        //Checking filters values integrity
-        $filterErrorHelper = new FiltersErrorHelper($values);
-        $filterErrors = $filterErrorHelper->checkForErrors();
-
-        //This is quite particular, all the treatement is done in the method
-        //Images are stored in $_FILES['images']
-        $errors['images'] = self::checkImagesErrors();
-
-
-
-        //Addind the detected errors to the list
-        if (!empty($filterErrors)) {
-            array_merge($errors, $filterErrors);
+        if ($action !== "create") {
+            $errors['idArticle'] = self::checkArticleIdErrors($values['idArticle']);
         }
+
+        if ($action !== "delete") {
+            $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
+            $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
+            $errors['description'] = self::checkDescriptionErrors($values['description']);
+            $errors['price'] = self::checkPriceErrors($values['price']);
+            $errors['idCat'] = self::checkCategoryErrors($values['idCat']);
+
+            //Checking filters values integrity
+            $filterErrorHelper = new FiltersErrorHelper($values);
+            $filterErrors = $filterErrorHelper->checkForErrors();
+
+            //This is quite particular, all the treatement is done in the method
+            //Images are stored in $_FILES['images']
+            $errors['images'] = self::checkImagesErrors();
+
+
+
+            //Addind the detected errors to the list
+            if (!empty($filterErrors)) {
+                array_merge($errors, $filterErrors);
+            }
+        }
+
 
 
 
@@ -133,6 +141,26 @@ class ProductErrorHelper
             return null;
         } else {
             return "Veuillez entrer au moins une image";
+        }
+    }
+
+    private static function checkArticleIdErrors(string $id): ?string
+    {
+
+        if (is_numeric($id)) {
+            try {
+                $artDb = new DBArticle();
+                if (!empty($artDb->getElementById($id))) {
+                    return null;
+                } else {
+                    return "Article introuvable";
+                }
+            } catch (\PDOException $e) {
+                return "Une erreur est survenue lors de la connexion de la base de données";
+            }
+            return null;
+        } else {
+            return "Veuillez sélectionner un article";
         }
     }
 }

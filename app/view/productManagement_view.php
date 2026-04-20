@@ -5,112 +5,115 @@
     <form action="index.php?path=/productmanagement/<?= $view['action'] ?>" method="post" enctype="multipart/form-data">
         <?php if ($view['action'] !== "create"): ?>
             <div class="form-item">
-                <label for="idArticle">Choisissez un article à <?= $view['operationLabel'] ?></label>
-                <select name="idArticle" id="idArticle">
-                    <?php foreach ($articles as $article): ?>
-                        <?php if ($article['depth'] === 0): ?>
-                            <!-- Le produit parent n'est pas sélectionnable -->
-                            <option disabled>
-                                <?= htmlspecialchars($article['label']) ?>
-                            </option>
-                        <?php else: ?>
-                            <option value="<?= $article['id'] ?>">
-                                <?= str_repeat('&nbsp;&nbsp;&nbsp;', $article['depth']) ?>
-                                └ Variante #<?= $article['id'] ?>
-                            </option>
-                        <?php endif; ?>
+                <label for="idArticle">Selectionnez un article</label>
+                <select name="idArticle">
+                    <?php foreach ($view['articlesList'] as $article): ?>
+                        <option
+                            value="<?= $article['id'] ?? '' ?>"
+                            <?= $article['disabled'] ? 'disabled' : '' ?>>
+                            <?= str_repeat('&nbsp;&nbsp;&nbsp;', $article['depth']) ?>
+                            <?= $article['depth'] > 0 ? '└ ' : '' ?>
+                            <?= $article['label'] ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
         <?php endif; ?>
 
-        <!-- Article name -->
-        <div class="form-item">
-            <label for="articleName">Nom de l'article</label>
-            <input type="text" name="articleName" id="articleName" placeholder="Le nom de l'article"
-                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['articleName']) ? $values['articleName'] : '' ?>">
-        </div>
-        <?php if (isset($view['errors']['articleName'])): ?>
-            <p class="error"><?= $view['errors']['articleName'] ?></p>
-        <?php endif; ?>
-
-        <!-- Brand -->
-        <div class="form-item">
-            <label for="idBrand">Marque de l'article</label>
-            <select name="idBrand" id="idBrand" value="<?= $values['idBrand'] ?? '' ?>">
-                <option value="-1">Sélectionnez une marque</option>
-                <?php //Creating the options with all the brand in the database
-                foreach ($view['brandList'] as $brand):
-                ?>
-                    <option value=<?= $brand['id_brand'] ?>> <?= $brand['brand_label'] ?></option>
-                <?php endforeach ?>
-            </select>
-        </div>
-        <?php if (isset($view['errors']['idBrand'])): ?>
-            <p class="error"><?= $view['errors']['idBrand'] ?></p>
-        <?php endif; ?>
-
-        <!-- Description -->
-        <div class="form-item">
-            <label for="description">Description de l'article</label>
-            <textarea name="description" id="description" placeholder="Décrivez l'article, essayez de faire un texte vendeur !"
-                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['description']) ? $values['description'] : '' ?>" maxlength="255" rows="5"></textarea>
-        </div>
-        <?php if (isset($view['errors']['description'])): ?>
-            <p class="error"><?= $view['errors']['description'] ?></p>
-        <?php endif; ?>
-
-        <!-- Price -->
-        <div class="form-item">
-            <label for="price">Prix de l'article</label>
-            <input type="text" name="price" id="price" placeholder="Le prix de l'article"
-                value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['price']) ? $values['price'] : '' ?>" maxlength="255">
-        </div>
-        <?php if (isset($view['errors']['price'])): ?>
-            <p class="error"><?= $view['errors']['price'] ?></p>
-        <?php endif; ?>
-
-        <?php if (isset($view['errors']["idColor"])): ?>
-            <p class="error"><?= $view['errors']["idColor"] ?></p>
-        <?php endif; ?>
-
-        <!-- Categories -->
-        <div class="form-item">
-            <label for="idCat">Catégorie de l'article</label>
-            <select name="idCat" id="idCat" value="<?= $values['idCat'] ?? '' ?>">
-                <option value="-1">Sélectionnez une catégorie</option>
-                <?php //Creating the options with all the categories in the database
-                foreach ($view['categoriesList'] as $category):
-                ?>
-                    <option value="<?= $category['id_category'] ?>">
-                        <?= str_repeat('&nbsp;&nbsp;&nbsp;', $category['depth']) ?>
-                        <?= $category['depth'] > 0 ? '└ ' : '' ?>
-                        <?= $category['cat_label'] ?>
-                    </option> <?php endforeach ?>
-            </select>
-        </div>
-        <?php if (isset($view['errors']["idCat"])): ?>
-            <p class="error"><?= $view['errors']["idCat"] ?></p>
-        <?php endif; ?>
-
-        <!-- Categories -->
-        <div id="filterList">
-
-        </div>
-
-        <!-- Image section -->
-        <div>
-            <p><b>Ajouter des images</b></p>
-            <div id="images">
-                <?php if (isset($view['errors']["images"])): ?>
-                    <p id="imageNeededMessage" class="error"><?= $view['errors']['images'] ?></p>
-                <?php else: ?>
-                    <p id="imageNeededMessage">Veuillez insérer au moins une image</p>
-                <?php endif ?>
+        <?php if ($view['action'] !== "delete"): ?>
+            <!-- Article name -->
+            <div class="form-item">
+                <label for="articleName">Nom de l'article</label>
+                <input type="text" name="articleName" id="articleName" placeholder="Le nom de l'article"
+                    value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['articleName']) ? $values['articleName'] : '' ?>">
             </div>
-        </div>
-        <i id="addImageButton" class="fa-solid fa-plus miniButton"></i>
-        <br>
+            <?php if (isset($view['errors']['articleName'])): ?>
+                <p class="error"><?= $view['errors']['articleName'] ?></p>
+            <?php endif; ?>
+
+            <!-- Brand -->
+            <div class="form-item">
+                <label for="idBrand">Marque de l'article</label>
+                <select name="idBrand" id="idBrand" value="<?= $values['idBrand'] ?? '' ?>">
+                    <option value="-1">Sélectionnez une marque</option>
+                    <?php //Creating the options with all the brand in the database
+                    foreach ($view['brandList'] as $brand):
+                    ?>
+                        <option value=<?= $brand['id_brand'] ?>> <?= $brand['brand_label'] ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <?php if (isset($view['errors']['idBrand'])): ?>
+                <p class="error"><?= $view['errors']['idBrand'] ?></p>
+            <?php endif; ?>
+
+            <!-- Description -->
+            <div class="form-item">
+                <label for="description">Description de l'article</label>
+                <textarea name="description" id="description" placeholder="Décrivez l'article, essayez de faire un texte vendeur !"
+                    value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['description']) ? $values['description'] : '' ?>" maxlength="255" rows="5"></textarea>
+            </div>
+            <?php if (isset($view['errors']['description'])): ?>
+                <p class="error"><?= $view['errors']['description'] ?></p>
+            <?php endif; ?>
+
+            <!-- Price -->
+            <div class="form-item">
+                <label for="price">Prix de l'article</label>
+                <input type="text" name="price" id="price" placeholder="Le prix de l'article"
+                    value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['price']) ? $values['price'] : '' ?>" maxlength="255">
+            </div>
+            <?php if (isset($view['errors']['price'])): ?>
+                <p class="error"><?= $view['errors']['price'] ?></p>
+            <?php endif; ?>
+
+            <?php if (isset($view['errors']["idColor"])): ?>
+                <p class="error"><?= $view['errors']["idColor"] ?></p>
+            <?php endif; ?>
+
+            <!-- Categories -->
+            <div class="form-item">
+                <label for="idCat">Catégorie de l'article</label>
+                <select name="idCat" id="idCat" value="<?= $values['idCat'] ?? '' ?>">
+                    <option value="-1">Sélectionnez une catégorie</option>
+                    <?php //Creating the options with all the categories in the database
+                    foreach ($view['categoriesList'] as $category):
+                    ?>
+                        <option value="<?= $category['id_category'] ?>">
+                            <?= str_repeat('&nbsp;&nbsp;&nbsp;', $category['depth']) ?>
+                            <?= $category['depth'] > 0 ? '└ ' : '' ?>
+                            <?= $category['cat_label'] ?>
+                        </option> <?php endforeach ?>
+                </select>
+            </div>
+            <?php if (isset($view['errors']["idCat"])): ?>
+                <p class="error"><?= $view['errors']["idCat"] ?></p>
+            <?php endif; ?>
+
+            <!-- Categories -->
+            <div class="form-list">
+                <p><b>Liste des filtres</b></p>
+                <div id="filterList">
+
+                </div>
+            </div>
+
+
+            <!-- Image section -->
+            <div>
+                <p><b>Ajouter des images</b></p>
+                <div id="images">
+                    <?php if (isset($view['errors']["images"])): ?>
+                        <p id="imageNeededMessage" class="error"><?= $view['errors']['images'] ?></p>
+                    <?php else: ?>
+                        <p id="imageNeededMessage">Veuillez insérer au moins une image</p>
+                    <?php endif ?>
+                </div>
+                <i id="addImageButton" class="fa-solid fa-plus miniButton"></i>
+
+            </div>
+            <br>
+        <?php endif; ?>
         <input type="hidden" name="form_submitted">
         <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
 
