@@ -3,6 +3,27 @@
 <main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
     <form action="index.php?path=/productmanagement/<?= $view['action'] ?>" method="post" enctype="multipart/form-data">
+        <?php if ($view['action'] !== "create"): ?>
+            <div class="form-item">
+                <label for="idArticle">Choisissez un article à <?= $view['operationLabel'] ?></label>
+                <select name="idArticle" id="idArticle">
+                    <?php foreach ($articles as $article): ?>
+                        <?php if ($article['depth'] === 0): ?>
+                            <!-- Le produit parent n'est pas sélectionnable -->
+                            <option disabled>
+                                <?= htmlspecialchars($article['label']) ?>
+                            </option>
+                        <?php else: ?>
+                            <option value="<?= $article['id'] ?>">
+                                <?= str_repeat('&nbsp;&nbsp;&nbsp;', $article['depth']) ?>
+                                └ Variante #<?= $article['id'] ?>
+                            </option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
+
         <!-- Article name -->
         <div class="form-item">
             <label for="articleName">Nom de l'article</label>
@@ -61,8 +82,11 @@
                 <?php //Creating the options with all the categories in the database
                 foreach ($view['categoriesList'] as $category):
                 ?>
-                    <option value=<?= $category['id_category'] ?>> <?= $category['cat_label'] ?></option>
-                <?php endforeach ?>
+                    <option value="<?= $category['id_category'] ?>">
+                        <?= str_repeat('&nbsp;&nbsp;&nbsp;', $category['depth']) ?>
+                        <?= $category['depth'] > 0 ? '└ ' : '' ?>
+                        <?= $category['cat_label'] ?>
+                    </option> <?php endforeach ?>
             </select>
         </div>
         <?php if (isset($view['errors']["idCat"])): ?>

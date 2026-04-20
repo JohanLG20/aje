@@ -37,7 +37,7 @@
                         </form>
                     </div>
                 </div>
-                <a href="index.php?action=contact" class="desktopMenuItem"><i class="fa-solid fa-circle-question menuIcon"></i></a>
+                <a href="index.php?path=/contact/" class="desktopMenuItem"><i class="fa-solid fa-circle-question menuIcon"></i></a>
 
                 <div class="navItem">
                     <i class="fa-solid fa-basket-shopping menuIcon"></i>
@@ -57,62 +57,60 @@
         </div>
         <nav id="navMenu" class="hidden" aria-label="collapse">
             <div class="navItem">
-                <a href="index.php?s=sports">Sports</a>
+                <a href="index.php?path=/search/sports">Sports</a>
                 <i class="fa-solid fa-plus mobileMenuItem"></i>
 
                 <div class="dropDownMenu hidden">
                     <ul class="droppingList">
-                        <li><a href="index.php?s=football">Football</a></li>
-                        <li><a href="index.php?s=basketball">Basketball</a></li>
-                        <li><a href="index.php?s=handball">Handball</a></li>
-                        <li><a href="index.php?s=golf">Golf</a></li>
-                        <li><a href="index.php?s=surf">Surf</a></li>
+                        <li><a href="index.php?path=/search/football">Football</a></li>
+                        <li><a href="index.php?path=/search/basketball">Basketball</a></li>
+                        <li><a href="index.php?path=/search/handball">Handball</a></li>
+                        <li><a href="index.php?path=/search/golf">Golf</a></li>
+                        <li><a href="index.php?path=/search/surf">Surf</a></li>
                     </ul>
                     <ul class="droppingList">
-                        <li><a href="index.php?s=natation">Natation</a></li>
-                        <li><a href="index.php?s=plongee">Plongée</a></li>
-                        <li><a href="index.php?s=musculation">Musculation</a></li>
-                        <li><a href="index.php?s=equitation">Équitation</a></li>
-                        <li><a href="index.php?s=skateboard">Skateboard</a></li>
+                        <li><a href="index.php?path=/search/natation">Natation</a></li>
+                        <li><a href="index.php?path=/search/plongee">Plongée</a></li>
+                        <li><a href="index.php?path=/search/musculation">Musculation</a></li>
+                        <li><a href="index.php?path=/search/equitation">Équitation</a></li>
+                        <li><a href="index.php?path=/search/skateboard">Skateboard</a></li>
                     </ul>
                 </div>
 
             </div>
             <div class="navItem">
-                <a href="index.php?s=homme">Homme</a>
+                <a href="index.php?path=/search/homme">Homme</a>
                 <i class="fa-solid fa-plus mobileMenuItem"></i>
                 <div class="dropDownMenu hidden">
                     <ul class="droppingList">
-                        <li><a href="index.php?s=sweat+homme">Sweat</a></li>
-                        <li><a href="index.php?s=jogging+homme">Jogging</a></li>
-                        <li><a href="index.php?s=tee-shirt+homme">Tee-shirt</a></li>
-                        <li><a href="index.php?s=pull+homme">Pull</a></li>
-                        <li><a href="index.php?s=chaussures+homme">Chaussures</a></li>
+                        <li><a href="index.php?path=/search/sweat+homme">Sweat</a></li>
+                        <li><a href="index.php?path=/search/jogging+homme">Jogging</a></li>
+                        <li><a href="index.php?path=/search/tee-shirt+homme">Tee-shirt</a></li>
+                        <li><a href="index.php?path=/search/pull+homme">Pull</a></li>
+                        <li><a href="index.php?path=/search/chaussures+homme">Chaussures</a></li>
                     </ul>
                 </div>
             </div>
             <div class="navItem">
-                <a href="index.php?s=femme">Femme</a>
+                <a href="index.php?path=/search/femme">Femme</a>
                 <i class="fa-solid fa-plus mobileMenuItem"></i>
                 <div class="dropDownMenu hidden">
                     <ul class="droppingList">
-                        <li><a href="index.php?s=sweat+femme">Sweat</a></li>
-                        <li><a href="index.php?s=jogging+femme">Jogging</a></li>
-                        <li><a href="index.php?s=tee-shirt+femme">Tee-shirt</a></li>
-                        <li><a href="index.php?s=pull+femme">Pull</a></li>
-                        <li><a href="index.php?s=chaussures+femme">Chaussures</a></li>
+                        <li><a href="index.php?path=/search/sweat+femme">Sweat</a></li>
+                        <li><a href="index.php?path=/search/jogging+femme">Jogging</a></li>
+                        <li><a href="index.php?path=/search/tee-shirt+femme">Tee-shirt</a></li>
+                        <li><a href="index.php?path=/search/pull+femme">Pull</a></li>
+                        <li><a href="index.php?path=/search/chaussures+femme">Chaussures</a></li>
                     </ul>
                 </div>
             </div>
             <div class="navItem">
-                <a href="index.php?action=about">A&nbsp;Propos</a>
+                <a href="index.php?path=/about/">A&nbsp;Propos</a>
             </div>
             <div class="navItem">
-                <a href="index.php?action=contact" class="mobileMenuItem">Contact</a>
+                <a href="index.php?path=/contact/" class="mobileMenuItem">Contact</a>
             </div>
-            <div class="navItem">
-                <a href="index.php?action=myaccount" class="mobileMenuItem">Mon compte</a>
-            </div>
+
 
         </nav>
 

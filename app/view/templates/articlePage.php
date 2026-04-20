@@ -1,12 +1,25 @@
-<article class="container">    ?>
+<article class="container"> ?>
 
     <div id="productOverview">
         <div>
             <h2><?= $articleInfos['name'] ?></h2>
             <div id="images">
-                <?php foreach ($articleInfos['images'] as $img): ?>
-                    <img src=<?= $img['path'] ?> alt="<?= $img['alt'] ?>">
-                <?php endforeach ?>
+                <!-- Image principale -->
+                <img id="mainImage"
+                    src="<?= $articleInfos['images'][0]['path'] ?>"
+                    alt="<?= $articleInfos['images'][0]['alt'] ?>">
+
+                <!-- Thumbnails (uniquement s'il y a plusieurs images) -->
+                <?php if (count($articleInfos['images']) > 1): ?>
+                    <div id="thumbnails">
+                        <?php foreach ($articleInfos['images'] as $index => $img): ?>
+                            <img src="<?= $img['path'] ?>"
+                                alt="<?= $img['alt'] ?>"
+                                class="<?= $index === 0 ? 'active' : '' ?>"
+                                onclick="changeMainImage(this)">
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <p><?= $articleInfos['brand'] ?></p>
             <div class=price>
@@ -93,5 +106,17 @@
         addCommentForm.append(addCommentFormSubmit)
         return addCommentSection
 
+    }
+
+    function changeMainImage(thumbnail) {
+        // On met à jour l'image principale
+        document.getElementById('mainImage').src = thumbnail.src;
+        document.getElementById('mainImage').alt = thumbnail.alt;
+
+        // On met à jour la classe active
+        document.querySelectorAll('#thumbnails img').forEach(img => {
+            img.classList.remove('active');
+        });
+        thumbnail.classList.add('active');
     }
 </script>

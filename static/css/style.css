@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Luciole";
   src: url(../fonts/Luciole-Regular.woff) format("woff");
@@ -268,6 +269,735 @@
   }
 }
 
+#noResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 24px;
+  text-align: center;
+}
+#noResults p {
+  color: #096a09;
+}
+#noResults p:first-child {
+  font-size: 20px;
+  font-family: "LucioleBold", "sans-serif";
+}
+#noResults p:last-of-type {
+  font-size: 14px;
+  color: grey;
+}
+#noResults ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #d9d9d9;
+  padding: 24px;
+  border-radius: 16px;
+  border-left: 4px solid #096a09;
+  width: 100%;
+  box-sizing: border-box;
+}
+#noResults ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: grey;
+  font-size: 14px;
+  text-align: left;
+}
+#noResults ul li::before {
+  content: "";
+  min-width: 8px;
+  height: 8px;
+  background-color: #096a09;
+  border-radius: 50%;
+}
+#noResults .btn1 {
+  margin-top: 8px;
+}
+
+#contactPage {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 16px;
+}
+#contactPage h1 {
+  color: #096a09;
+}
+#contactPage p {
+  color: grey;
+  font-size: 14px;
+}
+#contactPage #contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#contactPage #contactForm .formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@media screen and (min-width: 750px) {
+  #contactPage #contactForm .formRow {
+    flex-direction: row;
+  }
+  #contactPage #contactForm .formRow .formGroup {
+    flex: 1;
+  }
+}
+#contactPage #contactForm .formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#contactPage #contactForm .formGroup label {
+  font-size: 14px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+}
+#contactPage #contactForm .formGroup input,
+#contactPage #contactForm .formGroup select,
+#contactPage #contactForm .formGroup textarea {
+  padding: 12px 16px;
+  border: 2px solid #096a09;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #d9d9d9;
+  color: black;
+  box-sizing: border-box;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+#contactPage #contactForm .formGroup input:focus,
+#contactPage #contactForm .formGroup select:focus,
+#contactPage #contactForm .formGroup textarea:focus {
+  outline: none;
+  border-color: #096a09;
+}
+#contactPage #contactForm .formGroup input::placeholder,
+#contactPage #contactForm .formGroup select::placeholder,
+#contactPage #contactForm .formGroup textarea::placeholder {
+  color: grey;
+}
+#contactPage #contactForm .formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+#contactPage #contactForm .formGroup select {
+  cursor: pointer;
+}
+#contactPage #contactForm #gdprGroup #gdprLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: grey;
+  cursor: pointer;
+  font-family: "Luciole", "sans-serif";
+}
+#contactPage #contactForm #gdprGroup #gdprLabel input[type=checkbox] {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  border: 2px solid #096a09;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+#contactPage #contactForm #submitButton {
+  align-self: center;
+  padding: 12px 48px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+#contactPage #contactForm #submitButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: grey;
+}
+
+.product-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.product-page .articleInfos {
+  background-color: #096a09;
+  color: #eeeeee;
+  padding: 8px 16px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.product-page .articleInfos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #096a09;
+}
+.product-page .articleInfos-header .articleInfos {
+  flex: 1;
+}
+.product-page .articleInfos-header #addComment {
+  color: #eeeeee;
+  font-size: 13px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.product-page .articleInfos-header #addComment:hover {
+  text-decoration: underline;
+}
+.product-page .product-section-content {
+  background-color: #d9d9d9;
+  padding: 16px;
+}
+.product-page .product-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.product-page .product-header h1 {
+  font-size: 26px;
+  font-family: "LucioleBold", "sans-serif";
+  color: black;
+}
+.product-page .product-header #gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.product-page .product-header #gallery #mainImage {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+.product-page .product-header #gallery #thumbnails {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  overflow-x: auto;
+}
+.product-page .product-header #gallery #thumbnails::-webkit-scrollbar {
+  height: 4px;
+}
+.product-page .product-header #gallery #thumbnails::-webkit-scrollbar-thumb {
+  background: #096a09;
+  border-radius: 2px;
+}
+.product-page .product-header #gallery #thumbnails img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+.product-page .product-header #gallery #thumbnails img:hover, .product-page .product-header #gallery #thumbnails img.active {
+  border-color: #096a09;
+}
+.product-page .product-header .product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.product-page .product-header .product-details .product-brand {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: grey;
+}
+.product-page .product-header .product-details .price {
+  font-size: 22px;
+  font-family: "LucioleBold", "sans-serif";
+}
+.product-page .product-header .product-details .deliveryDate {
+  font-size: 13px;
+  color: grey;
+  font-style: italic;
+}
+.product-page .product-header .product-details .addBasketButton {
+  width: 60%;
+  text-align: center;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 24px;
+}
+.product-page .modality {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+.product-page .modality:last-child {
+  border-bottom: none;
+}
+.product-page .modality .modality-label {
+  color: grey;
+}
+.product-page .modality .modality-label::after {
+  content: " :";
+}
+.product-page .modality .modality-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+.product-page #variantsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.product-page #variantsList .variant-card {
+  padding: 8px 16px;
+  border: 2px solid #096a09;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.product-page #variantsList .variant-card .modality-value {
+  font-size: 14px;
+  color: #096a09;
+}
+.product-page #variantsList .variant-card .modality-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  display: block;
+}
+.product-page #variantsList .variant-card:hover, .product-page #variantsList .variant-card.active {
+  background-color: #096a09;
+}
+.product-page #variantsList .variant-card:hover .modality-value, .product-page #variantsList .variant-card.active .modality-value {
+  color: #eeeeee;
+}
+.product-page #commentSection #allComments {
+  display: flex;
+  flex-direction: column;
+}
+.product-page #commentSection #allComments .comment {
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+.product-page #commentSection #allComments .comment:last-child {
+  border-bottom: none;
+}
+.product-page #commentSection #allComments .comment .commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.product-page #commentSection #allComments .comment .commentHeader h4 {
+  font-size: 14px;
+  color: black;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions {
+  display: flex;
+  gap: 8px;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment, .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment {
+  color: #096a09;
+  border: 1px solid #096a09;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment:hover {
+  background-color: #096a09;
+  color: #eeeeee;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+  color: red;
+  border: 1px solid red;
+}
+.product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment:hover {
+  background-color: red;
+  color: white;
+}
+.product-page #commentSection #allComments .comment p {
+  font-size: 13px;
+  color: grey;
+  font-style: italic;
+  line-height: 1.5;
+}
+.product-page #commentSection .noComment {
+  font-size: 14px;
+  color: grey;
+  font-style: italic;
+}
+.product-page #commentSection #addCommentSection {
+  margin-top: 16px;
+}
+.product-page #commentSection #addCommentSection form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.product-page #commentSection #addCommentSection form #addCommentFormTitle {
+  color: #096a09;
+  font-size: 15px;
+}
+.product-page #commentSection #addCommentSection form textarea {
+  padding: 12px;
+  border: 2px solid #096a09;
+  border-radius: 8px;
+  min-height: 100px;
+  resize: vertical;
+  font-size: 14px;
+  background-color: #eeeeee;
+}
+.product-page #commentSection #addCommentSection form textarea:focus {
+  outline: none;
+}
+.product-page #commentSection #addCommentSection form button[type=submit] {
+  align-self: flex-end;
+}
+@media screen and (min-width: 1024px) {
+  .product-page .product-header {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 48px;
+  }
+  .product-page .product-header #gallery {
+    width: 45%;
+    flex-shrink: 0;
+  }
+  .product-page .product-header .product-details {
+    align-items: flex-start;
+    flex: 1;
+  }
+}
+
+#aboutPage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+#aboutPage #aboutHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  background-color: #096a09;
+  border-radius: 16px;
+  gap: 16px;
+}
+#aboutPage #aboutHero h1 {
+  font-size: 32px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #eeeeee;
+}
+#aboutPage #aboutHero p {
+  font-size: 18px;
+  color: #eeeeee;
+  opacity: 0.85;
+  font-style: italic;
+}
+#aboutPage .aboutSection {
+  display: flex;
+  flex-direction: column;
+}
+#aboutPage .aboutSection .aboutSectionContent {
+  background-color: #d9d9d9;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#aboutPage .aboutSection .aboutSectionContent p {
+  font-size: 14px;
+  color: grey;
+  line-height: 1.7;
+}
+#aboutPage #valuesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+#aboutPage #valuesGrid .valueCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background-color: #eeeeee;
+  border-radius: 12px;
+  border-bottom: 3px solid #096a09;
+}
+#aboutPage #valuesGrid .valueCard .valueIcon {
+  font-size: 32px;
+}
+#aboutPage #valuesGrid .valueCard h3 {
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+  font-size: 16px;
+}
+#aboutPage #valuesGrid .valueCard p {
+  font-size: 13px;
+  color: grey;
+  line-height: 1.6;
+}
+@media screen and (min-width: 750px) {
+  #aboutPage #valuesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+#aboutPage #statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+#aboutPage #statsGrid .statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 16px;
+  background-color: #eeeeee;
+  border-radius: 12px;
+  border-top: 4px solid #096a09;
+  gap: 8px;
+}
+#aboutPage #statsGrid .statCard .statNumber {
+  font-size: 32px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+}
+#aboutPage #statsGrid .statCard .statLabel {
+  font-size: 13px;
+  color: grey;
+}
+@media screen and (min-width: 750px) {
+  #aboutPage #statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+#aboutPage #founderSection #founderQuote {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background-color: #eeeeee;
+  border-radius: 12px;
+  border-left: 4px solid #096a09;
+}
+#aboutPage #founderSection #founderQuote p {
+  font-size: 15px;
+  font-style: italic;
+  color: black;
+  line-height: 1.8;
+}
+#aboutPage #founderSection #founderQuote p::before {
+  content: "“";
+}
+#aboutPage #founderSection #founderQuote p::after {
+  content: "”";
+}
+#aboutPage #founderSection #founderQuote #founderName {
+  font-size: 13px;
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+  align-self: flex-end;
+}
+#aboutPage #locationSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#aboutPage #locationSection #locationInfos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#aboutPage #locationSection #locationInfos h3 {
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+  margin-bottom: 8px;
+}
+#aboutPage #locationSection #locationInfos p {
+  font-size: 14px;
+  color: grey;
+}
+#aboutPage #locationSection #locationInfos .btn1 {
+  margin-top: 16px;
+  align-self: flex-start;
+}
+#aboutPage #locationSection #aboutMap {
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+@media screen and (min-width: 1024px) {
+  #aboutPage #locationSection {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  #aboutPage #locationSection #locationInfos {
+    width: 30%;
+    flex-shrink: 0;
+  }
+}
+
+#legalPage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+#legalPage #legalHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  background-color: #096a09;
+  border-radius: 16px;
+  gap: 12px;
+}
+#legalPage #legalHero h1 {
+  font-size: 28px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #eeeeee;
+}
+#legalPage #legalHero p {
+  font-size: 13px;
+  color: #eeeeee;
+  opacity: 0.75;
+  font-style: italic;
+}
+#legalPage .legalSection {
+  display: flex;
+  flex-direction: column;
+}
+#legalPage .legalSection .legalSectionContent {
+  background-color: #d9d9d9;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#legalPage .legalSection .legalSectionContent p {
+  font-size: 14px;
+  color: grey;
+  line-height: 1.7;
+}
+#legalPage .legalGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+#legalPage .legalGrid .legalItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+#legalPage .legalGrid .legalItem:last-child {
+  border-bottom: none;
+}
+#legalPage .legalGrid .legalItem .legalLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+}
+#legalPage .legalGrid .legalItem .legalValue {
+  font-size: 14px;
+  color: black;
+}
+#legalPage .legalGrid .legalItem .legalValue a {
+  color: #096a09;
+  text-decoration: underline;
+}
+@media screen and (min-width: 750px) {
+  #legalPage .legalGrid .legalItem {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  #legalPage .legalGrid .legalItem .legalLabel {
+    min-width: 220px;
+    flex-shrink: 0;
+  }
+}
+#legalPage .legalSubSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+#legalPage .legalSubSection:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+#legalPage .legalSubSection h3 {
+  font-size: 15px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+}
+#legalPage .legalSubSection p {
+  font-size: 14px;
+  color: grey;
+  line-height: 1.7;
+}
+#legalPage .legalList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 16px;
+}
+#legalPage .legalList li {
+  font-size: 14px;
+  color: grey;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 16px;
+}
+#legalPage .legalList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  background-color: #096a09;
+  border-radius: 50%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -384,33 +1114,49 @@ hr {
   z-index: 50;
 }
 #banner #baseMenu {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: clamp(8px, 4vw, 64px);
   font-size: 32px;
   width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
 }
-#banner #baseMenu #burger:hover {
-  color: black;
+#banner #baseMenu #burger {
+  position: absolute;
+  left: 5%;
 }
 #banner #baseMenu .menuItem {
   cursor: pointer;
-  width: 33%;
+  width: auto;
   justify-content: center;
 }
 #banner #baseMenu .brand {
   font-size: 32px;
   font-family: "LucioleBold", "sans-serif";
+  flex-shrink: 0;
 }
 #banner #baseMenu #menuIcons {
   display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-shrink: 0;
 }
 #banner #baseMenu #menuIcons .navItem {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 #banner #baseMenu #menuIcons .navItem .menuIcon {
-  width: 50%;
+  width: auto;
+  font-size: 22px;
+  cursor: pointer;
 }
 #banner #baseMenu #menuIcons .navItem .menuIcon:hover {
   color: black;
@@ -553,6 +1299,9 @@ hr {
 }
 
 @media screen and (min-width: 1024px) {
+  .container {
+    padding-top: 0;
+  }
   #banner {
     position: relative;
   }

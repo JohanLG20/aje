@@ -307,4 +307,23 @@ LIMIT :limit");
             throw $e;
         }
     }
+
+    public function getAllArticleInfosGroupeByIdArticle() : array {
+        try{
+            $query = $this->db->prepare("SELECT 
+    a.id_article,
+    a.id_article_informations,
+    ai.article_name
+FROM ARTICLE a
+JOIN ARTICLE_INFORMATIONS ai
+    ON ai.id_article_informations = a.id_article_informations
+ORDER BY a.id_article_informations, a.id_article");
+    
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch (\PDOException $e){
+            throw $e;
+        }
+    }
 }

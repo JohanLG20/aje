@@ -87,8 +87,22 @@ const ROUTES = [
     ],
     "/search/{query}" => [
         'controller' => AJE\Controller\SearchPageController::class,
-        'method' => 'displayView',
+        'method' => 'displayView'
     ],
+    "/contact/" => [
+        'controller' => AJE\Controller\StaticPageController::class,
+        'method' => 'showContactPage'
+    ],
+    "/about/" => [
+        'controller' => AJE\Controller\StaticPageController::class,
+        'method' => 'showAboutPage'
+    ],
+
+    "/disclaimer/" => [
+        'controller' => AJE\Controller\StaticPageController::class,
+        'method' => 'showDisclaimerPage'
+    ]
+
 
 
 

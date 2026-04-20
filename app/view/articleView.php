@@ -1,172 +1,163 @@
 <?php require(LAYOUT . "/header.php"); ?>
 <main class="container">
-
     <div class="product-page">
 
-        <!-- Informations générales -->
+        <!-- En-tête produit -->
         <div class="product-header">
             <h1><?= $productInfo['article_name'] ?></h1>
 
-            <?php foreach ($productInfo['imagesPath'] as $imagePath): ?>
-                <img src="<?= $imagePath ?>"
+            <!-- Galerie d'images -->
+            <div id="gallery">
+                <img id="mainImage"
+                    src="<?= $productInfo['imagesPath'][0] ?>"
                     alt="<?= $productInfo['article_name'] ?>">
-            <?php endforeach ?>
+
+                <?php if (count($productInfo['imagesPath']) > 1): ?>
+                    <div id="thumbnails">
+                        <?php foreach ($productInfo['imagesPath'] as $index => $imagePath): ?>
+                            <img src="<?= $imagePath ?>"
+                                alt="<?= $productInfo['article_name'] ?>"
+                                class="<?= $index === 0 ? 'active' : '' ?>"
+                                onclick="changeMainImage(this)">
+                        <?php endforeach ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Détails -->
             <div class="product-details">
                 <span class="product-brand"><?= $productInfo['brand'] ?></span>
-
-                <div class=price>
-                    <p class="<?= !is_null($productInfo['price']["promo_price"]) ? 'promotion' : 'normalPrice' ?>"><?= $productInfo['price']["normal_price"] ?>€</p>
+                <div class="price">
+                    <p class="<?= !is_null($productInfo['price']["promo_price"]) ? 'promotion' : 'normalPrice' ?>">
+                        <?= $productInfo['price']["normal_price"] ?>€
+                    </p>
                     <?php if (isset($productInfo['price']['promo_price'])): ?>
                         <p class="promotionNewPrice"><?= $productInfo['price']['promo_price'] ?>€</p>
                     <?php endif; ?>
                 </div>
+                <p class="deliveryDate">Livré le 18/11/2026</p>
+                <a href="index.php?path=/basket/add/<?= $idArticle ?>" class="addBasketButton btn1">
+                    Ajouter au panier
+                </a>
             </div>
-            <a href="index.php?path=/basket/add/<?= $idArticle ?>" class="addBasketButton btn1">Ajouter au panier</a>
-
         </div>
-    </div>
-    <!-- Description -->
-    <div>
-        <h3 class="articleInfos">
-            Description du produit
-        </h3>
-        <p><?= $productInfo['description'] ?></p>
-    </div>
 
-
-
-    <!-- Variantes -->
-
-    <div class="product-variants">
-        <h3 class="articleInfos">
-            Spécifications
-        </h3>
-        <?php if (isset($activeVariantLabel)) : ?>
-            <div class="active-variant">
-                <span class="modality-label"><?= $activeVariantLabel ?></span>
-                <span class="modality-value"><?= $activeVariantValue ?></span>
-            <?php endif; ?>
+        <!-- Description -->
+        <div class="product-section">
+            <h3 class="articleInfos">Description du produit</h3>
+            <div class="product-section-content">
+                <p><?= $productInfo['description'] ?></p>
             </div>
-            <!-- Modalités communes à toutes les variantes -->
-            <div class="product-common-modalities">
+        </div>
+
+        <!-- Spécifications -->
+        <div class="product-section">
+            <h3 class="articleInfos">Spécifications</h3>
+            <div class="product-section-content">
+
+                <?php if (isset($activeVariantLabel)): ?>
+                    <div class="modality">
+                        <span class="modality-label"><?= $activeVariantLabel ?></span>
+                        <span class="modality-value"><?= $activeVariantValue ?></span>
+                    </div>
+                <?php endif; ?>
+
                 <?php foreach ($commonModalities as $label => $modality): ?>
                     <div class="modality">
                         <span class="modality-label"><?= $label ?></span>
-                        <?php if ($modality['hexa']): ?>
-                            <span class="modality-color"
-                                style="background-color: <?= $modality['hexa'] ?>"
-                                title="<?= $modality['value'] ?>">
-                            </span>
-                        <?php else: ?>
-                            <span class="modality-value"><?= $modality['value'] ?></span>
-                        <?php endif; ?>
+
+                        <span class="modality-value"><?= $modality['value'] ?></span>
+
                     </div>
                 <?php endforeach; ?>
             </div>
-            <h3 class="articleInfos">
-                Tous les modèles disponibles :
-            </h3>
-            <?php foreach ($variants as $variant): ?>
-                <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
-                    class="variant-card">
+        </div>
 
-
-                    <!-- Modalités -->
-                    <div class="variant-modalities">
-                        <?php foreach ($variant['modalities'] as $label => $modality): ?>
-                            <div class="modality">
-
+        <!-- Variantes -->
+        <div class="product-section">
+            <h3 class="articleInfos">Tous les modèles disponibles</h3>
+            <div class="product-section-content">
+                <div id="variantsList">
+                    <?php foreach ($variants as $variant): ?>
+                        <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
+                            class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
+                            <?php foreach ($variant['modalities'] as $label => $modality): ?>
                                 <?php if ($modality['hexa']): ?>
-                                    <!-- Affichage spécial pour les couleurs -->
                                     <span class="modality-color"
                                         style="background-color: <?= $modality['hexa'] ?>"
                                         title="<?= $modality['value'] ?>">
                                     </span>
                                 <?php else: ?>
-                                    <span class="modality-value">
-                                        <?= $modality['value'] ?>
-                                    </span>
+                                    <span class="modality-value"><?= $modality['value'] ?></span>
                                 <?php endif; ?>
+                            <?php endforeach; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commentaires -->
+        <div class="product-section" id="commentSection">
+            <div id="commentSectionHeader" class="articleInfos-header">
+                <h3 class="articleInfos">Commentaires</h3>
+                <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
+                    <p id="addComment">+ Ajouter</p>
+                <?php endif; ?>
+            </div>
+
+            <div class="product-section-content">
+                <?php if (isset($productInfo['commentError'])): ?>
+                    <p class="error"><?= $productInfo['commentError'] ?></p>
+                <?php endif; ?>
+
+                <?php if (!empty($productInfo['comments'])): ?>
+                    <div id="allComments">
+                        <?php foreach ($productInfo['comments'] as $comment): ?>
+                            <div id="<?= $comment['idComment'] ?>" class="comment">
+                                <div class="commentHeader">
+                                    <h4><?= $comment['fullname'] ?></h4>
+                                    <div class="commentActions">
+                                        <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
+                                            <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
+                                        <?php endif; ?>
+                                        <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
+                                            <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <p><?= $comment['comment'] ?></p>
                             </div>
                         <?php endforeach; ?>
                     </div>
-
-                </a>
-            <?php endforeach; ?>
-
-    </div>
-
-    <div id="commentSection">
-        <?php if (isset($productInfo['commentError'])): ?>
-            <p><?= $productInfo['commentError'] ?></p>
-        <?php endif; ?>
-
-
-        <!-- Comments --->
-
-        <div id="commentSectionHeader">
-            <h3 id="articleInfos">
-                Commentaires
-            </h3>
-            <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
-                <p id="addComment">Ajouter un commentaire</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <p class="noComment">Aucun commentaire sur l'article pour le moment.</p>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <?php if (!empty($productInfo['comments'])): ?>
-            <div id="allComments">
-                <?php foreach ($productInfo['comments'] as $comment): ?>
-                    <div id="<?= $comment['idComment'] ?>" class="comment">
-                        <div class="commentHeader">
-                            <h4><?= $comment['fullname'] ?></h4>
-                            <?php if (isset($comment['canEdit']) && $comment['canEdit']):
-                            ?>
-                                <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
-                            <?php endif; ?>
-                            <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
-                            <?php endif; ?>
-                        </div>
-
-                        <p><?= $comment['comment'] ?></p>
-                    </div>
-
-                <?php endforeach; ?>
-            </div>
-        <?php else: ?>
-            <p>Aucun commentaire sur l'article pour le moment.</p>
-        <?php endif; ?>
-    </div>
     </div>
 </main>
 
 <script>
+    function changeMainImage(thumbnail) {
+        document.getElementById('mainImage').src = thumbnail.src;
+        document.getElementById('mainImage').alt = thumbnail.alt;
+        document.querySelectorAll('#thumbnails img').forEach(img => img.classList.remove('active'));
+        thumbnail.classList.add('active');
+    }
+
     let addCommentButton = document.querySelector("#addComment")
     if (addCommentButton !== null) {
         addCommentButton.addEventListener("click", () => {
-            let commentSection = document.querySelector("#allComments")
             let addSectionComment = document.querySelector('#addCommentSection')
-
-            //Checking if the section is already openned
             if (addSectionComment === null) {
                 let commentForm = createCommentForm("Ajouter")
-                //Insert the add comment section just after the header
                 commentSectionHeader.after(commentForm)
             }
-
-
         })
-
-        let deleteCommentButton = document.querySelector("#deleteComment")
-        if (addCommentButton !== null) {
-
-        }
     }
 
-
-    /**
-     * @return [type] Return a div that contains the form to add the comment
-     */
     function createCommentForm(action, preloadedDatas = "") {
         let addCommentSection = document.createElement("div")
         addCommentSection.id = "addCommentSection"
@@ -183,6 +174,7 @@
         addCommentFormText.name = "comment"
 
         let addCommentFormSubmit = document.createElement("button")
+        addCommentFormSubmit.classList.add('btn1')
         addCommentFormSubmit.type = "submit"
         addCommentFormSubmit.textContent = "Envoyer le commentaire"
 
@@ -191,7 +183,6 @@
         addCommentForm.append(addCommentFormText)
         addCommentForm.append(addCommentFormSubmit)
         return addCommentSection
-
     }
 </script>
 

@@ -14,41 +14,46 @@ abstract class CRUDController
     abstract protected function getSuccessMessage(string $action): string;
     abstract protected function setOperationLabel(string $action): string;
     abstract protected function callView(array $view, array $values): void;
-    abstract protected function completeViewInformations(): array;
+    abstract protected function completeViewInformations(string $action): array;
 
 
     public function prepareAndDisplayView(string $action)
     {
-        $view['action'] = $action;
-        $values = [];
+        if ($action !== "create" && $action !== "modify" && $action !== "delete") {
+            require(VIEW . "/404.php");
+        } else {
+            $view['action'] = $action;
 
-        $view['operationLabel'] = $this->setOperationLabel($action);
+            $values = [];
 
-        if (isset($_POST['form_submitted'])) {
-            $values = DataTransformer::escapeValues($_POST);
+            $view['operationLabel'] = $this->setOperationLabel($action);
 
-            if (!empty($values)) {
+            if (isset($_POST['form_submitted'])) {
+                $values = DataTransformer::escapeValues($_POST);
 
-                $hasErrors = $this->getPostValuesErrors($action, $values);
+                if (!empty($values)) {
 
-                if (!$hasErrors) {
-                    $view['operationResult'] = $this->executeOperation($action, $values);
-                    $view['form-accepted'] = true;
+                    $hasErrors = $this->getPostValuesErrors($action, $values);
+
+                    if (!$hasErrors) {
+                        $view['operationResult'] = $this->executeOperation($action, $values);
+                        $view['form-accepted'] = true;
+                    } else {
+                        $view['errors'] = $hasErrors;
+                    }
                 } else {
-                    $view['errors'] = $hasErrors;
+                    $view['operationResult'] = "Les valeurs entrées ne permettent pas de soumettre ce formulaire";
                 }
-            } else {
-                $view['operationResult'] = "Les valeurs entrées ne permettent pas de soumettre ce formulaire";
             }
+
+            $extraInfos = $this->completeViewInformations($action);
+
+            if (!empty($extraInfos)) {
+                $view = self::addInfosToView($view, $extraInfos);
+            }
+
+            $this->callView($view, $values);
         }
-
-        $extraInfos = $this->completeViewInformations();
-
-        if (!empty($extraInfos)) {
-            $view = self::addInfosToView($view, $extraInfos);
-        }
-
-        $this->callView($view, $values);
     }
 
     protected function executeOperation(string $action, array $values): string

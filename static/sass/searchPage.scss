@@ -1,5 +1,6 @@
 @use 'col';
 @use 'articleCard';
+@use 'fonts';
 
 #searchResults {
     display: flex;
@@ -88,5 +89,62 @@
         bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+    }
+}
+
+#noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 48px 24px;
+    text-align: center;
+
+    p {
+        color: col.$color-primary;
+
+        &:first-child {
+            font-size: 20px;
+            font-family: fonts.$titleBold;
+        }
+
+        &:last-of-type {
+            font-size: 14px;
+            color: grey;
+        }
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background-color: col.$color-third;
+        padding: 24px;
+        border-radius: 16px;
+        border-left: 4px solid col.$color-primary;
+        width: 100%;
+        box-sizing: border-box;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: grey;
+            font-size: 14px;
+            text-align: left;
+
+            // Petite puce colorée à la place du bullet par défaut
+            &::before {
+                content: '';
+                min-width: 8px;
+                height: 8px;
+                background-color: col.$color-primary;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .btn1 {
+        margin-top: 8px;
     }
 }

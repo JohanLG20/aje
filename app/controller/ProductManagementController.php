@@ -56,7 +56,7 @@ class ProductManagementController extends CRUDController
             *                    [1] => id_choice_ ...
             *                    ]
             */
-            
+
             $filterValues = [];
             //Retrieving all the filters and their values
             foreach ($params as $key => $val) {
@@ -81,7 +81,7 @@ class ProductManagementController extends CRUDController
                 $idLastArticle = $artDb->getLastAddedElement()['id_article'];
                 $phParams['id_article'] = $idLastArticle;
                 $phDb->addNewElement($phParams);
-                
+
                 //Creating the all the articles
                 array_push($allCreatedArticles, $idLastArticle);
 
@@ -145,12 +145,20 @@ class ProductManagementController extends CRUDController
         }
         return $operationLabel;
     }
-    protected function completeViewInformations(): array
+    protected function completeViewInformations(string $action): array
     {
         $catDb = new DBCategory();
         $brandDb = new DBBrand();
-        $extraInformations['categoriesList'] = $catDb->getAllElements();
+        $allCategories = $catDb->getAllElements();
+        $allCategories = $this->getCategoryTree($allCategories);
+        $extraInformations['categoriesList'] = $this->flattenTree($allCategories);
         $extraInformations['brandList'] = $brandDb->getAllElements();
+
+        if($action !== "create"){
+            $artDb = new DBArticle();
+            $allArticles = $artDb->getAllElements();
+            $extraInformations['articlesList'] = $allArticles;
+        }
 
 
         return $extraInformations;
@@ -159,4 +167,91 @@ class ProductManagementController extends CRUDController
     {
         require(VIEW . '/productManagement_view.php');
     }
+
+    private function getCategoryTree(array $categories): array
+    {
+        // On indexe par id pour faciliter la recherche
+        $indexed = [];
+        foreach ($categories as $cat) {
+            $indexed[$cat['id_category']] = $cat;
+            $indexed[$cat['id_category']]['children'] = [];
+        }
+
+        // On construit l'arbre en rattachant chaque enfant à son parent
+        $tree = [];
+        foreach ($indexed as $id => $cat) {
+            if ($cat['id_category_parent_of'] === null) {
+                // Catégorie racine
+                $tree[] = &$indexed[$id];
+            } else {
+                // On rattache l'enfant à son parent
+                $indexed[$cat['id_category_parent_of']]['children'][] = &$indexed[$id];
+            }
+        }
+        return $indexed;
+    }
+
+    /**
+     * Aplatit l'arbre en une liste ordonnée avec le niveau de profondeur
+     * pour pouvoir l'afficher dans un select
+     */
+    private function flattenTree(array $tree, int $depth = 0): array
+    {
+        $result = [];
+        foreach ($tree as $node) {
+            $result[] = [
+                'id_category'          => $node['id_category'],
+                'cat_label'            => $node['cat_label'],
+                'id_category_parent_of' => $node['id_category_parent_of'],
+                'depth'                => $depth
+            ];
+            if (!empty($node['children'])) {
+                $result = array_merge(
+                    $result,
+                    $this->flattenTree($node['children'], $depth + 1)
+                );
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @param array $articles
+     * 
+     * @return array Returns an array with this type of structure
+     * [
+     *    [
+     *       'id_article_informations' => 1,
+     *      'article_name'            => 'Sweat à capuche SportFlex',
+     *     'variants'                => [23, 24, 25, 26, 27, 28]
+     *    ],
+     *    [
+     *        'id_article_informations' => 2,
+     *        'article_name'            => 'Air Jordan 1 Retro High',
+     *       'variants'                => [13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+     *    ], 
+     *  ...
+     * ]
+     *  
+     */
+    public function groupArticlesByInformations(array $articles): array
+{
+    $grouped = [];
+
+    foreach ($articles as $article) {
+        $idInfos = $article['id_article_informations'];
+
+        if (!isset($grouped[$idInfos])) {
+            $grouped[$idInfos] = [
+                'id_article_informations' => $idInfos,
+                'article_name'            => $article['article_name'],
+                'variants'                => []
+            ];
+        }
+
+        $grouped[$idInfos]['variants'][] = $article['id_article'];
+    }
+
+    return array_values($grouped);
+}
 }
