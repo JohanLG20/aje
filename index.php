@@ -2,6 +2,9 @@
 session_start();
 if(isset($_SESSION['showLogin'])) unset($_SESSION['showLogin']);
 
+require("app/cls/config.php");
+
+
 use AJE\Config\Router;
 use Dotenv\Dotenv;
 
@@ -11,7 +14,7 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-require("app/cls/config.php");
-new Router;
+
+new Router();
 
 

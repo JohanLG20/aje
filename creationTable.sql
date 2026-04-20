@@ -49,6 +49,7 @@ CREATE TABLE ARTICLE_INFORMATIONS(
 CREATE TABLE ARTICLE(
    id_article INT AUTO_INCREMENT,
    id_article_informations INT NOT NULL,
+   deleted_at DATE DEFAULT NULL,
    PRIMARY KEY(id_article),
    FOREIGN KEY(id_article_informations) REFERENCES ARTICLE_INFORMATIONS(id_article_informations)
 );

@@ -60,21 +60,25 @@ abstract class CRUDController
     protected function executeOperation(string $action, array $values): string
     {
         $operationResult = "";
-        switch ($action) {
-            case 'create':
-                $operationResult = $this->create($values);
-                break;
+        try {
+            switch ($action) {
+                case 'create':
+                    $operationResult = $this->create($values);
+                    break;
 
-            case 'update':
-                $operationResult = $this->update($values);
-                break;
+                case 'update':
+                    $operationResult = $this->update($values);
+                    break;
 
-            case 'delete':
-                $operationResult = $this->delete($values); //TODO: Mettre à jour le int
-                break;
+                case 'delete':
+                    $operationResult = $this->delete($values); //TODO: Mettre à jour le int
+                    break;
+            }
+        } catch (\Exception $e) {
+            $operationResult = $this->handdleSqlErrors($e, $action, $values);
+        } finally {
+            return $operationResult;
         }
-
-        return $operationResult;
     }
 
 

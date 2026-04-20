@@ -11,7 +11,9 @@ const ROUTES = [
     ],
     '/productmanagement/{action}' => [
         'controller' => AJE\Controller\ProductManagementController::class,
-        'method' => 'prepareAndDisplayView'
+        'method' => 'prepareAndDisplayView',
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
     ],
     '/ajax/{table}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
