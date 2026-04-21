@@ -2,15 +2,15 @@
     class="dropDownMenu topMenuIcon hidden">
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
         <div id="welcomeMenu">
-            <p>Bonjour <?= $_SESSION['name'] ?></p>
+            <p class="menuLoginForm">Bonjour <?= $_SESSION['name'] ?></p>
             <?php if (isset($_SESSION['permissionLevel']) && $_SESSION['permissionLevel'] === "admin"): ?>
-                <a href="index.php?path=/productmanagement/create">Ajouter un produit</a>
-                <a href="index.php?path=/productmanagement/delete">Supprimer un produit</a>
-                <a href="index.php?path=/promotion/create">Ajouter une promotion</a>
+                <a href="index.php?path=/productmanagement/create" class="menuLoginForm">Ajouter un produit</a>
+                <a href="index.php?path=/productmanagement/delete" class="menuLoginForm">Supprimer un produit</a>
+                <a href="index.php?path=/promotion/create" class="menuLoginForm">Ajouter une promotion</a>
 
             <?php endif; ?>
-            <a href="index.php?path=/usermanagement/update">Modifier mon profil</a>
-            <a href="index.php?path=/logout/">Se déconnecter</a>
+            <a href="index.php?path=/usermanagement/update" class="menuLoginForm">Modifier mon profil</a>
+            <a href="index.php?path=/logout/" class="menuLoginForm">Se déconnecter</a>
         </div>
     <?php else: ?>
         <form action="index.php?path=/login/" method="post" id="loginForm">

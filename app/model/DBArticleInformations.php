@@ -45,7 +45,7 @@ class DBArticleInformations extends CoreModel{
             LEFT JOIN CHOICE_TXT ct ON ct.id_choice_ = v.id_choice_
             LEFT JOIN CHOICE_NUMBER cn ON cn.id_choice_ = v.id_choice_
             LEFT JOIN CHOICE_COLOR cc ON cc.id_choice_ = v.id_choice_
-            WHERE a.id_article_informations = :id
+            WHERE a.id_article_informations = :id AND a.deleted_at IS NULL
         ");
         $query->execute([':id' => $id]);
         return $query->fetchAll(\PDO::FETCH_ASSOC);

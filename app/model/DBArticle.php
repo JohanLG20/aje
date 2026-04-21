@@ -58,10 +58,10 @@ class DBArticle extends CoreModel
                     FROM (SELECT id_article 
                           FROM {$this->tableName} 
                           WHERE id_article_informations IN (SELECT id_article_informations 
-                                                            FROM {$this->tableName} a
-                                                            WHERE id_article = :id
-                                                            AND a.deleted_at IS NULL)) art
-                          INNER JOIN VALUES_ ON VALUES_.id_article = art.id_article");
+                                                            FROM {$this->tableName} 
+                                                            WHERE id_article = :id)
+                           AND  deleted_at IS NULL) a
+                          INNER JOIN VALUES_ ON VALUES_.id_article = a.id_article");
 
             $query->bindParam(":id", $id);
             $query->execute();
@@ -87,8 +87,10 @@ class DBArticle extends CoreModel
             $query = $this->db->prepare("SELECT DISTINCT id_choice_ 
                     FROM (SELECT id_article 
                           FROM ARTICLE 
-                          WHERE id_article = :id AND {$this->tableName}.deleted_at IS NULL) art
-                    INNER JOIN VALUES_ ON VALUES_.id_article = art.id_article");
+                          WHERE id_article = :id AND deleted_at IS NULL) a
+                    INNER JOIN VALUES_ ON VALUES_.id_article = a.id_article
+                    WHERE a.deleted_at IS NULL");
+
 
             $query->bindParam(":id", $id);
             $query->execute();
@@ -125,6 +127,8 @@ LEFT JOIN PRICE_HISTORY promo
     AND promo.end_date IS NOT NULL
     AND promo.end_date >= CURDATE()
     AND promo.start_date <= CURDATE();
+    WHERE a.deleted_at IS NULL
+
     
     
     ");
@@ -141,19 +145,19 @@ LEFT JOIN PRICE_HISTORY promo
     {
         $query = $this->db->prepare("
         SELECT id_article_informations 
-        FROM {$this->tableName} a
+        FROM {$this->tableName} 
         WHERE id_{$this->idName} = :id
-        AND a.deleted_at IS NULL
+        AND deleted_at IS NULL
     ");
         $query->execute([':id' => $idArticle]);
         $result = $query->fetch(\PDO::FETCH_ASSOC);
         return $result ? (int) $result['id_article_informations'] : null;
     }
 
-public function searchForArticles(string $research): array
-{
-    try {
-        $sqlQuery = "
+    public function searchForArticles(string $research): array
+    {
+        try {
+            $sqlQuery = "
         WITH RECURSIVE category_tree AS (
             -- On part des catégories qui correspondent à la recherche
             SELECT id_category
@@ -225,20 +229,19 @@ public function searchForArticles(string $research): array
             OR c.cat_label LIKE :research
             OR ai.id_category IN (SELECT id_category FROM category_tree)
         )
-        AND a.deleted IS NULL
+        AND a.deleted_at IS NULL
         GROUP BY a.id_article_informations";
 
-        $query = $this->db->prepare($sqlQuery);
-        $query->execute([
-            ':research'     => '%' . $research . '%',
-            ':research_cat' => '%' . $research . '%'
-        ]);
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
-
-    } catch (\PDOException $e) {
-        throw $e;
+            $query = $this->db->prepare($sqlQuery);
+            $query->execute([
+                ':research'     => '%' . $research . '%',
+                ':research_cat' => '%' . $research . '%'
+            ]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
     }
-}
 
     /**
      * @param string $limit The number of article we want, 10 is set by default
