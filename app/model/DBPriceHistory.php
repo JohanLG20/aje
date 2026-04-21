@@ -2,7 +2,6 @@
 
 namespace AJE\Model;
 
-use PDOException;
 use PDOStatement;
 
 class DBPriceHistory extends CoreModel
@@ -17,10 +16,10 @@ class DBPriceHistory extends CoreModel
     protected function prepareAddQuery(array $params): PDOStatement|false
     {
         //By default, if no values are specified for the startDate it take the day of the day
-        if (isset($params['startDate'])) {
+        if (isset($params['start_date'])) {
             $query = $this->db->prepare("INSERT INTO {$this->tableName}(id_article, price, start_date, end_date)
                             VALUES (:idArticle, :price, :startDate, :endDate)");
-            $query->bindValue(":startDate", $params['startDate'] ?? NULL);
+            $query->bindValue(":startDate", $params['start_date']);
         } else {
             $query = $this->db->prepare("INSERT INTO {$this->tableName}(id_article, price, end_date)
                             VALUES (:idArticle, :price, :endDate)");
@@ -28,7 +27,7 @@ class DBPriceHistory extends CoreModel
 
         $query->bindValue(":idArticle", $params['id_article']);
         $query->bindValue(":price", $params['price']);
-        $query->bindValue(":endDate", $params['endDate'] ?? null);
+        $query->bindValue(":endDate", $params['end_date'] ?? null);
 
         return $query;
     }

@@ -15,6 +15,13 @@ const ROUTES = [
         'minPermission' => 'admin',
         'denyAccessMethod' => 'permissionDenied'
     ],
+    '/promotion/{action}' => [
+        'controller' => AJE\Controller\PromotionManagementController::class,
+        'method' => 'prepareAndDisplayView',
+        //'minPermission' => 'admin',
+        //'denyAccessMethod' => 'permissionDenied'
+    ],
+
     '/ajax/{table}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getDatas'

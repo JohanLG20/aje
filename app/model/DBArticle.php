@@ -150,11 +150,27 @@ LEFT JOIN PRICE_HISTORY promo
         return $result ? (int) $result['id_article_informations'] : null;
     }
 
-    public function searchForArticles(string $research): array
-    {
-        try {
-            $sqlQuery = "SELECT DISTINCT
+public function searchForArticles(string $research): array
+{
+    try {
+        $sqlQuery = "
+        WITH RECURSIVE category_tree AS (
+            -- On part des catégories qui correspondent à la recherche
+            SELECT id_category
+            FROM CATEGORY
+            WHERE cat_label LIKE :research_cat
+
+            UNION ALL
+
+            -- On récupère toutes les sous-catégories récursivement
+            SELECT c.id_category
+            FROM CATEGORY c
+            JOIN category_tree ct
+                ON c.id_category_parent_of = ct.id_category
+        )
+        SELECT DISTINCT
             a.id_article as id,
+            a.id_article_informations,
             ai.article_name as article_name,
             ai.image_repertory as image_repertory,
             b.brand_label AS brand,
@@ -164,9 +180,9 @@ LEFT JOIN PRICE_HISTORY promo
             v.id_filter_type,
             v.id_choice_,
             ft.filter_type_label,
-            COALESCE(ct.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
+            COALESCE(ct2.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
             cc.color_choice_hexa
-        FROM {$this->tableName} a
+        FROM ARTICLE a
         JOIN ARTICLE_INFORMATIONS ai
             ON ai.id_article_informations = a.id_article_informations
         JOIN CATEGORY c
@@ -183,8 +199,8 @@ LEFT JOIN PRICE_HISTORY promo
             AND promo.start_date <= CURDATE()
         LEFT JOIN VALUES_ v
             ON v.id_article = a.id_article
-        LEFT JOIN CHOICE_TXT ct
-            ON ct.id_choice_ = v.id_choice_
+        LEFT JOIN CHOICE_TXT ct2
+            ON ct2.id_choice_ = v.id_choice_
         LEFT JOIN CHOICE_COLOR cc
             ON cc.id_choice_ = v.id_choice_
         LEFT JOIN CHOICE_NUMBER cn
@@ -193,28 +209,36 @@ LEFT JOIN PRICE_HISTORY promo
             ON cr.id_choice_ = v.id_choice_
         LEFT JOIN FILTER_TYPE ft
             ON ft.id_filter_type = v.id_filter_type
-        WHERE
-            (ai.article_name LIKE :research
+        WHERE (
+            ai.article_name LIKE :research
             OR ai.description LIKE :research
             OR b.brand_label LIKE :research
-            OR c.cat_label LIKE :research
-            OR ct.choice LIKE :research
+            OR ct2.choice LIKE :research
             OR cc.color_choice_label LIKE :research
             OR CAST(cn.choice AS CHAR) LIKE :research
             OR (
                 :research REGEXP '^[0-9]+(\\.[0-9]+)?$'
                 AND CAST(:research AS DECIMAL(8,3)) >= cr.min_
                 AND CAST(:research AS DECIMAL(8,3)) <= cr.max_
-            ))
-            AND a.deleted_at IS NULL";
+            )
+            -- On vérifie si la catégorie de l'article ou une de ses parentes correspond
+            OR c.cat_label LIKE :research
+            OR ai.id_category IN (SELECT id_category FROM category_tree)
+        )
+        AND a.deleted IS NULL
+        GROUP BY a.id_article_informations";
 
-            $query = $this->db->prepare($sqlQuery);
-            $query->execute([':research' => '%' . $research . '%']);
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            throw $e;
-        }
+        $query = $this->db->prepare($sqlQuery);
+        $query->execute([
+            ':research'     => '%' . $research . '%',
+            ':research_cat' => '%' . $research . '%'
+        ]);
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+
+    } catch (\PDOException $e) {
+        throw $e;
     }
+}
 
     /**
      * @param string $limit The number of article we want, 10 is set by default

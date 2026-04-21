@@ -168,6 +168,7 @@ abstract class CoreModel
                 $query->bindValue(":{$key}", $val);
             }
 
+            var_dump($sqlQuery);
             return $query;
         } catch (\PDOException $e) {
             throw $e;

@@ -251,7 +251,7 @@ class ProductManagementController extends CRUDController
      * ]
      *  
      */
-    private function groupArticles(array $rows): array
+    public function groupArticles(array $rows): array
     {
         $grouped = [];
 
@@ -278,7 +278,7 @@ class ProductManagementController extends CRUDController
         return $grouped;
     }
 
-    private function flattenArticlesForSelect(array $grouped): array
+    public function flattenArticlesForSelect(array $grouped): array
     {
         $result = [];
 
@@ -342,5 +342,9 @@ class ProductManagementController extends CRUDController
         }
 
         return $result;
+    }
+
+    public function permissionDenied(string $action){
+        require (VIEW . "/404.php");
     }
 }

@@ -1111,6 +1111,88 @@ main form p:last-child {
   }
 }
 
+#notFoundPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 16px;
+  gap: 32px;
+}
+#notFoundPage #notFoundCode {
+  font-size: 120px;
+  font-family: "LucioleBold", "sans-serif";
+  color: rgb(78.947826087, 240.052173913, 78.947826087);
+  line-height: 1;
+}
+#notFoundPage #notFoundContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+}
+#notFoundPage #notFoundContent h1 {
+  font-size: 28px;
+  font-family: "LucioleBold", "sans-serif";
+  color: #096a09;
+}
+#notFoundPage #notFoundContent > p {
+  font-size: 15px;
+  color: grey;
+  line-height: 1.6;
+}
+#notFoundPage #notFoundContent #notFoundActions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  background-color: #d9d9d9;
+  padding: 20px 24px;
+  border-radius: 16px;
+  border-left: 4px solid #096a09;
+  width: 100%;
+  box-sizing: border-box;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions p {
+  font-size: 14px;
+  color: grey;
+  font-style: italic;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions ul li::before {
+  content: "";
+  min-width: 8px;
+  height: 8px;
+  background-color: #096a09;
+  border-radius: 50%;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions ul li a {
+  font-size: 14px;
+  color: #096a09;
+  text-decoration: underline;
+}
+#notFoundPage #notFoundContent #notFoundSuggestions ul li a:hover {
+  color: black;
+}
+
 * {
   margin: 0;
   padding: 0;

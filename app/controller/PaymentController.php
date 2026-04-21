@@ -27,7 +27,6 @@ class PaymentController
         $validatePayment = true; // This variable is used to know which button to display in the view
         require(VIEW . "/payment_view.php");
         $client = new AuthentificationController();
-
     }
 
     public function proceedToPayment()
@@ -55,28 +54,32 @@ class PaymentController
      */
     private function registerOrder(array $basketArticles)
     {
-        $dbOrder = new DBOrder_();
-        $dbArticleOrder = new DBArticleOrder();
+        try {
+            $dbOrder = new DBOrder_();
+            $dbArticleOrder = new DBArticleOrder();
 
-        //Retrivieving the client id
-        $client = new AuthentificationController();
-        $clientId = $client->getId();
+            //Retrivieving the client id
+            $client = new AuthentificationController();
+            $clientId = $client->getId();
 
-        if (!is_null($clientId)) {
-            //Creating each order and linking it to the article in the ARTICLE_ORDER table
-            foreach ($basketArticles as $articleId => $article) {
-                $dbOrder->addNewElement(["id_user_" => $client->getId()]);
-                $lastOrderId = $dbOrder->getLastAddedElement()['id_order_']; //Retrieving the newly created order
-                $registrationSucceded = $dbArticleOrder->addNewElement([
-                    "id_article" => $articleId,
-                    "id_order_" => $lastOrderId,
-                    "quantity" => $article['quantity']
-                ]);
+            if (!is_null($clientId)) {
+                //Creating each order and linking it to the article in the ARTICLE_ORDER table
+                foreach ($basketArticles as $articleId => $article) {
+                    $dbOrder->addNewElement(["id_user_" => $clientId]);
+                    $lastOrderId = $dbOrder->getLastAddedElement()['id_order_']; //Retrieving the newly created order
+                    $registrationSucceded = $dbArticleOrder->addNewElement([
+                        "id_article" => $articleId,
+                        "id_order_" => $lastOrderId,
+                        "quantity" => $article['quantity']
+                    ]);
 
-                if (!$registrationSucceded) {
-                    throw new Exception("Une erreur est survenue lors de l'enregistement de la commande");
+                    if (!$registrationSucceded) {
+                        throw new Exception("Une erreur est survenue lors de l'enregistement de la commande");
+                    }
                 }
             }
+        } catch (\PDOException $e) {
+            throw new Exception("Une erreur est survenue lors de l'enregistement de la commande");
         }
     }
 }

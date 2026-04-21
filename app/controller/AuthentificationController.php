@@ -112,6 +112,8 @@ class AuthentificationController
                 case 'client':
                     return !is_null($this->permissionLevel);
                     break;
+                case 'admin':
+                    return $this->permissionLevel === 'admin';
                 default:
                     return false;
             }

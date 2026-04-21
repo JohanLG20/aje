@@ -24,6 +24,7 @@ abstract class UserErrorHelper
             return !empty($errors) ? $errors : false;
         }
         else{
+            //No infos are needed to delete a user
             return false;
         }
     }

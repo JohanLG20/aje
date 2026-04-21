@@ -72,6 +72,9 @@ class UserManagementController extends CRUDController
             case 'create':
                 $result = "Votre compte a été crée avec succès !";
                 break;
+            case 'update':
+                $result = "Votre compte à bien été modifé";
+                break;
         }
         return $result;
     }

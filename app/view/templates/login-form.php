@@ -3,6 +3,12 @@
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
         <div id="welcomeMenu">
             <p>Bonjour <?= $_SESSION['name'] ?></p>
+            <?php if (isset($_SESSION['permissionLevel']) && $_SESSION['permissionLevel'] === "admin"): ?>
+                <a href="index.php?path=/productmanagement/create">Ajouter un produit</a>
+                <a href="index.php?path=/productmanagement/delete">Supprimer un produit</a>
+                <a href="index.php?path=/promotion/create">Ajouter une promotion</a>
+
+            <?php endif; ?>
             <a href="index.php?path=/usermanagement/update">Modifier mon profil</a>
             <a href="index.php?path=/logout/">Se déconnecter</a>
         </div>
