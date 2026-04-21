@@ -32,7 +32,7 @@
                     <div class="dropDownMenu hidden topMenuIcon">
                         <form onsubmit="redirectSearch(event)">
                             <div class="searchForm">
-                                <input type="search" id="q-mobile" name="q">
+                                <input type="search" id="q-mobile" name="q" placeholder="Rechercher un article">
                                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
@@ -43,7 +43,7 @@
                 <div id="searchDesktop" class="navItem desktopMenuItem">
                     <form onsubmit="redirectSearch(event)">
                         <div class="searchForm">
-                            <input type="search" id="q-desktop" name="q">
+                            <input type="search" id="q-desktop" name="q" placeholder="Rechercher un article">
                             <button id="menuSearchIcon" type="submit">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
