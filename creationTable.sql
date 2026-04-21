@@ -156,3 +156,30 @@ CREATE TABLE FILTERED_BY(
    FOREIGN KEY(id_category) REFERENCES CATEGORY(id_category),
    FOREIGN KEY(id_filter_type) REFERENCES FILTER_TYPE(id_filter_type)
 );
+
+CREATE VIEW FILTER_VALUES_ASSOCIATIONS 
+AS
+SELECT *, CASE
+             WHEN EXISTS(SELECT *
+                         FROM   CHOICE_COLOR AS CC
+                         WHERE  CC.id_choice_ = C.id_choice_) 
+                THEN (SELECT CC.color_choice_label
+                      FROM CHOICE_COLOR AS CC WHERE CC.id_choice_ = C.id_choice_)
+             WHEN EXISTS(SELECT *
+                         FROM   CHOICE_TXT AS CT
+                         WHERE  CT.id_choice_ = C.id_choice_) 
+                THEN (SELECT CT.choice
+                      FROM CHOICE_TXT AS CT WHERE CT.id_choice_ = C.id_choice_)
+             WHEN EXISTS(SELECT *
+                         FROM   CHOICE_NUMBER AS CN
+                         WHERE  CN.id_choice_ = C.id_choice_) 
+                THEN (SELECT CN.choice
+                      FROM CHOICE_NUMBER AS CN WHERE CN.id_choice_ = C.id_choice_)
+        	    WHEN EXISTS(SELECT *
+                         FROM   CHOICE_RANGE AS CR
+                         WHERE  CR.id_choice_ = C.id_choice_) 
+                THEN (SELECT CONCAT(CR.min_, " - ", CR.max_)
+                      FROM CHOICE_RANGE AS CR WHERE CR.id_choice_ = C.id_choice_)
+             ELSE NULL
+          END AS filter_value
+FROM CHOICE_ AS C;
