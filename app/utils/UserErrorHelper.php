@@ -44,7 +44,7 @@ abstract class UserErrorHelper
                     $lastName,
                     FILTER_VALIDATE_REGEXP,
                     array('options' => array(
-                        'regexp' => "/^([a-zA-Z\-]*)$/"
+                        'regexp' => "/^([a-zA-Z\-\s]*)$/"
 
                     ))
                 )) {
