@@ -161,7 +161,7 @@ class AuthentificationController
     /**
      * @param string $idArticle The article id we want to check
      * 
-     * @return bool True if the connected user can connect, false otherwise
+     * @return bool True if the connected user can comment, false otherwise
      */
     public function canCommentArticle(string $idArticle): bool
     {
@@ -169,8 +169,9 @@ class AuthentificationController
             $dbUser = new DBUser();
 
             if (!is_null($this->id)) {
-                $userPurchase = $dbUser->getUserPurchases($this->id, $idArticle);
-                if ($userPurchase && !empty($userPurchase)) {
+                $commentableArticles = $dbUser->getUserCommentablesArticles($this->id, $idArticle);
+                var_dump($commentableArticles);
+                if ($commentableArticles && !empty($commentableArticles)) {
                     return true;
                 } else {
                     return false;

@@ -130,4 +130,39 @@ class DBUser extends CoreModel
             throw $e;
         }
     }
+
+    /**
+     * Return the list of the commentables articles. It can also be filtered with a list of articles. If no parameters are given, return the whole list of commetables articles by the given user.
+     * @param string $idUser The id of the user 
+     * @param string $idArticle Optionnal: The id of a specific article
+     * 
+     * @return array An array that contains the list of the articles id that the user purchased
+     */
+    public function getUserCommentablesArticles(string $idUser, string $idArticle = ""): array
+    {
+        try {
+            $sqlQuery = "SELECT a.id_article_informations FROM {$this->tableName}
+            INNER JOIN ORDER_ o ON o.id_{$this->idName} = {$this->tableName}.id_{$this->idName}
+            INNER JOIN ARTICLE_ORDER ao ON o.id_order_ = ao.id_order_
+            INNER JOIN ARTICLE a ON a.id_article = ao.id_article
+            WHERE {$this->tableName}.id_{$this->idName} = :idUser";
+
+            if ($idArticle !== "") {
+                $sqlQuery .= " AND a.id_article_informations IN (SELECT id_article_informations FROM ARTICLE WHERE id_article = :idArticle)";
+            }
+
+            $query = $this->db->prepare($sqlQuery);
+
+            $query->bindValue(":idUser", $idUser);
+
+            if ($idArticle !== "") {
+                $query->bindValue(":idArticle", $idArticle);
+            }
+            $query->execute();
+
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
 }
