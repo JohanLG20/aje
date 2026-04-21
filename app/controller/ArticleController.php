@@ -77,9 +77,7 @@ class ArticleController
                 $activeVariantLabel = array_key_first($activeVariant['modalities']);
                 //Retrieving the associated value
                 $activeVariantValue =
-                    is_null($activeVariant['modalities'][$activeVariantLabel]['hexa']) ?
-                    $activeVariant['modalities'][$activeVariantLabel]['value'] :
-                    $activeVariant['modalities'][$activeVariantLabel]['hexa'];
+                    $activeVariant['modalities'][$activeVariantLabel]['value'];
             }
 
             require(VIEW . '/articleView.php');
@@ -105,7 +103,6 @@ class ArticleController
             if ($row['filter_type_label']) {
                 $variants[$id]['modalities'][$row['filter_type_label']] = [
                     'value' => $row['choice_value'],
-                    'hexa'  => $row['color_choice_hexa'] ?? null
                 ];
             }
         }

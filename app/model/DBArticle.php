@@ -185,7 +185,7 @@ LEFT JOIN PRICE_HISTORY promo
             v.id_choice_,
             ft.filter_type_label,
             COALESCE(ct2.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
-            cc.color_choice_hexa
+        
         FROM ARTICLE a
         JOIN ARTICLE_INFORMATIONS ai
             ON ai.id_article_informations = a.id_article_informations

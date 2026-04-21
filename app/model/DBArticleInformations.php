@@ -40,7 +40,7 @@ class DBArticleInformations extends CoreModel{
             SELECT
                 a.id_article,
                 ft.filter_type_label,
-                COALESCE(ct.choice, CAST(cn.choice AS CHAR), cc.color_choice_label) AS choice_value,
+                COALESCE(cc.color_choice_label, ct.choice, CAST(cn.choice AS CHAR)) AS choice_value,
                 cc.color_choice_hexa
             FROM ARTICLE a
             LEFT JOIN VALUES_ v ON v.id_article = a.id_article

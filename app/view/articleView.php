@@ -82,14 +82,7 @@
                         <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
                             class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
                             <?php foreach ($variant['modalities'] as $label => $modality): ?>
-                                <?php if ($modality['hexa']): ?>
-                                    <span class="modality-color"
-                                        style="background-color: <?= $modality['hexa'] ?>"
-                                        title="<?= $modality['value'] ?>">
-                                    </span>
-                                <?php else: ?>
                                     <span class="modality-value"><?= $modality['value'] ?></span>
-                                <?php endif; ?>
                             <?php endforeach; ?>
                         </a>
                     <?php endforeach; ?>
