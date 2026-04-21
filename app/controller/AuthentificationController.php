@@ -60,7 +60,7 @@ class AuthentificationController
                         $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label']; // Setting the permissions level
                         $_SESSION['userId'] = $requieredUser['id_user_'];
 
-                        header("Location: {$_SERVER['HTTP_REFERER']}");
+                        header("Location: index.php");
                     } else {
                         $errors['login'] = "Identifiant ou mot de passe incorrect";
                     }
