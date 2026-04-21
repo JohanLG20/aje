@@ -22,19 +22,6 @@ const ROUTES = [
         //'denyAccessMethod' => 'permissionDenied'
     ],
 
-    '/ajax/{table}' => [
-        'controller' => AJE\Utils\AJAXRequestHandler::class,
-        'method' => 'getDatas'
-    ],
-    '/ajax/{table}/{id}' => [
-        'controller' => AJE\Utils\AJAXRequestHandler::class,
-        'method' => 'getDatas'
-    ],
-    '/ajax/{table}/{id}/{attribute}' => [
-        'controller' => AJE\Utils\AJAXRequestHandler::class,
-        'method' => 'getDatas'
-    ],
-
     '/filterRequest/getFvForCat/{id}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getAllFiltersValueForFilterType'

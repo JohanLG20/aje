@@ -73,7 +73,7 @@ CREATE TABLE USER_(
 
 CREATE TABLE PRICE_HISTORY(
    id_price_history INT AUTO_INCREMENT,
-   start_date DATE NOT NULL,
+   start_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    end_date DATE,
    price DECIMAL(7,2),
    id_article INT NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE COMMENT(
 
 CREATE TABLE ORDER_(
    id_order_ INT AUTO_INCREMENT,
-   date_ VARCHAR(50) NOT NULL,
+   date_ VARCHAR(50) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
    id_user_ INT NOT NULL,
    PRIMARY KEY(id_order_),
    FOREIGN KEY(id_user_) REFERENCES USER_(id_user_)

@@ -86,24 +86,6 @@ abstract class CoreModel
         }
     }
 
-    public function getAllElementsForValue(string $elementName, string $elementVal, array $attrsToGet = []): array
-    {
-        try {
-            //Prepering the select section of the querry
-            $sqlQuery = $this->prepareSelectQuery($attrsToGet);
-            //Finalising the query
-            $sqlQuery .= " FROM {$this->tableName} WHERE
-                    {$elementName} = :elemToGet";
-
-            $query = $this->db->prepare($sqlQuery);
-            $query->bindParam(":elemToGet", $elementVal);
-            $query->execute();
-            return $query->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
-
     public function getLastAddedElement(): array
     {
         try {
@@ -116,30 +98,6 @@ abstract class CoreModel
         }
     }
 
-    public function getAllElementsForValues(string $elementName, array $values, array $attrsToGet = [])
-    {
-
-        $sqlQuery = $this->prepareSelectQuery($attrsToGet);
-        $sqlQuery .= " FROM {$this->tableName} WHERE
-                    {$elementName} IN (";
-
-        //Preparing the query with the keys of the array
-        foreach ($values as $key => $val) {
-            $sqlQuery .= ":{$key},";
-        }
-        $sqlQuery = substr($sqlQuery, 0, -1); //Removing the last coma of the query
-        $sqlQuery .= ")"; //Finalising the query
-
-        $query = $this->db->prepare($sqlQuery);
-
-        foreach ($val as $key => $val) {
-            //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
-            $query->bindValue(":{$key}", $val);
-        }
-
-        $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
-    }
 
     protected function prepareAddQuery(array $params): \PDOStatement|false
     {
