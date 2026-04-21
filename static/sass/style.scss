@@ -209,20 +209,42 @@ hr {
                     z-index: 10;
 
                 }
+
+                .searchForm {
+                    display: flex;
+                    align-items: center;
+                    background-color: col.$color-secondary;
+                    border: 2px solid col.$color-primary;
+                    border-radius: 16px;
+                    height: 30px;
+                    padding: 0 8px;
+
+                    input {
+                        background: none;
+                        border: none;
+                        outline: none;
+                        font-size: 14px;
+                        width: 160px;
+                    }
+
+                    button {
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
             }
 
-            #menuContactLink {
+            .mobileMenuItem {
+                display: block;
+            }
+
+            .desktopMenuItem {
                 display: none;
             }
         }
 
-        .mobileMenuItem {
-            display: block;
-        }
 
-        .desktopMenuIcon {
-            display: none;
-        }
 
     }
 
@@ -394,50 +416,38 @@ hr {
         #baseMenu {
             padding: 16px 0;
 
-            .searchForm {
-                display: flex;
-                background-color: col.$color-secondary;
-                color: black;
-                align-items: center;
-                height: 30px;
-                border: 2px solid black;
-                border-radius: 16px;
-                -webkit-border-radius: 16px;
-                -moz-border-radius: 16px;
-                -ms-border-radius: 16px;
-                -o-border-radius: 16px;
-
-                #menuSearchInput {
-                    background: none;
-                    border: none;
-                }
-
-                #menuSearchInput:focus {
-                    outline: none;
-                }
-
-                #menuSearchIcon {
-                    background: none;
-                    border: none;
-                }
-
-            }
-
-            i {
-                position: relative;
-
-                .dropDownMenu {
-                    position: absolute;
-                }
-            }
-
-            .mobileMenuItem {
+            #burger{
                 display: none;
             }
 
-            .desktopMenuIcon {
-                display: flex;
+            #menuIcons {
+
+                i {
+                    position: relative;
+
+                    .dropDownMenu {
+                        position: absolute;
+                    }
+                }
+
+                .topMenuIcon{
+                    width: fit-content;
+                    white-space: nowrap;
+                }
+
+                .searchForm {
+                    border: 6px solid black;
+                }
+
+                .mobileMenuItem {
+                    display: none;
+                }
+
+                .desktopMenuItem {
+                    display: block;
+                }
             }
+
 
         }
 

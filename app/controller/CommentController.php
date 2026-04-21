@@ -76,7 +76,6 @@ class CommentController
     */
     public function canAddComment(string $id): bool
     {
-        var_dump($this->hasCommented($id));
         return $this->connectedUser->canCommentArticle($id) && !$this->hasCommented($id);
     }
 
@@ -93,7 +92,6 @@ class CommentController
             try {
                 
                 $userComment = $this->db->getUserCommentForArticle($this->connectedUser->getId(), $idArticle);
-                var_dump($userComment);
                 $res = is_array($userComment) && !empty($userComment); //This test must be because the model function can return a boolean
             } catch (\PDOException $e) {
                 throw new \Exception($e);

@@ -20,32 +20,37 @@
 <body>
     <header id="banner">
         <div id="baseMenu">
+
             <div id="burger" class="menuItem mobileMenuItem">
                 <i class="fa-solid fa-bars menuIcon"></i>
             </div>
             <a href="index.php" class="brand">AJE</a>
-
-            <div id="menuIcons" class="menuItem">
-                <div class="navItem">
-                    <i class="fa-solid fa-magnifying-glass-plus mobileMenuItem"></i>
+            <nav id="menuIcons">
+                <!-- Version mobile : icône + dropdown -->
+                <div class="navItem mobileMenuItem">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
                         <form onsubmit="redirectSearch(event)">
                             <div class="searchForm">
-                                <input type="search" id="q" name="q">
-                                <button id="menuSearchIcon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <input type="search" id="q-mobile" name="q">
+                                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="navItem" >
-                    <form onsubmit="redirectSearch(event)" class="desktopMenuIcon">
+                <!-- Version desktop : barre de recherche directement visible -->
+                <div id="searchDesktop" class="navItem desktopMenuItem">
+                    <form onsubmit="redirectSearch(event)">
                         <div class="searchForm">
-                            <input type="search" id="q" name="q">
-                            <button id="menuSearchIcon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <input type="search" id="q-desktop" name="q">
+                            <button id="menuSearchIcon" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
+
                 <a href="index.php?path=/contact/" class="desktopMenuItem"><i class="fa-solid fa-circle-question menuIcon"></i></a>
 
                 <div class="navItem">
@@ -61,7 +66,9 @@
                     <?php require(TEMPLATES . '/login-form.php') ?>
                 </div>
 
-            </div>
+            </nav>
+        </div>
+
 
         </div>
         <nav id="navMenu" class="hidden" aria-label="collapse">

@@ -1379,13 +1379,31 @@ hr {
   left: auto;
   z-index: 10;
 }
-#banner #baseMenu #menuIcons #menuContactLink {
-  display: none;
+#banner #baseMenu #menuIcons .navItem .searchForm {
+  display: flex;
+  align-items: center;
+  background-color: #eeeeee;
+  border: 2px solid #096a09;
+  border-radius: 16px;
+  height: 30px;
+  padding: 0 8px;
 }
-#banner #baseMenu .mobileMenuItem {
+#banner #baseMenu #menuIcons .navItem .searchForm input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 160px;
+}
+#banner #baseMenu #menuIcons .navItem .searchForm button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+#banner #baseMenu #menuIcons .mobileMenuItem {
   display: block;
 }
-#banner #baseMenu .desktopMenuIcon {
+#banner #baseMenu #menuIcons .desktopMenuItem {
   display: none;
 }
 #banner #navMenu {
@@ -1517,41 +1535,27 @@ hr {
   #banner #baseMenu {
     padding: 16px 0;
   }
-  #banner #baseMenu .searchForm {
-    display: flex;
-    background-color: #eeeeee;
-    color: black;
-    align-items: center;
-    height: 30px;
-    border: 2px solid black;
-    border-radius: 16px;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-    -ms-border-radius: 16px;
-    -o-border-radius: 16px;
-  }
-  #banner #baseMenu .searchForm #menuSearchInput {
-    background: none;
-    border: none;
-  }
-  #banner #baseMenu .searchForm #menuSearchInput:focus {
-    outline: none;
-  }
-  #banner #baseMenu .searchForm #menuSearchIcon {
-    background: none;
-    border: none;
-  }
-  #banner #baseMenu i {
-    position: relative;
-  }
-  #banner #baseMenu i .dropDownMenu {
-    position: absolute;
-  }
-  #banner #baseMenu .mobileMenuItem {
+  #banner #baseMenu #burger {
     display: none;
   }
-  #banner #baseMenu .desktopMenuIcon {
-    display: flex;
+  #banner #baseMenu #menuIcons i {
+    position: relative;
+  }
+  #banner #baseMenu #menuIcons i .dropDownMenu {
+    position: absolute;
+  }
+  #banner #baseMenu #menuIcons .topMenuIcon {
+    width: fit-content;
+    white-space: nowrap;
+  }
+  #banner #baseMenu #menuIcons .searchForm {
+    border: 6px solid black;
+  }
+  #banner #baseMenu #menuIcons .mobileMenuItem {
+    display: none;
+  }
+  #banner #baseMenu #menuIcons .desktopMenuItem {
+    display: block;
   }
   #banner #navMenu {
     position: relative;

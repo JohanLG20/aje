@@ -43,10 +43,13 @@
 </body>
 
 <script>
-    //This function is used to redirect the search towards the router. It correct the path to be compatible with the router taxonomy
     function redirectSearch(event) {
         event.preventDefault();
-        const query = document.getElementById('q').value.trim();
+        const mobileInput = document.getElementById('q-mobile');
+        const desktopInput = document.getElementById('q-desktop');
+        const query = (desktopInput && desktopInput.offsetParent !== null) ?
+            desktopInput.value.trim() :
+            mobileInput.value.trim();
         window.location.href = `index.php?path=/search/${encodeURIComponent(query)}`;
     }
 </script>
