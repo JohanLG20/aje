@@ -170,7 +170,6 @@ class AuthentificationController
 
             if (!is_null($this->id)) {
                 $commentableArticles = $dbUser->getUserCommentablesArticles($this->id, $idArticle);
-                var_dump($commentableArticles);
                 if ($commentableArticles && !empty($commentableArticles)) {
                     return true;
                 } else {
