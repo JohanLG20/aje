@@ -2,7 +2,6 @@
 
 namespace AJE\Model;
 
-use Exception;
 use PDOException;
 
 abstract class CoreModel

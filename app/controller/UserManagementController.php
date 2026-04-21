@@ -20,7 +20,7 @@ class UserManagementController extends CRUDController
         if ($e->getCode() == 0) {
             $errorMessage = "Cette adresse email est déjà utilisée.";
         }
-        return $e->getMessage();
+        return $errorMessage;
     }
     protected function completeViewInformations(string $action): array
     {
@@ -32,7 +32,7 @@ class UserManagementController extends CRUDController
         try {
             $user = new DBUser();
             if ($user->addNewElement($params)) {
-                return 'Votre compte à été créer avec succès. Vous pouvez maintenant vous identifier.';
+                return $this->getSuccessMessage("create");
             } else {
                 return 'Une erreur est survenue lors de la création de votre compte, veuillez réessayer.';
             }
