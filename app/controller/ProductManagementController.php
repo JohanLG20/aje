@@ -24,7 +24,6 @@ class ProductManagementController extends CRUDController
     protected function create(array $params): string
     {
         try {
-
             $imageRepertory = uniqid();
 
             // ----------------- Creating the article informations ------------
