@@ -4,10 +4,11 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    
-    
+
+
     align-items: center;
     color: black;
+
     .basketItemCard {
         display: flex;
         gap: 16px;
@@ -15,20 +16,21 @@
         margin: auto 1%;
         border: 2px solid col.$color-primary;
         align-items: center;
+
         img {
             max-width: 100px;
             max-height: 100px;
             height: auto;
         }
 
-        .basketDescriptionSection{
+        .basketDescriptionSection {
             display: flex;
             flex-direction: column;
             align-items: center;
             font-size: 18px;
             margin-right: 16px;
 
-            .basketQuantity{
+            .basketQuantity {
                 display: flex;
                 text-align: center;
                 margin-top: 8px;
@@ -38,8 +40,15 @@
         }
     }
 
-    #basketPaymentButton{
+    #basketPaymentButton {
         width: fit-content;
 
     }
+
+
+}
+
+#noItemInBasket {
+    color: rgba($color: #000000, $alpha: 0.75);
+    font-size: 20px;
 }

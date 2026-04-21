@@ -29,5 +29,5 @@
 
 
 <?php else: ?>
-    <p id="noArticleInBasket">Aucun article dans le panier</p>
+    <p id="noItemInBasket">Aucun article dans le panier</p>
 <?php endif; ?>

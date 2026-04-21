@@ -45,6 +45,11 @@
   width: fit-content;
 }
 
+#noItemInBasket {
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 20px;
+}
+
 #commentSection #commentSectionHeader {
   display: flex;
 }
@@ -123,18 +128,17 @@
 }
 
 #connexionMenu {
-  max-width: 300px;
   flex-direction: column;
   gap: 16px;
 }
 #connexionMenu #welcomeMenu {
   display: flex;
   flex-direction: column;
+  margin: 0 16px;
 }
-#connexionMenu #welcomeMenu .menuLoginFrom {
+#connexionMenu #welcomeMenu .menuLoginForm {
   color: rgba(0, 0, 0, 0.75);
   font-size: 20px;
-  text-align: center;
 }
 #connexionMenu #loginForm {
   display: flex;

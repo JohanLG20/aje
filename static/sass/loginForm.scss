@@ -1,16 +1,16 @@
 #connexionMenu {
-    max-width: 300px;
+
     flex-direction: column;
     gap: 16px;
 
     #welcomeMenu {
         display: flex;
         flex-direction: column;
+        margin: 0 16px;
 
-        .menuLoginFrom {
+        .menuLoginForm {
             color: rgba($color: #000000, $alpha: 0.75);
             font-size: 20px;
-            text-align: center;
         }
     }
 
