@@ -7,6 +7,11 @@
         display: flex;
         flex-direction: column;
         margin: 0 16px;
+        gap: 32px;
+
+        hr{
+            width: 75%;
+        }
 
         .menuLoginForm {
             color: rgba($color: #000000, $alpha: 0.75);

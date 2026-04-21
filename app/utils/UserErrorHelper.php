@@ -12,7 +12,7 @@ abstract class UserErrorHelper
             $errors['email'] = self::checkEmailErrors($values['email']);
             $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
             $errors['city'] = self::checkCityErrors($values['city']);
-            $errors['postCode'] = self::checkPostaCodeErrors($values['postCode']);
+            $errors['postCode'] = self::checkPostalCodeErrors($values['postCode']);
             $errors['address'] = self::checkAddressErrors($values['address']);
             $errors['phoneNumber'] = self::checkPhoneNumberErrors($values['phoneNumber']);
             //We remove all the values that dont have any errors
@@ -163,7 +163,7 @@ abstract class UserErrorHelper
      * 
      * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
      */
-    private static function checkPostaCodeErrors(string $postCode): ?string
+    private static function checkPostalCodeErrors(string $postCode): ?string
     {
         if (strlen($postCode) > 0) {
             //Checking if there are only numbers
@@ -204,7 +204,7 @@ abstract class UserErrorHelper
                     $address,
                     FILTER_VALIDATE_REGEXP,
                     array('options' => array(
-                        'regexp' => "/^([a-zA-Z\-\s\']*)$/"
+                        'regexp' => "/^([a-zA-Z\-\s\'0-9]*)$/"
 
                     ))
                 )) {

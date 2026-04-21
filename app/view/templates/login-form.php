@@ -3,6 +3,7 @@
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
         <div id="welcomeMenu">
             <p class="menuLoginForm">Bonjour <?= $_SESSION['name'] ?></p>
+            <hr>
             <?php if (isset($_SESSION['permissionLevel']) && $_SESSION['permissionLevel'] === "admin"): ?>
                 <a href="index.php?path=/productmanagement/create" class="menuLoginForm">Ajouter un produit</a>
                 <a href="index.php?path=/productmanagement/delete" class="menuLoginForm">Supprimer un produit</a>
