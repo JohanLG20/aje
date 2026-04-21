@@ -55,24 +55,12 @@ abstract class DataTransformer
         return preg_replace("/\s/", "", $str);
     }
 
-    /*
-    Function that make the cartesian product of a 2 dimensionnal array
-    Thanks Claude.ai
-    */
-    public static function cartesianProduct(array $tableaux): array
-    {
-        $resultat = [[]];
-
-        foreach ($tableaux as $indice => $valeurs) {
-            $nouvelleListe = [];
-            foreach ($resultat as $combinaisonExistante) {
-                foreach ($valeurs as $valeur) {
-                    $nouvelleListe[] = $combinaisonExistante + [$indice => $valeur];
-                }
-            }
-            $resultat = $nouvelleListe;
-        }
-
-        return $resultat;
+    /**
+     * @param string $str The string we want to modify
+     * 
+     * @return string A string with the first letter in upper case and the rest in lower case
+     */
+    public static function makeCleanName(string $str) : string{
+        return ucfirst(strtolower($str));
     }
 }

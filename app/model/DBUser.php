@@ -2,6 +2,7 @@
 
 namespace AJE\Model;
 
+use AJE\Utils\DataTransformer;
 use PDOException;
 
 class DBUser extends CoreModel
@@ -29,7 +30,7 @@ class DBUser extends CoreModel
 
         $addProdQuery->bindParam(":email", $params['email']);
         $addProdQuery->bindParam(":city", $params['city']);
-        $addProdQuery->bindParam(":firstname", $params['firstname']);
+        $addProdQuery->bindParam(":firstname", DataTransformer::makeCleanName($params['firstname']));
         $addProdQuery->bindParam(":address", $params['address']);
         $addProdQuery->bindParam(":phoneNumber", $phoneNumber);
         $addProdQuery->bindParam(":postCode", $params['postCode']);
