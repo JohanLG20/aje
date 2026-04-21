@@ -19,6 +19,7 @@ class Router
             $this->routes = ROUTES;
             $this->availablePaths = array_keys($this->routes);
             $this->requestedPath = $_GET['path'] ?? '/';
+            
             $this->parseRoutes();
         } catch (\Exception $e) {
             require(VIEW . "/errorPage.php");
@@ -66,6 +67,9 @@ class Router
                     $controller->{$route['denyAccessMethod']}(...$params);
                 }
             }
+        }
+        else{
+            require(VIEW . "/404.php");
         }
     }
 

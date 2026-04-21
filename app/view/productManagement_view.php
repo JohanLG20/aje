@@ -119,9 +119,7 @@
 
     </form>
 
-    <?php if (isset($view['operationResult'])) : ?>
-        <p><?= $view['operationResult'] ?></p>
-    <?php endif; ?>
+
 </main>
 
 <script>

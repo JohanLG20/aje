@@ -51,7 +51,6 @@ class UserManagementController extends CRUDController
             //We retrieve the id of the connected user.
             $authController = new AuthentificationController();
             $userId = $authController->getId();
-            var_dump($userId);
             if ($userDb->deleteElementById($userId)) {
                 //We send back the user to the home page
                 header("Location: index.php");

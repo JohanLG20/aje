@@ -110,7 +110,11 @@ const ROUTES = [
     "/disclaimer/" => [
         'controller' => AJE\Controller\StaticPageController::class,
         'method' => 'showDisclaimerPage'
-    ]
+    ],
+    "/404/" => [
+        'controller' => AJE\Controller\StaticPageController::class,
+        'method' => 'show404'
+    ],
 
 
 

@@ -9,7 +9,7 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="static/css/style.css" >
+    <link rel="stylesheet" href="static/css/style.css">
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -36,6 +36,15 @@
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <div class="navItem" >
+                    <form onsubmit="redirectSearch(event)" class="desktopMenuIcon">
+                        <div class="searchForm">
+                            <input type="search" id="q" name="q">
+                            <button id="menuSearchIcon" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
                 </div>
                 <a href="index.php?path=/contact/" class="desktopMenuItem"><i class="fa-solid fa-circle-question menuIcon"></i></a>
 
@@ -115,5 +124,3 @@
         </nav>
 
     </header>
-
-  

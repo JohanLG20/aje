@@ -85,7 +85,7 @@ class DBUser extends CoreModel
         try {
             $query = $this->db->prepare("SELECT comment_label FROM {$this->tableName}
             INNER JOIN COMMENT ON COMMENT.id_user_ = {$this->tableName}.id_{$this->idName}
-             WHERE id_article = :idArticle AND {$this->tableName}.id_{$this->idName} = :idUser");
+             WHERE COMMENT.id_article = :idArticle AND {$this->tableName}.id_{$this->idName} = :idUser");
 
             $query->bindValue(":idArticle", $idArticle);
             $query->bindValue(":idUser", $idUser);
@@ -107,10 +107,10 @@ class DBUser extends CoreModel
     public function getUserPurchases(string $idUser, string $idArticle = ""): array
     {
         try {
-            $sqlQuery = "SELECT ARTICLE.id_article FROM {$this->tableName}
+            $sqlQuery = "SELECT ao.id_article FROM {$this->tableName}
             INNER JOIN ORDER_ o ON o.id_{$this->idName} = {$this->tableName}.id_{$this->idName}
             INNER JOIN ARTICLE_ORDER ao ON o.id_order_ = ao.id_order_
-            WHERE {$this->idName} = :idUser";
+            WHERE {$this->tableName}.id_{$this->idName} = :idUser";
 
             if ($idArticle !== "") {
                 $sqlQuery .= " AND ao.id_article = :idArticle";

@@ -35,7 +35,7 @@
                         <p class="promotionNewPrice"><?= $productInfo['price']['promo_price'] ?>€</p>
                     <?php endif; ?>
                 </div>
-                <p class="deliveryDate">Livré le 18/11/2026</p>
+                <p class="deliveryDate">Livré le plus rapidement possible</p>
                 <a href="index.php?path=/basket/add/<?= $idArticle ?>" class="addBasketButton btn1">
                     Ajouter au panier
                 </a>
@@ -102,7 +102,7 @@
             <div id="commentSectionHeader" class="articleInfos-header">
                 <h3 class="articleInfos">Commentaires</h3>
                 <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
-                    <p id="addComment">+ Ajouter</p>
+                    <p id="addComment">Ajouter un commentaire</p>
                 <?php endif; ?>
             </div>
 

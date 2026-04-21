@@ -76,6 +76,7 @@ class CommentController
     */
     public function canAddComment(string $id): bool
     {
+        var_dump($this->hasCommented($id));
         return $this->connectedUser->canCommentArticle($id) && !$this->hasCommented($id);
     }
 
@@ -90,11 +91,12 @@ class CommentController
         if (!is_null($this->connectedUser->getId())) {
 
             try {
-                $dbUser = new DBUser();
-                $userComment = $dbUser->getUserCommentForArticle($this->connectedUser->getId(), $idArticle);
+                
+                $userComment = $this->db->getUserCommentForArticle($this->connectedUser->getId(), $idArticle);
+                var_dump($userComment);
                 $res = is_array($userComment) && !empty($userComment); //This test must be because the model function can return a boolean
-            } catch (\PDOException) {
-                $res = false;
+            } catch (\PDOException $e) {
+                throw new \Exception($e);
             }
             return $res;
         } else {

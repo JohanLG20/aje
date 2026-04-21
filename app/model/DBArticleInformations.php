@@ -2,6 +2,8 @@
 
 namespace AJE\Model;
 
+use Exception;
+
 class DBArticleInformations extends CoreModel{
     public function __construct()
     {
@@ -32,7 +34,8 @@ class DBArticleInformations extends CoreModel{
 
     public function getProductVariants(int $id): array|bool
     {
-        // Toutes les variantes (ARTICLE) liées à cet ARTICLE_INFORMATIONS
+        try{
+            // Toutes les variantes (ARTICLE) liées à cet ARTICLE_INFORMATIONS
         $query = $this->db->prepare("
             SELECT
                 a.id_article,
@@ -49,5 +52,13 @@ class DBArticleInformations extends CoreModel{
         ");
         $query->execute([':id' => $id]);
         return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        catch(\PDOException $e){
+            throw new \Exception("Erreur de connexion à la base de données");
+        }
+        
     }
+
+    
+
 }

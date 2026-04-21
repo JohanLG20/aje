@@ -2,6 +2,7 @@
 
 namespace AJE\Controller;
 
+use AJE\Model\DBComment;
 use AJE\Utils\DataTransformer;
 use AJE\Model\DBUser;
 use AJE\Model\DBUserLevel;
@@ -164,11 +165,21 @@ class AuthentificationController
      */
     public function canCommentArticle(string $idArticle): bool
     {
-        if (!is_null($this->id)) {
-            return true;
-            //TODO: make function
-        } else {
-            return false;
+        try {
+            $dbUser = new DBUser();
+
+            if (!is_null($this->id)) {
+                $userPurchase = $dbUser->getUserPurchases($this->id, $idArticle);
+                if ($userPurchase && !empty($userPurchase)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            throw new \Exception("Erreur lors de la recherche des commentaires" . $e->getMessage());
         }
     }
 }

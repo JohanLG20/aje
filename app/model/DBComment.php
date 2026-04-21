@@ -40,10 +40,10 @@ class DBComment extends CoreModel
         }
     }
 
-public function getCommentByIdByAuthorByArticle(string $idComment, string $idUser, string $idArticle)
-{
-    try {
-        $query = $this->db->prepare("
+    public function getCommentByIdByAuthorByArticle(string $idComment, string $idUser, string $idArticle)
+    {
+        try {
+            $query = $this->db->prepare("
             SELECT * FROM {$this->tableName} 
             WHERE id_user_ = :idUser 
             AND id_article_informations = (
@@ -53,13 +53,39 @@ public function getCommentByIdByAuthorByArticle(string $idComment, string $idUse
             )
             AND id_{$this->idName} = :idComment
         ");
-        $query->bindParam(":idUser", $idUser);
-        $query->bindParam(":idArticle", $idArticle);
-        $query->bindParam(":idComment", $idComment);
-        $query->execute();
-        return $query->fetch(\PDO::FETCH_ASSOC);
-    } catch (\PDOException $e) {
-        throw $e;
+            $query->bindParam(":idUser", $idUser);
+            $query->bindParam(":idArticle", $idArticle);
+            $query->bindParam(":idComment", $idComment);
+            $query->execute();
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
     }
-}
+
+
+    /**
+     * @param string $idUser The id of the user we want to check
+     * @param string $idArticle The id of the article we want to check
+     * 
+     * @return array Returns an associative array that contains the comment of the user on the article at ['comment'] => theComment or an empty array if not comments is found. Can also return false if the query failed.
+     */
+    public function getUserCommentForArticle(string $idUser, string $idArticle): array|bool
+    {
+        try {
+            $query = $this->db->prepare("SELECT comment_label FROM {$this->tableName}
+             WHERE COMMENT.id_article_informations = (SELECT id_article_informations
+                                                    FROM ARTICLE 
+                                                    WHERE id_article = :idArticle)
+              AND id_user_ = :idUser");
+
+            $query->bindValue(":idArticle", $idArticle);
+            $query->bindValue(":idUser", $idUser);
+            $query->execute();
+
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
 }
