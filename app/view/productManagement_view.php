@@ -6,7 +6,7 @@
         <?php if ($view['action'] !== "create"): ?>
             <div class="form-item">
                 <label for="idArticle">Selectionnez un article</label>
-                <select name="idArticle">
+                <select name="idArticle" required>
                     <?php foreach ($view['articlesList'] as $article): ?>
                         <option
                             value="<?= $article['id'] ?? '' ?>"
@@ -26,10 +26,11 @@
                 <label for="articleName">Nom de l'article</label>
                 <input type="text" name="articleName" id="articleName" placeholder="Le nom de l'article"
                     value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['articleName']) ? $values['articleName'] : '' ?>">
+                <?php if (isset($view['errors']['articleName'])): ?>
+                    <p class="error"><?= $view['errors']['articleName'] ?></p>
+                <?php endif; ?>
             </div>
-            <?php if (isset($view['errors']['articleName'])): ?>
-                <p class="error"><?= $view['errors']['articleName'] ?></p>
-            <?php endif; ?>
+
 
             <!-- Brand -->
             <div class="form-item">
@@ -42,34 +43,34 @@
                         <option value=<?= $brand['id_brand'] ?>> <?= $brand['brand_label'] ?></option>
                     <?php endforeach ?>
                 </select>
+                <?php if (isset($view['errors']['idBrand'])): ?>
+                    <p class="error"><?= $view['errors']['idBrand'] ?></p>
+                <?php endif; ?>
             </div>
-            <?php if (isset($view['errors']['idBrand'])): ?>
-                <p class="error"><?= $view['errors']['idBrand'] ?></p>
-            <?php endif; ?>
+
 
             <!-- Description -->
             <div class="form-item">
                 <label for="description">Description de l'article</label>
                 <textarea name="description" id="description" placeholder="Décrivez l'article, essayez de faire un texte vendeur !"
                     value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['description']) ? $values['description'] : '' ?>" maxlength="255" rows="5"></textarea>
+                <?php if (isset($view['errors']['description'])): ?>
+                    <p class="error"><?= $view['errors']['description'] ?></p>
+                <?php endif; ?>
             </div>
-            <?php if (isset($view['errors']['description'])): ?>
-                <p class="error"><?= $view['errors']['description'] ?></p>
-            <?php endif; ?>
+
 
             <!-- Price -->
             <div class="form-item">
                 <label for="price">Prix de l'article</label>
                 <input type="text" name="price" id="price" placeholder="Le prix de l'article"
                     value="<?= isset($_POST['form_submitted']) && !isset($view['errors']['price']) ? $values['price'] : '' ?>" maxlength="255">
+                <?php if (isset($view['errors']['price'])): ?>
+                    <p class="error"><?= $view['errors']['price'] ?></p>
+                <?php endif; ?>
             </div>
-            <?php if (isset($view['errors']['price'])): ?>
-                <p class="error"><?= $view['errors']['price'] ?></p>
-            <?php endif; ?>
 
-            <?php if (isset($view['errors']["idColor"])): ?>
-                <p class="error"><?= $view['errors']["idColor"] ?></p>
-            <?php endif; ?>
+
 
             <!-- Categories -->
             <div class="form-item">
@@ -85,10 +86,11 @@
                             <?= $category['cat_label'] ?>
                         </option> <?php endforeach ?>
                 </select>
+                <?php if (isset($view['errors']["idCat"])): ?>
+                    <p class="error"><?= $view['errors']["idCat"] ?></p>
+                <?php endif; ?>
             </div>
-            <?php if (isset($view['errors']["idCat"])): ?>
-                <p class="error"><?= $view['errors']["idCat"] ?></p>
-            <?php endif; ?>
+
 
             <!-- Categories -->
             <div class="form-list">
