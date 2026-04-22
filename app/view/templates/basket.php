@@ -14,6 +14,7 @@
                     <div class="basketQuantity">
                         <p>Quantité</p>
                         <p><?= $bask['quantity'] ?></p>
+                        <a href="?path=/basket/remove/<?= $idArticle ?>" class="error">Supprimer</a>
                     </div>
                 </div>
 
