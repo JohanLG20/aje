@@ -36,14 +36,16 @@ class PaymentController
         if (!is_null($articles)) {
             try {
                 $this->registerOrder($basket->getArticles($articles));
+                $orderInfos['items'] = $articles;
                 $basket->resetBasket();
                 require(VIEW . "/validatePayment_view.php");
             } catch (PDOException $e) {
                 throw ($e);
             }
         } else {
-            echo "Pas d'articles dans le panier.";
-            //TODO: Create error message
+            //Sending the user back to the main page
+            header("Location: index.php");
+            
         }
     }
 

@@ -13,6 +13,7 @@
 @use 'disclaimer';
 @use 'crudForm';
 @use 'page404';
+@use 'validatePayement';
 
 * {
     margin: 0;
@@ -270,7 +271,7 @@ hr {
                 width: 100vw;
                 gap: 8px;
 
-
+                white-space: nowrap;
 
                 .droppingList {
                     display: flex;

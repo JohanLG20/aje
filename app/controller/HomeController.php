@@ -9,8 +9,9 @@ class HomeController
 {
     public function home()
     {
+        
         $dbArt = new DBArticle();
-        $latestArticles = $dbArt->searchForArticles("Basket");
+        $latestArticles = $dbArt->searchForArticles("");
         $latestArticles = SaveImageHanddler::addFirstImageToArray($latestArticles);
 
         $promotions = $dbArt->getArticlesInPromotions();

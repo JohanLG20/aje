@@ -1,5 +1,4 @@
 <?php if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])):  ?>
-
     <div id="basket">
         <?php foreach ($_SESSION['basket'] as $idArticle => $bask): ?>
             <div class="basketItemCard">
