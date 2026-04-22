@@ -296,7 +296,7 @@
     width: 400px;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 50%;
+    bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }

@@ -3,10 +3,11 @@
         <div id="footerMenu">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="index.php?s=sport">Sport</a></li>
-                <li><a href="index.php?s=homme">Homme</a></li>
-                <li><a href="index.php?s=femme">Femme</a></li>
-                <li><a href="index.php?s=about">A Propos</a></li>
+                <li><a href="index.php?path=/search/sport">Sport</a></li>
+                <li><a href="index.php?path=/search/Homme">Homme</a></li>
+                <li><a href="index.php?path=/search/Femme">Femme</a></li>
+                <li><a href="index.php?path=/about/">A Propos</a></li>
+                <li><a href="index.php?path=/disclaimer/">Mentions légales</a></li>
 
             </ul>
         </div>

@@ -41,19 +41,7 @@ class ArticleController
             $productInfo['comments'] = $commentController->getComments($idArt);
 
             // On identifie la variante active pour la mettre en avant dans la vue
-            $activeVariant = array_filter(
-                $variants,
-                fn($v) => $v['id_article'] === $idArt
-            );
-            $activeVariant = array_values($activeVariant)[0] ?? null;
-
-            if (!empty($activeVariant['modalities'])) {
-                //Retrieving the label
-                $activeVariantLabel = array_key_first($activeVariant['modalities']);
-                //Retrieving the associated value
-                $activeVariantValue =
-                    $activeVariant['modalities'][$activeVariantLabel]['value'];
-            }
+            $activeVariant = intval($idArt);
 
             //If there is more than one variants, then we show them
             $productInfo['hasVariants'] = count($variants) > 1 ? true : false;

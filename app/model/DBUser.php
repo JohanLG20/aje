@@ -152,7 +152,6 @@ class DBUser extends CoreModel
                 $sqlQuery .= " AND a.id_article_informations IN (SELECT id_article_informations FROM ARTICLE WHERE id_article = :idArticle)";
             }
 
-            var_dump($idUser, $idArticle);
             $query = $this->db->prepare($sqlQuery);
 
             $query->bindValue(":idUser", $idUser);

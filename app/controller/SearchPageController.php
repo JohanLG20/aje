@@ -13,25 +13,37 @@ class SearchPageController
 
         try {
             $dbArticle = new DBArticle();
-            $eachQueryWord = explode(" ", $query);
-            $rawArticles = []; // Résultats bruts sans filtrage
 
-            foreach ($eachQueryWord as $word) {
-                $result = $dbArticle->searchForArticles($word);
+            // Découpage correct par espaces et +
+            $eachQueryWord = preg_split('/[\s+]+/', $query, -1, PREG_SPLIT_NO_EMPTY);
 
-                foreach ($result as $row) {
-                    $id = $row['id'];
-                    if (!isset($rawArticles[$id])) {
-                        $rawArticles[$id] = $row;
-                        $rawArticles[$id]['score'] = 0;
-                    }
-                    $rawArticles[$id]['score']++;
+            $rawArticles = [];
+
+            if (count($eachQueryWord) > 1) {
+                // On récupère les résultats du premier mot indexés par id
+                $firstResult = $dbArticle->searchForArticles($eachQueryWord[0]);
+                $rawArticles = array_column($firstResult, null, 'id');
+
+                // Pour chaque mot suivant on intersecte sur les ids
+                for ($i = 1; $i < count($eachQueryWord); $i++) {
+                    $result = $dbArticle->searchForArticles($eachQueryWord[$i]);
+                    $resultIds = array_column($result, 'id');
+
+                    // On ne garde que les articles présents dans les deux résultats
+                    $rawArticles = array_filter(
+                        $rawArticles,
+                        fn($article) => in_array($article['id'], $resultIds)
+                    );
                 }
+            } else {
+                // Recherche simple sur un seul mot
+                $result = $dbArticle->searchForArticles($query);
+                $rawArticles = array_column($result, null, 'id');
             }
 
-            
-            // On applique les filtres et le tri sur les résultats bruts
+
             $datas = $this->applyFiltersAndSort($rawArticles);
+            $datas['filters'] = $this->getAvailableFilters($rawArticles);
 
             return $datas;
         } catch (\PDOException $e) {
@@ -154,11 +166,9 @@ class SearchPageController
         $sort['alpha'] = $_GET['alpha'] ?? null;
 
         usort($articles, function ($a, $b) use ($sort) {
-            if ($b['score'] !== $a['score']) {
-                return $b['score'] - $a['score'];
-            }
             foreach ($sort as $key => $order) {
                 $multiplier = $order === 'ASC' ? 1 : -1;
+
                 if ($key === 'price') {
                     $priceA = $a['promo_price'] ?? $a['normal_price'];
                     $priceB = $b['promo_price'] ?? $b['normal_price'];
@@ -166,7 +176,8 @@ class SearchPageController
                 } elseif ($key === 'alpha') {
                     $result = strcmp($a['article_name'], $b['article_name']) * $multiplier;
                 }
-                if ($result !== 0) return $result;
+
+                if (isset($result) && $result !== 0) return $result;
             }
             return 0;
         });

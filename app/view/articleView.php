@@ -74,14 +74,15 @@
         </div>
 
         <!-- Variantes -->
-        <?php if ($productInfo['hasVariants']): ?>
+        <?php 
+            if ($productInfo['hasVariants']): ?>
             <div class="product-section">
                 <h3 class="articleInfos">Tous les modèles disponibles</h3>
                 <div class="product-section-content">
                     <div id="variantsList">
                         <?php foreach ($variants as $variant): ?>
                             <a href="?path=/article/<?= $variant['id_article'] ?>"
-                                class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
+                                class="variant-card <?= ($variant['id_article'] == $activeVariant ) ? 'active' : '' ?>">
                                 <?php foreach ($variant['modalities'] as $label => $modality): ?>
                                     <span class="modality-value"><?= $modality['value'] ?></span>
                                 <?php endforeach; ?>
@@ -114,7 +115,7 @@
                                     <h4><?= $comment['fullname'] ?></h4>
                                     <div class="commentActions">
                                         <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
-                                            <a href="?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
+                                            <p class="editComment hidden" >Editer</p>
                                         <?php endif; ?>
                                         <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
                                             <a href="?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
