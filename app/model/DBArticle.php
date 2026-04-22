@@ -231,7 +231,7 @@ LEFT JOIN PRICE_HISTORY promo
             OR ai.id_category IN (SELECT id_category FROM category_tree)
         )
         AND a.deleted_at IS NULL
-        GROUP BY a.id_article_informations";
+        GROUP BY a.id_article";
 
             $query = $this->db->prepare($sqlQuery);
             $query->execute([

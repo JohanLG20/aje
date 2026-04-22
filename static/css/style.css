@@ -23,8 +23,8 @@
   align-items: center;
 }
 #basket .basketItemCard img {
-  max-width: 120px;
-  max-height: 120px;
+  max-width: 150px;
+  max-height: 150px;
   height: auto;
 }
 #basket .basketItemCard .basketDescriptionSection {
@@ -32,6 +32,7 @@
   flex-direction: column;
   align-items: center;
   font-size: 18px;
+  gap: 8px;
   padding: 8px 0;
   margin-right: 16px;
 }
@@ -39,7 +40,6 @@
   display: flex;
   text-align: center;
   align-items: center;
-  margin-top: 8px;
   width: 100%;
   gap: 32px;
 }
@@ -171,6 +171,24 @@
   position: relative;
   width: 100%;
 }
+.slider #sliderWrapper i {
+  font-size: 48px;
+}
+.slider #sliderWrapper #caption {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: rgba(128, 128, 128, 0.5);
+  padding: 32px;
+}
+.slider #sliderWrapper #caption #captionText {
+  text-align: center;
+  width: 100%;
+  color: #eeeeee;
+  font-size: 32px;
+}
 .slider #sliderWrapper #sliderImages {
   display: flex;
   width: 100%;
@@ -278,7 +296,7 @@
     width: 400px;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: 50%;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -1084,13 +1102,13 @@ main form .form-item select option:disabled {
   color: grey;
   font-family: "LucioleBold", "sans-serif";
 }
-main form .error {
+main form .form-item .error {
   font-size: 12px;
   color: red;
   margin-top: -4px;
   padding-left: 4px;
 }
-main form .error::before {
+main form .form-item .error::before {
   content: "⚠ ";
 }
 main form button[type=submit] {
@@ -1674,6 +1692,9 @@ hr {
     white-space: nowrap;
   }
   #banner #baseMenu #menuIcons .searchForm {
+    min-width: 400px;
+    display: flex;
+    justify-content: space-between;
     border: 6px solid black;
   }
   #banner #baseMenu #menuIcons .mobileMenuItem {

@@ -29,6 +29,7 @@ class SearchPageController
                 }
             }
 
+            
             // On applique les filtres et le tri sur les résultats bruts
             $datas = $this->applyFiltersAndSort($rawArticles);
 

@@ -7,10 +7,13 @@
     padding: 4px 0;
     align-items: center;
     gap: 16px;
-    width: 500px;
+    width: 100%;
     background-color: grey;
 }
 
+@mixin arrows{
+    font-size: 48px;
+}
 
 .slider {
     width: 100%;
@@ -20,6 +23,28 @@
     #sliderWrapper {
         position: relative;
         width: 100%;
+
+        i{
+            @include arrows;
+        }
+
+        #caption {
+            position: absolute;
+            display: flex;
+            bottom: 0;
+            width: 100%;
+            z-index: 2;
+            background-color: rgba($color: grey, $alpha: 0.5);
+            padding: 32px;
+            
+
+            #captionText {
+                text-align: center;
+                width: 100%;
+                color: col.$color-secondary;
+                font-size: 32px;
+            }
+        }
 
         #sliderImages {
             display: flex;

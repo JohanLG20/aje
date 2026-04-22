@@ -119,6 +119,9 @@
         <input type="hidden" name="form_submitted">
         <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
 
+        <?php if (isset($view['operationResult'])) : ?>
+            <p><?= $view['operationResult'] ?></p>
+        <?php endif; ?>
     </form>
 
 

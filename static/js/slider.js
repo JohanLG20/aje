@@ -1,7 +1,7 @@
 let slider = document.getElementById("sliderImages")
 //Used for the caption
 let sliderImages = document.getElementsByClassName("sliderImage")
-let captions = document.getElementById("captions")
+let captionText = document.getElementById("captionText")
 let currentX = 0
 
 
@@ -59,4 +59,5 @@ function nextSlide() {
 }
 
 function setUpCaptions() {
+    captionText.textContent = sliderImages[currentSlide].getAttribute("caption")
 }
