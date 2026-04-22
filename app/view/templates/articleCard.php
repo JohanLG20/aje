@@ -1,5 +1,5 @@
 <article class="articleCard">
-    <a href="index.php?path=/article/<?= $art['id'] ?>" class="articleCardLink">
+    <a href="?path=/article/<?= $art['id'] ?>" class="articleCardLink">
         <div class="articleCardImage">
             <img src="<?= $art['image'] ?>" alt="<?= $art['article_name'] ?>">
         </div>

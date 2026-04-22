@@ -1,7 +1,7 @@
 <?php require(LAYOUT . '/header.php') ?>
 <main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
-    <form action="index.php?path=/usermanagement/<?= $view['action'] ?>" method="post">
+    <form action="?path=/usermanagement/<?= $view['action'] ?>" method="post">
         <!-- Last name -->
         <div class="form-item">
             <label for="lastname">Nom</label>
@@ -115,7 +115,7 @@
                 //We create a form to send the informations    
                 let form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'index.php?path=/usermanagement/delete';
+                form.action = '?path=/usermanagement/delete';
 
                 let formSubmitted = document.createElement('input');
                 input.type = 'hidden';

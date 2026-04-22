@@ -15,7 +15,7 @@
 
         <div id="footerContact">
             <h2>Une question, un soucis avec votre commande ?</h2>
-            <a href="index.php?path=/contact/" class="btn2">NOUS CONTACTER</a>
+            <a href="?path=/contact/" class="btn2">NOUS CONTACTER</a>
             <div>
                 <p>Nos réseaux</p>
                 <div id="socials">
@@ -50,7 +50,7 @@
         const query = (desktopInput && desktopInput.offsetParent !== null) ?
             desktopInput.value.trim() :
             mobileInput.value.trim();
-        window.location.href = `index.php?path=/search/${encodeURIComponent(query)}`;
+        window.location.href = `?path=/search/${encodeURIComponent(query)}`;
     }
 </script>
 

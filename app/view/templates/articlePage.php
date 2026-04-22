@@ -29,7 +29,7 @@
                 <?php endif; ?>
             </div>
             <p>DATE DE LIVRAISON</p>
-            <a href="index.php?path=/basket/add/<?= $articleInfos['id'] ?>" class="addBasketButton btn1">Ajouter au panier</a>
+            <a href="?path=/basket/add/<?= $articleInfos['id'] ?>" class="addBasketButton btn1">Ajouter au panier</a>
         </div>
 
 
@@ -86,7 +86,7 @@
         addCommentSection.id = "addCommentSection"
 
         let addCommentForm = document.createElement("form")
-        addCommentForm.action = "index.php?path=/addComment/"
+        addCommentForm.action = "?path=/addComment/"
         addCommentForm.method = "POST"
 
         let addCommentFormTitle = document.createElement("h4")

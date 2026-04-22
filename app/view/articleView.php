@@ -36,7 +36,7 @@
                     <?php endif; ?>
                 </div>
                 <p class="deliveryDate">Livré le plus rapidement possible</p>
-                <a href="index.php?path=/basket/add/<?= $idArt ?>" class="addBasketButton btn1">
+                <a href="?path=/basket/add/<?= $idArt ?>" class="addBasketButton btn1">
                     Ajouter au panier
                 </a>
             </div>
@@ -80,7 +80,7 @@
                 <div class="product-section-content">
                     <div id="variantsList">
                         <?php foreach ($variants as $variant): ?>
-                            <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
+                            <a href="?path=/article/<?= $variant['id_article'] ?>"
                                 class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
                                 <?php foreach ($variant['modalities'] as $label => $modality): ?>
                                     <span class="modality-value"><?= $modality['value'] ?></span>
@@ -114,10 +114,10 @@
                                     <h4><?= $comment['fullname'] ?></h4>
                                     <div class="commentActions">
                                         <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
-                                            <a href="index.php?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
+                                            <a href="?path=/editComment/<?= $comment['idComment'] ?>" class="editComment">Editer</a>
                                         <?php endif; ?>
                                         <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                            <a href="index.php?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                                            <a href="?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
         addCommentSection.id = "addCommentSection"
 
         let addCommentForm = document.createElement("form")
-        addCommentForm.action = "index.php?path=/addComment/"
+        addCommentForm.action = "?path=/addComment/"
         addCommentForm.method = "POST"
 
         let addCommentFormTitle = document.createElement("h4")

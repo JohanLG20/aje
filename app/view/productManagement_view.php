@@ -2,7 +2,7 @@
 
 <main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
-    <form action="index.php?path=/productmanagement/<?= $view['action'] ?>" method="post" enctype="multipart/form-data">
+    <form action="?path=/productmanagement/<?= $view['action'] ?>" method="post" enctype="multipart/form-data">
         <?php if ($view['action'] !== "create"): ?>
             <div class="form-item">
                 <label for="idArticle">Selectionnez un article</label>
@@ -176,7 +176,7 @@
             filterListDiv.appendChild(filterListTitle)
 
             //Adding the filters
-            fetch("index.php?path=/filterRequest/getFvForCat/" + categorySelector.value)
+            fetch("?path=/filterRequest/getFvForCat/" + categorySelector.value)
                 .then(r => {
                     console.log(r)
                     if (r.ok) {

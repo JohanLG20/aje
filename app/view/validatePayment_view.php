@@ -44,7 +44,7 @@
             <!-- Actions -->
             <div id="confirmationActions">
                 <a href="index.php" class="btn1">Retour à l'accueil</a>
-                <a href="index.php?path=/search/sport" class="btn2">Continuer mes achats</a>
+                <a href="?path=/search/sport" class="btn2">Continuer mes achats</a>
             </div>
 
         </div>

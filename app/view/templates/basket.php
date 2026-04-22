@@ -4,7 +4,7 @@
             <div class="basketItemCard">
                 <img src="<?= $bask['image'] ?>" alt="<?= $bask['name'] ?>">
                 <div class="basketDescriptionSection">
-                    <a href="index.php?path=/article/<?= $idArticle ?>" class="basketArticleLink"><?= $bask['name'] ?></a>
+                    <a href="?path=/article/<?= $idArticle ?>" class="basketArticleLink"><?= $bask['name'] ?></a>
                     <div class=price>
                         <p class="<?= !is_null($bask['price']["promo_price"]) ? 'promotion' : 'normalPrice' ?>"><?= $bask['price']["normal_price"] ?>€</p>
                         <?php if (isset($bask['price']['promo_price'])): ?>
@@ -20,9 +20,9 @@
             </div>
         <?php endforeach; ?>
         <?php if (isset($validatePayment)): ?>
-            <a href="index.php?path=/pay/" class="btn1">Valider le paiement</a>
+            <a href="?path=/pay/" class="btn1">Valider le paiement</a>
         <?php else: ?>
-            <a id="basketPaymentButton" href="index.php?path=/payment/" class="btn1">Payer</a>
+            <a id="basketPaymentButton" href="?path=/payment/" class="btn1">Payer</a>
         <?php endif; ?>
     </div>
 
