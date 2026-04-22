@@ -306,8 +306,12 @@ JOIN BRAND b
 JOIN PRICE_HISTORY normal
     ON normal.id_article = a.id_article
     AND normal.end_date IS NULL
-JOIN PRICE_HISTORY promo
+LEFT JOIN PRICE_HISTORY promo
     ON promo.id_article = a.id_article
+    AND promo.end_date IS NOT NULL
+    AND promo.end_date >= CURDATE()
+    AND promo.start_date <= CURDATE()
+    AND a.deleted_at IS NULL
     GROUP BY a.id_article_informations ORDER BY a.id_article_informations DESC
 LIMIT :limit");
             $query->bindValue(":limit", $limit, \PDO::PARAM_INT);
