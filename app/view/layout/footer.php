@@ -44,13 +44,20 @@
 
 <script>
     function redirectSearch(event) {
-        event.preventDefault();
-        const mobileInput = document.getElementById('q-mobile');
-        const desktopInput = document.getElementById('q-desktop');
-        const query = (desktopInput && desktopInput.offsetParent !== null) ?
-            desktopInput.value.trim() :
-            mobileInput.value.trim();
-        window.location.href = `?path=/search/${encodeURIComponent(query)}`;
+        event.preventDefault()
+
+        //Retrieving the datas
+        const data = new FormData(event.target);
+
+        if (data.get('q') !== "") {//Only launching a research if the input is not empty
+            const mobileInput = document.getElementById('q-mobile');
+            const desktopInput = document.getElementById('q-desktop');
+            const query = (desktopInput && desktopInput.offsetParent !== null) ?
+                desktopInput.value.trim() :
+                mobileInput.value.trim();
+            window.location.href = `?path=/search/${encodeURIComponent(query)}`;
+        }
+
     }
 </script>
 

@@ -167,9 +167,9 @@ class AuthentificationController
     {
         try {
             $dbUser = new DBUser();
-
             if (!is_null($this->id)) {
                 $commentableArticles = $dbUser->getUserCommentablesArticles($this->id, $idArticle);
+                
                 if ($commentableArticles && !empty($commentableArticles)) {
                     return true;
                 } else {

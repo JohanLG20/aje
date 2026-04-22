@@ -4,7 +4,6 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
-use AJE\Model\DBPriceHistory;
 
 class ArticleController
 {
@@ -38,8 +37,8 @@ class ArticleController
             $images = $this->retrieveImages($productInfo['image_repertory']);
             $productInfo['imagesPath'] = !empty($images) ? $images : [IMAGE_NOT_FOUND_LINK];
             $commentController = new CommentController();
-            $productInfo['canAddComment'] = $commentController->canAddComment($idArticleInformations);
-            $productInfo['comments'] = $commentController->getComments($idArticleInformations);
+            $productInfo['canAddComment'] = $commentController->canAddComment($idArt);
+            $productInfo['comments'] = $commentController->getComments($idArt);
 
             // On identifie la variante active pour la mettre en avant dans la vue
             $activeVariant = array_filter(
