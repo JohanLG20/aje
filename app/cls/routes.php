@@ -26,12 +26,8 @@ const ROUTES = [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
         'method' => 'getAllFiltersValueForFilterType'
     ],
-    '/article/info/{idArticleInformations}' => [
-        'controller' => AJE\Controller\ArticleController::class,
-        'method' => 'show'
-    ],
 
-    '/article/{idArticle}' => [
+    '/article/{idArt}' => [
         'controller' => AJE\Controller\ArticleController::class,
         'method' => 'showVariant'
     ],

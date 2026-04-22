@@ -8,40 +8,16 @@ use AJE\Model\DBPriceHistory;
 
 class ArticleController
 {
-    // Page produit générique — accessible via /article/info/{id_article_informations}
-    public function show(int $idArticleInformations): void
-    {
-        try {
-            $dbArticleInformations = new DBArticleInformations();
-            $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
 
-            if (!$productInfo) {
-                $this->notFound();
-                return;
-            }
-
-            $productInfo['imagesPath'] = $this->retrieveImages($productInfo['image_repertory']);
-            $commentController = new CommentController();
-            $productInfo['canAddComment'] = $commentController->canAddComment($idArticleInformations);
-            $productInfo['comments'] = $commentController->getComments($idArticleInformations);
-
-            $rawVariants = $dbArticleInformations->getProductVariants($idArticleInformations);
-            $variants = $this->formatVariants($rawVariants);
-
-            require(VIEW . '/articleView.php');
-        } catch (\PDOException $e) {
-            // TODO: gérer l'erreur
-        }
-    }
 
     // Page variante spécifique — accessible via /article/{id_article}
-    public function showVariant(int $idArticle): void
+    public function showVariant(int $idArt): void
     {
         try {
             $dbArticle = new DBArticle();
 
             // On récupère l'id_article_informations lié à cet article
-            $idArticleInformations = $dbArticle->getArticleInformationsId($idArticle);
+            $idArticleInformations = $dbArticle->getArticleInformationsId($idArt);
 
             if (!$idArticleInformations) {
                 $this->notFound();
@@ -50,7 +26,7 @@ class ArticleController
 
             $dbArticleInformations = new DBArticleInformations();
             $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
-            $productInfo['price'] = $dbArticle->getArticlePrice($idArticle);
+            $productInfo['price'] = $dbArticle->getArticlePrice($idArt);
             $rawVariants = $dbArticleInformations->getProductVariants($idArticleInformations);
 
             $formatted   = $this->formatVariants($rawVariants);
@@ -68,7 +44,7 @@ class ArticleController
             // On identifie la variante active pour la mettre en avant dans la vue
             $activeVariant = array_filter(
                 $variants,
-                fn($v) => $v['id_article'] === $idArticle
+                fn($v) => $v['id_article'] === $idArt
             );
             $activeVariant = array_values($activeVariant)[0] ?? null;
 
@@ -81,9 +57,8 @@ class ArticleController
             }
 
             //If there is more than one variants, then we show them
-            if(count($variants) > 1){
-                $productInfo['hasVariants'] = true;
-            }
+            $productInfo['hasVariants'] = count($variants) > 1 ? true : false;
+            
 
             require(VIEW . '/articleView.php');
         } catch (\PDOException $e) {

@@ -36,7 +36,7 @@
                     <?php endif; ?>
                 </div>
                 <p class="deliveryDate">Livré le plus rapidement possible</p>
-                <a href="index.php?path=/basket/add/<?= $idArticle ?>" class="addBasketButton btn1">
+                <a href="index.php?path=/basket/add/<?= $idArt ?>" class="addBasketButton btn1">
                     Ajouter au panier
                 </a>
             </div>
