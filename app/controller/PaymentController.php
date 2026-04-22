@@ -14,8 +14,7 @@ class PaymentController
      */
     public function permissionDenied()
     {
-        echo "Vous devez être connecté pour pouvoir payer un panier";
-        //TODO: Display the login form to make people connect/create an account
+        require(VIEW . "/basketPreviewRefuse.php");
     }
 
 

@@ -23,7 +23,7 @@
                         <img src="<?= IMAGE_LINK ?>/slider/slider2.png" alt="Image 2">
                     </div>
                     <div class="sliderImage">
-                        <img src="<?= IMAGE_LINK ?>/slider/slider3.png" alt="Image 3">
+                        <video src="static/video/running.webm" loading="lazy" autoplay loop></video>
                     </div>
                 </div>
             </div>

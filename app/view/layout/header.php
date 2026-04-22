@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="navItem">
-                    <i class="fa-solid fa-user menuIcon "></i>
+                    <i class="fa-solid fa-user menuIcon" id="loginButton"></i>
 
                     <?php require(TEMPLATES . '/login-form.php') ?>
                 </div>
