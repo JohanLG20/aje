@@ -5,12 +5,26 @@ namespace AJE\Controller;
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
 
+/**
+ * Class responsible of gathering the informations in order to display the view of the articles
+ * It is reach throught the path ?path=/article/{idArt} and it displays the requested article. It prepares the informations in multiples variable : - array $productInfo -> generic informations such as price, description, name .. It's also where is set if the product has variants or not
+ *                                    - string $idArt : The id of the article, used to handdle the basket behavior
+ *                                    - array $variants : An array that contains all the variants of the article can be in size, weight ... 
+ *                                    - array $commonModalities : Contains all the values that comes from filters but are common to all the other products.
+ *                                    
+ * 
+ */
 class ArticleController
 {
 
 
-    // Page variante spécifique — accessible via /article/{id_article}
-    public function showVariant(int $idArt): void
+    
+    /**
+     * Responsible of the gathering the informations on the product, entry point on ?path=/article/{idArt}. If no article is found, show the 404 page.
+     * @param int $idArt The id of the article we want to display
+     * 
+     */
+    public function showVariant(int $idArt)
     {
         try {
             $dbArticle = new DBArticle();
