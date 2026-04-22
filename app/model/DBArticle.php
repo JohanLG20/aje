@@ -273,6 +273,42 @@ JOIN PRICE_HISTORY promo
     AND promo.end_date >= CURDATE()
     AND promo.start_date <= CURDATE()
     AND a.deleted_at IS NULL
+GROUP BY a.id_article_informations
+LIMIT :limit");
+            $query->bindValue(":limit", $limit, \PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param string $limit The number of article we want, 10 is set by default
+     * 
+     * @return array An array with the latest articles
+     */
+    public function getLatestArticles(string $limit = "10"): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT
+    a.id_article as id,
+    ai.article_name as article_name,
+    ai.image_repertory,
+    b.brand_label AS brand,
+    normal.price AS normal_price,
+    promo.price AS promo_price
+FROM {$this->tableName} a
+JOIN ARTICLE_INFORMATIONS ai
+    ON ai.id_article_informations = a.id_article_informations
+JOIN BRAND b
+    ON b.id_brand = ai.id_brand
+JOIN PRICE_HISTORY normal
+    ON normal.id_article = a.id_article
+    AND normal.end_date IS NULL
+JOIN PRICE_HISTORY promo
+    ON promo.id_article = a.id_article
+    GROUP BY a.id_article_informations ORDER BY a.id_article_informations DESC
 LIMIT :limit");
             $query->bindValue(":limit", $limit, \PDO::PARAM_INT);
             $query->execute();

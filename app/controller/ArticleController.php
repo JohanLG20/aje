@@ -80,6 +80,11 @@ class ArticleController
                     $activeVariant['modalities'][$activeVariantLabel]['value'];
             }
 
+            //If there is more than one variants, then we show them
+            if(count($variants) > 1){
+                $productInfo['hasVariants'] = true;
+            }
+
             require(VIEW . '/articleView.php');
         } catch (\PDOException $e) {
             // TODO: gérer l'erreur

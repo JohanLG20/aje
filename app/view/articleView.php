@@ -74,21 +74,23 @@
         </div>
 
         <!-- Variantes -->
-        <div class="product-section">
-            <h3 class="articleInfos">Tous les modèles disponibles</h3>
-            <div class="product-section-content">
-                <div id="variantsList">
-                    <?php foreach ($variants as $variant): ?>
-                        <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
-                            class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
-                            <?php foreach ($variant['modalities'] as $label => $modality): ?>
+        <?php if ($productInfo['hasVariants']): ?>
+            <div class="product-section">
+                <h3 class="articleInfos">Tous les modèles disponibles</h3>
+                <div class="product-section-content">
+                    <div id="variantsList">
+                        <?php foreach ($variants as $variant): ?>
+                            <a href="index.php?path=/article/<?= $variant['id_article'] ?>"
+                                class="variant-card <?= $variant['id_article'] === ($activeVariant['id_article'] ?? null) ? 'active' : '' ?>">
+                                <?php foreach ($variant['modalities'] as $label => $modality): ?>
                                     <span class="modality-value"><?= $modality['value'] ?></span>
-                            <?php endforeach; ?>
-                        </a>
-                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
 
         <!-- Commentaires -->
         <div class="product-section" id="commentSection">

@@ -11,7 +11,7 @@ class HomeController
     {
         
         $dbArt = new DBArticle();
-        $latestArticles = $dbArt->searchForArticles("");
+        $latestArticles = $dbArt->getLatestArticles();
         $latestArticles = SaveImageHanddler::addFirstImageToArray($latestArticles);
 
         $promotions = $dbArt->getArticlesInPromotions();
