@@ -26,6 +26,7 @@ use PDOException;
  */
 class BasketController
 {
+    //List of the articles
     private ?array $articles;
 
     public function __construct()

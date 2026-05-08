@@ -204,6 +204,10 @@ class ProductManagementController extends CRUDController
                 $indexed[$cat['id_category_parent_of']]['children'][] = &$indexed[$id];
             }
         }
+
+        echo "<pre>";
+        var_dump($indexed);
+        echo "</pre>";
         return $indexed;
     }
 

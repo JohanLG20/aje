@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJE - vente d'équipements sportifs et vêtements</title>
+    <?php if(isset($metaDesc)): ?>
+        <meta name="description" content="<?= $metaDesc ?>">
+    <?php else: ?>
+        <meta name="description" content="AJE — Votre boutique de sport en ligne. Équipements sportifs, vêtements homme et femme au meilleur prix. Basé à Vannes, livraison rapide partout en France.">
+    <?php endif; ?>
+
+    <title>AJE - Vente d'équipements sportifs et vêtements</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin="" />

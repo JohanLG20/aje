@@ -2,7 +2,7 @@
 
 const ROUTES = [
     '/' => [
-        'controller' => AJE\Controller\HomeController::class,
+        'controller' => AJE\Controller\StaticPageController::class,
         'method' => 'home'
     ],
     '/usermanagement/{action}' => [
@@ -18,8 +18,8 @@ const ROUTES = [
     '/promotion/{action}' => [
         'controller' => AJE\Controller\PromotionManagementController::class,
         'method' => 'prepareAndDisplayView',
-        //'minPermission' => 'admin',
-        //'denyAccessMethod' => 'permissionDenied'
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
     ],
 
     '/filterRequest/getFvForCat/{id}' => [

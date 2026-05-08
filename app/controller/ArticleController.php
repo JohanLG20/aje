@@ -59,6 +59,8 @@ class ArticleController
 
             //If there is more than one variants, then we show them
             $productInfo['hasVariants'] = count($variants) > 1 ? true : false;
+
+            $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " . $productInfo['article_name'] . " - " . $productInfo['description']; 
             
 
             require(VIEW . '/articleView.php');

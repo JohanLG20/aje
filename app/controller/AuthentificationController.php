@@ -2,7 +2,6 @@
 
 namespace AJE\Controller;
 
-use AJE\Model\DBComment;
 use AJE\Utils\DataTransformer;
 use AJE\Model\DBUser;
 use AJE\Model\DBUserLevel;
@@ -96,7 +95,7 @@ class AuthentificationController
         if (isset($_POST['account_deleted'])) {
             header("Location: index.php"); //We redirect him at the index
         } else {
-            header("Location: {$_SERVER['HTTP_REFERER']}");
+            header("Location: {$_SERVER['HTTP_REFERER']}"); // We redirect to his last page
         }
     }
 

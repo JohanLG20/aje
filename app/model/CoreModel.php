@@ -17,6 +17,11 @@ abstract class CoreModel
         $this->db = DBConnexion::getInstance()->getConnexion();
     }
 
+    /**
+     * @param array $attrsToGet Optionnal : List of the attributes to get. If no values is provided, it select the whole row.
+     * 
+     * @return array An array that contains all the values of the asked table
+     */
     public function getAllElements(array $attrsToGet = []): array
     {
         try {
@@ -33,16 +38,26 @@ abstract class CoreModel
 
 
 
+    /**
+     * @param array $params The values of the element to add. The keys of the array must be tied to the attributes name in the database
+     * 
+     * @return bool True if the request was successfull, false otherwise
+     */
     public function addNewElement(array $params): bool
     {
         try {
-            $query = $this->prepareAddQuery($params);
+            $query = $this->prepareAddQuery($params); // Preparing the query in function of the parameters given
             return $query->execute();
         } catch (\PDOException $e) {
             throw $e;
         }
     }
 
+    /**
+     * @param array $params The values of the element to modified. The keys of the array must be tied to the attributes name in the database
+     * 
+     * @return bool True if the request was successfull, false otherwise
+     */
     public function modifyElementById(array $params): bool
     {
         try {
@@ -53,6 +68,11 @@ abstract class CoreModel
         }
     }
 
+    /**
+     * @param int $id The id of the element to delete
+     * 
+     * @return bool True if the operation was successfull, false otherwise
+     */
     public function deleteElementById(int $id): bool
     {
         try {
@@ -69,6 +89,12 @@ abstract class CoreModel
         }
     }
 
+    /**
+     * @param string $id The id of the element to get
+     * @param array $attrsToGet An array that contains the attributes to get. If no value is provided, returns all the attributes
+     * 
+     * @return array An array that contains the required attributes of the element.
+     */
     public function getElementById(string $id, array $attrsToGet = []): array|bool
     {
         try {
@@ -86,6 +112,9 @@ abstract class CoreModel
         }
     }
 
+    /**
+     * @return array An array that contains the value of the last element added to the table
+     */
     public function getLastAddedElement(): array
     {
         try {
@@ -99,6 +128,11 @@ abstract class CoreModel
     }
 
 
+    /**
+     * @param array $params The parameters to add. The keys must match the attributes name in the database
+     * 
+     * @return \PDOStatement The query ready to be executed
+     */
     protected function prepareAddQuery(array $params): \PDOStatement|false
     {
         try {

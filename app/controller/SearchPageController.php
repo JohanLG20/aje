@@ -11,6 +11,8 @@ class SearchPageController
     {
         $query = trim($query);
 
+        $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " .$query;
+
         try {
             $dbArticle = new DBArticle();
 

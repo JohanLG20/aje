@@ -90,7 +90,7 @@ class CommentController
         if (!is_null($this->connectedUser->getId())) {
 
             try {
-                
+
                 $userComment = $this->db->getUserCommentForArticle($this->connectedUser->getId(), $idArticle);
                 $res = is_array($userComment) && !empty($userComment); //This test must be because the model function can return a boolean
             } catch (\PDOException $e) {
@@ -151,8 +151,7 @@ class CommentController
             } catch (\PDOException $e) {
                 $_SESSION['commentError'] = "Une erreur est survenue lors de la suppression du commentaire";
             }
-        }
-        else{
+        } else {
             $this->permissionDenied();
         }
         header("Location: {$_SERVER['HTTP_REFERER']}");
@@ -175,11 +174,25 @@ class CommentController
         return  $explodedLastUri[count($explodedLastUri) - 1];
     }
 
+    /**
+     * Check if the user has the right to edit a comment
+     * @param string $idComment The id of the comment to check
+     * @param string $idArticle The id of the article to check
+     * 
+     * @return bool True if the user has the right to edit, false otherwise
+     */
     public function canEdit(string $idComment, string $idArticle): bool
     {
         return $this->isAuthor($idComment, $idArticle);
     }
 
+    /**
+     * Check if the user has the right to delete a comment
+     * @param string $idComment The id of the comment to check
+     * @param string $idArticle The id of the article to check
+     * 
+     * @return bool True if the user has the right to delete, false otherwise
+     */
     public function canDelete(string $idComment, string $idArticle): bool
     {
 
@@ -187,6 +200,13 @@ class CommentController
             $this->isAuthor($idComment, $idArticle);
     }
 
+    /**
+     * Check if the connected user is the author of the given comment for the given article
+     * @param string $idComment The id of the comment to check
+     * @param string $idArticle The id of the article to check
+     * 
+     * @return bool True if the connected user is the author of the article, false otherwise
+     */
     private function isAuthor(string $idComment, string $idArticle): bool
     {
         if (!is_null($this->connectedUser->getId())) {
@@ -194,6 +214,6 @@ class CommentController
             return is_array($res) && !empty($res);
         }
 
-        return false;
+        return false; //Returns false by default
     }
 }

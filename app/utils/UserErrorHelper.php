@@ -142,7 +142,7 @@ abstract class UserErrorHelper
                     $city,
                     FILTER_VALIDATE_REGEXP,
                     array('options' => array(
-                        'regexp' => "/^([a-zA-Z\-]*)$/"
+                        'regexp' => "/^([a-zA-Z\-\s]*)$/"
 
                     ))
                 )) {

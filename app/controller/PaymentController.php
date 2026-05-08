@@ -7,6 +7,10 @@ use AJE\Model\DBOrder_;
 use Exception;
 use PDOException;
 
+/**
+ * [Description PaymentController]
+ * Class that is used when the user tries to pay or access the payment page. It handdles the registration in the databse of the payment.
+ */
 class PaymentController
 {
     /**
@@ -19,7 +23,7 @@ class PaymentController
 
 
     /**
-     * Called when a client tries to access to the payment page
+     * Called when a client tries to access to the payment page via the route /payment/
      */
     public function displayPaymentPage()
     {
@@ -28,21 +32,25 @@ class PaymentController
         $client = new AuthentificationController();
     }
 
+    /**
+     * This method is accessed by the route /pay/
+     */
     public function proceedToPayment()
     {
         $basket = new BasketController();
-        $articles = $basket->getArticles();
-        if (!is_null($articles)) {
+        $articles = $basket->getArticles(); // Retrieving the articles in the basket
+
+        if (!is_null($articles)) { // 
             try {
                 $this->registerOrder($basket->getArticles($articles));
-                $orderInfos['items'] = $articles;
+                $orderInfos['items'] = $articles; //Preloading the articles informations for the view
                 $basket->resetBasket();
                 require(VIEW . "/validatePayment_view.php");
             } catch (PDOException $e) {
                 throw ($e);
             }
         } else {
-            //Sending the user back to the main page
+            //Sending the user back to the main page since a user shouldn't have access to this route if they have no articles il the basket
             header("Location: index.php");
             
         }
@@ -56,6 +64,7 @@ class PaymentController
     private function registerOrder(array $basketArticles)
     {
         try {
+            //Initializing the db that will be used 
             $dbOrder = new DBOrder_();
             $dbArticleOrder = new DBArticleOrder();
 
