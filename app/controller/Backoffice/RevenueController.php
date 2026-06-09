@@ -10,11 +10,9 @@ class RevenueController
     {
         try {
             $dbArticle = new DBArticle();
+            $revenues = $dbArticle->getTotalRevenues()['revenues'];
+            require(VIEW . '/backoffice/revenues.php');
 
-            $revenues = $dbArticle->getTotalRevenues();
-            require(LAYOUT . '/header.php');
-            var_dump($revenues);
-            require(LAYOUT . '/footer.php');
         } catch (\Exception $e) {
             throw $e;
         }

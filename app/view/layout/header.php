@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php if(isset($metaDesc)): ?>
+    <?php if (isset($metaDesc)): ?>
         <meta name="description" content="<?= $metaDesc ?>">
     <?php else: ?>
         <meta name="description" content="AJE — Votre boutique de sport en ligne. Équipements sportifs, vêtements homme et femme au meilleur prix. Basé à Vannes, livraison rapide partout en France.">
@@ -16,11 +16,12 @@
         crossorigin="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="static/css/style.css">
-
-    <script src="static/js/main.js" defer></script>
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
+        crossorigin="" defer></script>
+    <script src="static/js/main.js" defer></script>
+
     <script src="static/js/slider.js" defer></script>
 </head>
 
