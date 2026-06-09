@@ -10,6 +10,9 @@ use AJE\Utils\DataTransformer;
 
 use PDOException;
 
+/**
+ * The class responsible of the controllers.
+ */
 class CommentController
 {
 
@@ -32,7 +35,7 @@ class CommentController
      * @param string $idArticle The id of the article
      * 
      * @return array An array with all the comments in the form of :
-     * [0] => [
+     * [{idComment}] => [
      *          ['fullname'] => nameOfCommentator|utilisateur_supprimé if the user is deleted,
      *          ['comment'] => theComment
      *          ['canEdit'] => true if the user can edit the comment, false otherwise
@@ -55,19 +58,17 @@ class CommentController
             $dbComment = new DBComment();
             $commentsAndUserInfos = $dbComment->getCommentsAndUserInfosForArticle($idArticle);
 
-
+            //Setting up the array to be ready to be displayed
             for ($i = 0; $i < count($commentsAndUserInfos); $i++) {
                 $idComment = $commentsAndUserInfos[$i]['id_comment'];
                 $comments[$i]['idComment'] = $idComment;
                 $comments[$i]['comment'] = $commentsAndUserInfos[$i]['comment'];
-                $comments[$i]['fullname'] = $commentsAndUserInfos[$i]['fullname'];
+                $comments[$i]['fullname'] = $commentsAndUserInfos[$i]['fullname'] ?? "utilisateur_supprimé";
                 $comments[$i]['canEdit'] = $this->canEdit($idComment, $idArticle);
                 $comments[$i]['canDelete'] = $this->canDelete($idComment, $idArticle);
             }
         } catch (\PDOException $e) {
         }
-        //$comments['error'] = $this
-
         return $comments;
     }
 

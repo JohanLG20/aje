@@ -167,6 +167,11 @@ abstract class CoreModel
 
     protected function prepareModifyQuery(array $params): \PDOStatement|false {}
 
+    /**
+     * @param array $attrsToGet
+     * 
+     * @return string The string that contains 
+     */
     private function prepareSelectQuery(array $attrsToGet): string
     {
         //Prepering the select section of the querry

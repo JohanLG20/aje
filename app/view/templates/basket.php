@@ -13,9 +13,17 @@
                     </div>
                     <div class="basketQuantity">
                         <p>Quantité</p>
-                        <p><?= $bask['quantity'] ?></p>
+
+                        <div class="basketQuantityModulation">
+                            <a href="?path=/basket/add/<?= $idArticle ?>"><span class="fa-solid fa-plus"></span></a>
+                            <p><?= $bask['quantity'] ?></p>
+                            <a href="?path=/basket/removeOne/<?= $idArticle ?>"><span class="fa-solid fa-minus"></span></a>
+                        </div>
+
                         <a href="?path=/basket/remove/<?= $idArticle ?>" class="error">Supprimer</a>
+
                     </div>
+
                 </div>
 
             </div>

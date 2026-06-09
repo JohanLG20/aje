@@ -1,4 +1,4 @@
-<article class="articleCard">
+<article class="articleCard" title="<?= $art['article_name'] ?>">
     <a href="?path=/article/<?= $art['id'] ?>" class="articleCardLink">
         <div class="articleCardImage">
             <img src="<?= $art['image'] ?>" alt="<?= $art['article_name'] ?>">

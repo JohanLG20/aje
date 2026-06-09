@@ -1,0 +1,117 @@
+@use 'col';
+@use 'fonts';
+
+#contactPage {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 16px;
+
+    h1 {
+        color: col.$color-primary;
+    }
+
+    p {
+        color: grey;
+        font-size: 14px;
+    }
+
+    #contactForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .formRow {
+            display: flex;
+            flex-direction: column; // Mobile first : empilé
+            gap: 20px;
+
+            @media screen and (min-width: 750px) {
+                flex-direction: row; // Côte à côte sur desktop
+
+                .formGroup {
+                    flex: 1;
+                }
+            }
+        }
+
+        .formGroup {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            label {
+                font-size: 14px;
+                font-family: fonts.$titleBold;
+                color: col.$color-primary;
+            }
+
+            input,
+            select,
+            textarea {
+                padding: 12px 16px;
+                border: 2px solid col.$color-primary;
+                border-radius: 8px;
+                font-size: 14px;
+                background-color: col.$color-third;
+                color: black;
+                box-sizing: border-box;
+                width: 100%;
+                transition: border-color 0.2s;
+
+                &:focus {
+                    outline: none;
+                    border-color: col.$color-primary;
+                }
+
+                &::placeholder {
+                    color: grey;
+                }
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 120px;
+            }
+
+            select {
+                cursor: pointer;
+            }
+        }
+
+        #gdprGroup {
+            #gdprLabel {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 13px;
+                color: grey;
+                cursor: pointer;
+                font-family: fonts.$title;
+
+                input[type="checkbox"] {
+                    width: 18px;
+                    min-width: 18px;
+                    height: 18px;
+                    border: 2px solid col.$color-primary;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    padding: 0;
+                }
+            }
+        }
+
+        #submitButton {
+            align-self: center;
+            padding: 12px 48px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                background-color: grey;
+            }
+        }
+    }
+}

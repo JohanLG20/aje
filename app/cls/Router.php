@@ -15,7 +15,7 @@ class Router
 
     public function __construct()
     {
-        try {
+        try{
             $this->routes = ROUTES;
             $this->availablePaths = array_keys($this->routes);
             $this->requestedPath = $_GET['path'] ?? '/';

@@ -1,0 +1,94 @@
+@use 'col';
+@use 'fonts';
+
+#notFoundPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 16px;
+    gap: 32px;
+
+    #notFoundCode {
+        font-size: 120px;
+        font-family: fonts.$titleBold;
+        color: col.$color-primary-light;
+        line-height: 1;
+    }
+
+    #notFoundContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        max-width: 500px;
+
+        h1 {
+            font-size: 28px;
+            font-family: fonts.$titleBold;
+            color: col.$color-primary;
+        }
+
+        & > p {
+            font-size: 15px;
+            color: grey;
+            line-height: 1.6;
+        }
+
+        #notFoundActions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        #notFoundSuggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            background-color: col.$color-third;
+            padding: 20px 24px;
+            border-radius: 16px;
+            border-left: 4px solid col.$color-primary;
+            width: 100%;
+            box-sizing: border-box;
+
+            p {
+                font-size: 14px;
+                color: grey;
+                font-style: italic;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    &::before {
+                        content: '';
+                        min-width: 8px;
+                        height: 8px;
+                        background-color: col.$color-primary;
+                        border-radius: 50%;
+                    }
+
+                    a {
+                        font-size: 14px;
+                        color: col.$color-primary;
+                        text-decoration: underline;
+
+                        &:hover { color: black; }
+                    }
+                }
+            }
+        }
+    }
+}

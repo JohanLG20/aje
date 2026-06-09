@@ -9,4 +9,6 @@ class DBArticleOrder extends CoreAssociativeTable
         $this->db = DBConnexion::getInstance()->getConnexion();
         $this->tableName = "ARTICLE_ORDER";
     }
+
+
 }

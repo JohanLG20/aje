@@ -31,14 +31,25 @@ const ROUTES = [
         'controller' => AJE\Controller\ArticleController::class,
         'method' => 'showVariant'
     ],
-    'basket/add/{id}' => [
+    '/basket/add/{id}' => [
         'controller' => AJE\Controller\BasketController::class,
         'method' => 'addToBasket'
     ],
-    'basket/remove/{id}' => [
+    '/basket/remove/{id}' => [
         'controller' => AJE\Controller\BasketController::class,
         'method' => 'removeFromBasket'
     ],
+    '/basket/removeOne/{id}' => [
+        'controller' => AJE\Controller\BasketController::class,
+        'method' => 'removeOne'
+    ],
+    '/revenues/' => [
+        'controller' => AJE\Controller\Backoffice\RevenueController::class,
+        'method' => 'show',
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+
     '/login/' => [
         'controller' => AJE\Controller\AuthentificationController::class,
         'method' => 'login'

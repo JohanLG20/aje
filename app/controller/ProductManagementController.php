@@ -9,7 +9,7 @@ use AJE\Model\DBCategory;
 use AJE\Model\DBPriceHistory;
 use AJE\Model\DBValues_;
 use AJE\Utils\ProductErrorHelper;
-use AJE\Utils\SaveImageHanddler;
+use AJE\Utils\ImageHanddler;
 use AJE\Utils\DataTransformer;
 use Exception;
 
@@ -97,7 +97,7 @@ class ProductManagementController extends CRUDController
 
             //--------------------- Saving the image -------------
 
-            $sih = new SaveImageHanddler($imageRepertory);
+            $sih = new ImageHanddler($imageRepertory);
             if (!$sih->saveImages($_FILES['images'])) {
                 throw new Exception("Impossible de créer la page de l'article");
             }
@@ -181,7 +181,7 @@ class ProductManagementController extends CRUDController
     }
     protected function callView(array $view, array $values): void
     {
-        require(VIEW . '/productManagement_view.php');
+        require(VIEW . '/productManagement/' . $view['action'] . '.php');
     }
 
     private function getCategoryTree(array $categories): array
@@ -205,9 +205,6 @@ class ProductManagementController extends CRUDController
             }
         }
 
-        echo "<pre>";
-        var_dump($indexed);
-        echo "</pre>";
         return $indexed;
     }
 

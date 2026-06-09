@@ -10,6 +10,7 @@ abstract class UserErrorHelper
             $errors['lastname'] = self::checkLastnameErrors($values['lastname']);
             $errors['firstname'] = self::checkFirstnameErrors($values['firstname']);
             $errors['email'] = self::checkEmailErrors($values['email']);
+            $errors['passwd'] = self::checkPassword($values['passwd']);
             $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
             $errors['city'] = self::checkCityErrors($values['city']);
             $errors['postCode'] = self::checkPostalCodeErrors($values['postCode']);
@@ -22,8 +23,7 @@ abstract class UserErrorHelper
                 }
             }
             return !empty($errors) ? $errors : false;
-        }
-        else{
+        } else {
             //No infos are needed to delete a user
             return false;
         }
@@ -110,6 +110,27 @@ abstract class UserErrorHelper
         } else {
             return 'Veuillez entrer un email';
         }
+    }
+
+    /**
+     * @param string $passwd The password we want to check
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
+    public static function checkPassword(string $passwd): ?string
+    {
+        if ($passwd == filter_var(
+            $passwd,
+            FILTER_VALIDATE_REGEXP,
+            array('options' => array(
+                'regexp' => "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/"
+
+            ))
+        )) {
+            return null;
+        }
+
+        return "Le mot de passe doit faire au moins 8 caractères, contenir une majuscule et une miniscule, un chiffre ainsi qu'un caractère spécial";
     }
 
 

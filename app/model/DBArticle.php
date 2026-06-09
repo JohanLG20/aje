@@ -226,12 +226,11 @@ LEFT JOIN PRICE_HISTORY promo
                 AND CAST(:research AS DECIMAL(8,3)) >= cr.min_
                 AND CAST(:research AS DECIMAL(8,3)) <= cr.max_
             )
-            -- On vérifie si la catégorie de l'article ou une de ses parentes correspond
             OR c.cat_label LIKE :research
             OR ai.id_category IN (SELECT id_category FROM category_tree)
         )
         AND a.deleted_at IS NULL
-        GROUP BY a.id_article_informations";
+        GROUP BY a.id_article";
 
             $query = $this->db->prepare($sqlQuery);
             $query->execute([
@@ -311,7 +310,7 @@ LEFT JOIN PRICE_HISTORY promo
     AND promo.end_date IS NOT NULL
     AND promo.end_date >= CURDATE()
     AND promo.start_date <= CURDATE()
-    AND a.deleted_at IS NULL
+WHERE a.deleted_at IS NULL
     GROUP BY a.id_article_informations ORDER BY a.id_article_informations DESC
 LIMIT :limit");
             $query->bindValue(":limit", $limit, \PDO::PARAM_INT);
@@ -324,7 +323,8 @@ LIMIT :limit");
 
     public function getAllArticlesWithModalities(): array
     {
-        $query = $this->db->prepare("
+        try {
+            $query = $this->db->prepare("
         SELECT
             a.id_article,
             a.id_article_informations,
@@ -345,8 +345,11 @@ LIMIT :limit");
         ORDER BY a.id_article_informations, a.id_article
         
     ");
-        $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+            $query->execute();
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
 
@@ -359,5 +362,37 @@ LIMIT :limit");
     ");
         $query->bindParam(':idArticle', $idArticle);
         return $query->execute();
+    }
+
+    /**
+     * @return array An array that contains the total of the revenues
+     */
+    public function getTotalRevenues(): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT SUM(p.prices) AS revenues FROM (
+                                                SELECT ph.price * ao.quantity AS prices 
+                                                FROM ARTICLE_ORDER as ao 
+                                                INNER JOIN ARTICLE as a ON ao.id_article = a.id_article 
+                                                INNER JOIN PRICE_HISTORY as ph ON ph.id_article = a.id_article 
+                                                INNER JOIN ORDER_ as o ON o.id_order_ = ao.id_order_ 
+                                             WHERE 
+                                                (ph.end_date IS NULL AND o.date_ >= ph.start_date
+                                                    -- Checking if there are no promotions on the product yet
+                                                   AND NOT EXISTS (
+                                                     SELECT 1 FROM PRICE_HISTORY ph2 
+                                                        WHERE ph2.id_article = a.id_article 
+                                                     AND ph2.end_date IS NOT NULL 
+                                                        AND o.date_ BETWEEN ph2.start_date AND ph2.end_date
+                                                   ))
+                                                   OR
+                                                   (ph.end_date IS NOT NULL AND o.date_ BETWEEN ph.start_date AND ph.end_date)
+                                                ) p");
+
+            $query->execute();
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

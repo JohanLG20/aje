@@ -48,6 +48,9 @@
         <div class="form-item">
             <label for="passwd">Mot de passe</label>
             <input type="password" name="passwd" id="passwd" placeholder="Votre mot de passe">
+            <?php if (isset($view['errors']['passwd'])): ?>
+                <p class="error"><?= $view['errors']['passwd'] ?></p>
+            <?php endif; ?>
         </div>
 
         <!-- Password confirmation -->

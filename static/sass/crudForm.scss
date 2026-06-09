@@ -1,0 +1,129 @@
+@use 'col';
+@use 'fonts';
+
+main {
+    padding: 16px;
+    box-sizing: border-box;
+
+    h2 {
+        color: col.$color-primary;
+        font-family: fonts.$titleBold;
+        margin-bottom: 24px;
+        font-size: 24px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            label {
+                font-size: 13px;
+                font-family: fonts.$titleBold;
+                color: col.$color-primary;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            input,
+            select {
+                padding: 12px 16px;
+                border: 2px solid col.$color-primary-light;
+                border-radius: 8px;
+                font-size: 14px;
+                background-color: col.$color-third;
+                color: black;
+                box-sizing: border-box;
+                width: 100%;
+                transition: border-color 0.2s;
+
+                &::placeholder {
+                    color: grey;
+                    font-size: 13px;
+                }
+            }
+
+            // Styles spécifiques au select
+            select {
+                cursor: pointer;
+                appearance: none; // On retire le style natif du navigateur
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23808080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 16px center;
+                padding-right: 40px; // Espace pour la flèche
+
+                option {
+                    background-color: col.$color-third;
+                    color: black;
+                    padding: 8px;
+
+                    &:disabled {
+                        color: grey;
+                        font-family: fonts.$titleBold;
+                    }
+                }
+            }
+
+            .error {
+                font-size: 12px;
+                color: red;
+                margin-top: -4px;
+                padding-left: 4px;
+
+                &::before {
+                    content: '⚠ ';
+                }
+            }
+        }
+
+        button[type="submit"] {
+            margin-top: 16px;
+            align-self: center;
+            width: 60%;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 24px;
+            text-align: center;
+        }
+
+        p:last-child {
+            text-align: center;
+            font-size: 14px;
+            color: grey;
+            margin-top: 8px;
+        }
+    }
+
+    @media screen and (min-width: 750px) {
+        max-width: 600px;
+        margin: 0 auto;
+
+        form {
+            // On regroupe les champs deux par deux sur desktop
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+
+            // Ces éléments prennent toute la largeur
+            .form-item:nth-child(5),
+            // Confirmation mot de passe
+            .form-item:nth-last-child(1),
+            // Adresse
+            button[type="submit"],
+            input[type="hidden"],
+            p {
+                grid-column: 1 / -1;
+            }
+
+            h2 {
+                grid-column: 1 / -1;
+            }
+        }
+    }
+}

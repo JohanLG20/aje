@@ -1,0 +1,346 @@
+@use 'col';
+@use 'fonts';
+
+
+.product-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    // Style commun des headers de section
+    .articleInfos {
+        background-color: col.$color-primary;
+        color: col.$color-secondary;
+        padding: 8px 16px;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .articleInfos-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: col.$color-primary;
+
+        .articleInfos {
+            flex: 1;
+        }
+
+        #addComment {
+            color: col.$color-secondary;
+            font-size: 13px;
+            padding: 8px 16px;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // Contenu de chaque section
+    .product-section-content {
+        background-color: col.$color-third;
+        padding: 16px;
+    }
+
+    // En-tête produit
+    .product-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+
+        h1 {
+            font-size: 26px;
+            font-family: fonts.$titleBold;
+            color: black;
+        }
+
+        // Galerie
+        #gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+
+            #mainImage {
+                width: 100%;
+                max-width: 280px;
+                aspect-ratio: 1/1;
+                object-fit: contain;
+            }
+
+            #thumbnails {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                overflow-x: auto;
+
+                &::-webkit-scrollbar {
+                    height: 4px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: col.$color-primary;
+                    border-radius: 2px;
+                }
+
+                img {
+                    width: 64px;
+                    height: 64px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                    border: 2px solid transparent;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                    transition: border-color 0.2s;
+
+                    &:hover,
+                    &.active {
+                        border-color: col.$color-primary;
+                    }
+                }
+            }
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+
+            .product-brand {
+                font-size: 14px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: grey;
+            }
+
+            .price {
+                font-size: 22px;
+                font-family: fonts.$titleBold;
+            }
+
+            .deliveryDate {
+                font-size: 13px;
+                color: grey;
+                font-style: italic;
+            }
+
+            .addBasketButton {
+                width: 60%;
+                text-align: center;
+                padding: 12px;
+                font-size: 15px;
+                border-radius: 24px;
+            }
+        }
+    }
+
+    // Modalités communes
+    .modality {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 0;
+        font-size: 14px;
+        border-bottom: 1px solid col.$color-primary-light;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .modality-label {
+            color: grey;
+
+            &::after {
+                content: ' :';
+            }
+        }
+
+        .modality-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1px solid grey;
+        }
+    }
+
+    // Grille de variantes
+    #variantsList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .variant-card {
+            padding: 8px 16px;
+            border: 2px solid col.$color-primary;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+
+            .modality-value {
+                font-size: 14px;
+                color: col.$color-primary;
+            }
+
+            .modality-color {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                border: 1px solid grey;
+                display: block;
+            }
+
+            &:hover,
+            &.active {
+                background-color: col.$color-primary;
+
+                .modality-value {
+                    color: col.$color-secondary;
+                }
+            }
+        }
+    }
+
+    // Commentaires
+    #commentSection {
+
+        #commentSectionHeader {
+            #addComment {
+                color: col.$color-secondary;
+            }
+        }
+
+        #allComments {
+            display: flex;
+            flex-direction: column;
+
+            .comment {
+                padding: 12px 0;
+                border-bottom: 1px solid col.$color-primary-light;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .commentHeader {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 6px;
+
+                    h4 {
+                        font-size: 14px;
+                        color: black;
+                    }
+
+                    .commentActions {
+                        display: flex;
+                        gap: 8px;
+
+                        .editComment,
+                        .deleteComment {
+                            font-size: 11px;
+                            padding: 3px 8px;
+                            border-radius: 6px;
+                        }
+
+                        .editComment {
+                            color: col.$color-primary;
+                            border: 1px solid col.$color-primary;
+
+                            &:hover {
+                                background-color: col.$color-primary;
+                                color: col.$color-secondary;
+                            }
+                        }
+
+                        .deleteComment {
+                            color: red;
+                            border: 1px solid red;
+
+                            &:hover {
+                                background-color: red;
+                                color: white;
+                            }
+                        }
+                    }
+                }
+
+                p {
+                    font-size: 13px;
+                    color: grey;
+                    font-style: italic;
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        .noComment {
+            font-size: 14px;
+            color: grey;
+            font-style: italic;
+        }
+
+        #addCommentSection {
+            margin-top: 16px;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                #addCommentFormTitle {
+                    color: col.$color-primary;
+                    font-size: 15px;
+                }
+
+                textarea {
+                    padding: 12px;
+                    border: 2px solid col.$color-primary;
+                    border-radius: 8px;
+                    min-height: 100px;
+                    resize: vertical;
+                    font-size: 14px;
+                    background-color: col.$color-secondary;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+
+                button[type="submit"] {
+                    align-self: flex-end;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .product-header {
+            flex-direction: row;
+            align-items: flex-start;
+            text-align: left;
+            gap: 48px;
+
+            #gallery {
+                width: 45%;
+                flex-shrink: 0;
+            }
+
+            .product-details {
+                align-items: flex-start;
+                flex: 1;
+            }
+        }
+    }
+}

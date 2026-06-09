@@ -3,10 +3,16 @@
 namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
-use AJE\Utils\SaveImageHanddler;
+use AJE\Utils\ImageHanddler;
 
 class SearchPageController
 {
+    /**
+     * Function that research the corresponding articles in the database, based on the given query
+     * @param string $query The informations we have to search in the database
+     * 
+     * @return array An array that contains the informations needed by the view to be displayed
+     */
     private function search(string $query): array
     {
         $query = trim($query);
@@ -53,6 +59,12 @@ class SearchPageController
         }
     }
 
+    /**
+     * Return the availables filter for a given set of articles
+     * @param array $articles The list of articles we want the fiter of
+     * 
+     * @return array An array that contains all the filters available, which can be the category, the brand or the modalities
+     */
     private function getAvailableFilters(array $articles): array
     {
         $filters = [
@@ -184,7 +196,7 @@ class SearchPageController
             return 0;
         });
 
-        $articles = SaveImageHanddler::addFirstImageToArray($articles);
+        $articles = ImageHanddler::addFirstImageToArray($articles);
 
         return [
             'articles' => array_values($articles),

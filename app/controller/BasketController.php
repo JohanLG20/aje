@@ -4,7 +4,7 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
-use AJE\Utils\SaveImageHanddler;
+use AJE\Utils\ImageHanddler;
 use PDOException;
 
 /**
@@ -37,7 +37,8 @@ class BasketController
     /**
      * @return array|null Return null if there are no articles, the articles list if there are
      */
-    public function getArticles(): array|null{
+    public function getArticles(): array|null
+    {
         return $this->articles;
     }
     /**
@@ -52,6 +53,7 @@ class BasketController
             $_SESSION['basket'] = [];
         }
 
+        //Checking if the article already exists in the basket
         if (array_key_exists($id, $_SESSION['basket'])) {
             $_SESSION['basket'][$id]['quantity']++;
         } else {
@@ -62,7 +64,7 @@ class BasketController
     }
 
     /**
-     * Remove an article to the basket.
+     * Entierely remove an article to the basket.
      * @param string $id The id of the article we want to remove
      * 
      */
@@ -73,9 +75,26 @@ class BasketController
     }
 
     /**
+     * Remove one the quantity of the given article. If there are no more articles, removes it from the basket.
+     * @param string $id The id of the article we want to reduce the quantity
+     * 
+     */
+    public function removeOne(string $id)
+    {
+        //Checking if there are more than one article in the basket
+        if ($_SESSION['basket'][$id]['quantity'] > 1) {
+            $_SESSION['basket'][$id]['quantity']--;
+        } else {
+            unset($_SESSION['basket'][$id]);
+        }
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+    }
+
+    /**
      * Unset the variable $_SESSION['basket']
      */
-    public function resetBasket(){
+    public function resetBasket()
+    {
         unset($_SESSION['basket']);
     }
 
@@ -112,7 +131,7 @@ class BasketController
             $basket['price'] = $dbArticle->getArticlePrice($id);
 
             //Retrieving the principal image
-            $image = SaveImageHanddler::getFirstImage($articleInfos['image_repertory']);
+            $image = ImageHanddler::getFirstImage($articleInfos['image_repertory']);
             $basket['image'] = $image ?? IMAGE_NOT_FOUND_LINK;
 
             return $basket;
@@ -121,5 +140,4 @@ class BasketController
             return $basket;
         }
     }
-
 }

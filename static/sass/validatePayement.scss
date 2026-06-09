@@ -1,0 +1,138 @@
+@use 'col';
+@use 'fonts';
+
+#confirmationPage {
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    box-sizing: border-box;
+
+    #confirmationCard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        width: 100%;
+        max-width: 680px;
+
+        // Icône succès
+        #confirmationIcon {
+            i {
+                font-size: 80px;
+                color: col.$color-primary;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-family: fonts.$titleBold;
+            color: col.$color-primary;
+            text-align: center;
+        }
+
+        .confirmationSubtitle {
+            font-size: 16px;
+            color: grey;
+            text-align: center;
+            margin-top: -20px;
+        }
+
+
+        // Récapitulatif
+        #orderSummary {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+
+            h2 {
+                background-color: col.$color-primary;
+                color: col.$color-secondary;
+                padding: 8px 16px;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            #orderItems {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                background-color: col.$color-third;
+
+                .orderItem {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    padding: 12px 16px;
+                    border-bottom: 1px solid col.$color-primary-light;
+
+                    &:last-child { border-bottom: none; }
+
+                    img {
+                        width: 70px;
+                        height: 70px;
+                        object-fit: contain;
+                        flex-shrink: 0;
+                        border-radius: 8px;
+                        background-color: col.$color-secondary;
+                    }
+
+                    .orderItemDetails {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+
+                        .orderItemName {
+                            font-size: 14px;
+                            font-family: fonts.$titleBold;
+                            color: black;
+                        }
+
+                        .orderItemBrand {
+                            font-size: 12px;
+                            color: grey;
+                            font-style: italic;
+                        }
+
+                        .orderItemQuantity {
+                            font-size: 12px;
+                            color: grey;
+                        }
+                    }
+
+                    .orderItemPrice {
+                        text-align: right;
+                        flex-shrink: 0;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+           
+        }
+
+        // Boutons
+        #confirmationActions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+
+            a {
+                text-align: center;
+                padding: 14px;
+                border-radius: 24px;
+                font-size: 15px;
+            }
+
+            @media screen and (min-width: 750px) {
+                flex-direction: row;
+                justify-content: center;
+
+                a { width: auto; padding: 14px 32px; }
+            }
+        }
+    }
+}

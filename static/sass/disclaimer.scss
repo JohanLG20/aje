@@ -1,0 +1,154 @@
+@use 'col';
+@use 'fonts';
+
+#legalPage {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    // Hero
+    #legalHero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 24px;
+        background-color: col.$color-primary;
+        border-radius: 16px;
+        gap: 12px;
+
+        h1 {
+            font-size: 28px;
+            font-family: fonts.$titleBold;
+            color: col.$color-secondary;
+        }
+
+        p {
+            font-size: 13px;
+            color: col.$color-secondary;
+            opacity: 0.75;
+            font-style: italic;
+        }
+    }
+
+    // Sections communes
+    .legalSection {
+        display: flex;
+        flex-direction: column;
+
+        .legalSectionContent {
+            background-color: col.$color-third;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            p {
+                font-size: 14px;
+                color: grey;
+                line-height: 1.7;
+            }
+        }
+    }
+
+    // Grille d'informations
+    .legalGrid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        .legalItem {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px 0;
+            border-bottom: 1px solid col.$color-primary-light;
+
+            &:last-child { border-bottom: none; }
+
+            .legalLabel {
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: col.$color-primary;
+                font-family: fonts.$titleBold;
+            }
+
+            .legalValue {
+                font-size: 14px;
+                color: black;
+
+                a {
+                    color: col.$color-primary;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+            .legalItem {
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+
+                .legalLabel {
+                    min-width: 220px;
+                    flex-shrink: 0;
+                }
+            }
+        }
+    }
+
+    // Sous-sections CGV et données
+    .legalSubSection {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid col.$color-primary-light;
+
+        &:last-child { border-bottom: none; padding-bottom: 0; }
+
+        h3 {
+            font-size: 15px;
+            font-family: fonts.$titleBold;
+            color: col.$color-primary;
+        }
+
+        p {
+            font-size: 14px;
+            color: grey;
+            line-height: 1.7;
+        }
+    }
+
+    // Liste légale
+    .legalList {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding-left: 16px;
+
+        li {
+            font-size: 14px;
+            color: grey;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 16px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 7px;
+                width: 6px;
+                height: 6px;
+                background-color: col.$color-primary;
+                border-radius: 50%;
+            }
+        }
+    }
+}

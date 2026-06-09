@@ -2,7 +2,7 @@
 
 namespace AJE\Utils;
 
-class SaveImageHanddler
+class ImageHanddler
 {
     private string $imageDirectory;
 
@@ -49,7 +49,7 @@ class SaveImageHanddler
     {
         //We use the index to modify the array by referencing it
         foreach ($arr as $index => $val) {
-            $image = SaveImageHanddler::getFirstImage($val['image_repertory']);
+            $image = ImageHanddler::getFirstImage($val['image_repertory']);
             $arr[$index]['image'] = $image ?? IMAGE_NOT_FOUND_LINK;
         }
 

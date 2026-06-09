@@ -1,0 +1,206 @@
+@use 'col';
+@use 'fonts';
+
+#aboutPage {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    // Hero
+    #aboutHero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 48px 24px;
+        background-color: col.$color-primary;
+        border-radius: 16px;
+        gap: 16px;
+
+        h1 {
+            font-size: 32px;
+            font-family: fonts.$titleBold;
+            color: col.$color-secondary;
+        }
+
+        p {
+            font-size: 18px;
+            color: col.$color-secondary;
+            opacity: 0.85;
+            font-style: italic;
+        }
+    }
+
+    // Sections communes
+    .aboutSection {
+        display: flex;
+        flex-direction: column;
+
+        .aboutSectionContent {
+            background-color: col.$color-third;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            p {
+                font-size: 14px;
+                color: grey;
+                line-height: 1.7;
+            }
+        }
+    }
+
+    // Grille de valeurs
+    #valuesGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+
+        .valueCard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+            padding: 24px 16px;
+            background-color: col.$color-secondary;
+            border-radius: 12px;
+            border-bottom: 3px solid col.$color-primary;
+
+            .valueIcon {
+                font-size: 32px;
+            }
+
+            h3 {
+                font-family: fonts.$titleBold;
+                color: col.$color-primary;
+                font-size: 16px;
+            }
+
+            p {
+                font-size: 13px;
+                color: grey;
+                line-height: 1.6;
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    // Chiffres clés
+    #statsGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+
+        .statCard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px 16px;
+            background-color: col.$color-secondary;
+            border-radius: 12px;
+            border-top: 4px solid col.$color-primary;
+            gap: 8px;
+
+            .statNumber {
+                font-size: 32px;
+                font-family: fonts.$titleBold;
+                color: col.$color-primary;
+            }
+
+            .statLabel {
+                font-size: 13px;
+                color: grey;
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    // Section fondateur
+    #founderSection {
+        #founderQuote {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px;
+            background-color: col.$color-secondary;
+            border-radius: 12px;
+            border-left: 4px solid col.$color-primary;
+
+            p {
+                font-size: 15px;
+                font-style: italic;
+                color: black;
+                line-height: 1.8;
+
+                &::before { content: '\201C'; }
+                &::after  { content: '\201D'; }
+            }
+
+            #founderName {
+                font-size: 13px;
+                color: col.$color-primary;
+                font-family: fonts.$titleBold;
+                align-self: flex-end;
+            }
+        }
+    }
+
+    // Section localisation
+    #locationSection {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        #locationInfos {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            h3 {
+                color: col.$color-primary;
+                font-family: fonts.$titleBold;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 14px;
+                color: grey;
+            }
+
+            .btn1 {
+                margin-top: 16px;
+                align-self: flex-start;
+            }
+        }
+
+        #aboutMap {
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        @media screen and (min-width: 1024px) {
+            flex-direction: row;
+            align-items: flex-start;
+
+            #locationInfos {
+                width: 30%;
+                flex-shrink: 0;
+            }
+
+        }
+    }
+}

@@ -20,7 +20,7 @@ class DBUser extends CoreModel
         throw new \Exception("Not implemented yet");
     }
 
-    //The function is rewrited to handdle the fact that the phone number isn't requiered
+    //The function is rewrited to handdle the fact that the phone number isn't requiered. It also format the user name to a cleaner form
     public function prepareAddQuery(array $params): \PDOStatement|false
     {
         $addProdQuery = $this->db->prepare("INSERT INTO `{$this->tableName}`(`mail`, `city`, `first_name`, `address`, `phone_number`, `postal_code`, `last_name`, `passwd`, `id_user_level`) 
@@ -28,13 +28,16 @@ class DBUser extends CoreModel
 
         $phoneNumber = $params['phoneNumber'] ?? NULL; //We have to test if the phone number is entered before sending it to bindParams
 
+        $firstName = DataTransformer::makeCleanName($params['firstname']);
+        $lastName = DataTransformer::makeCleanName($params['lastname']);
+        
         $addProdQuery->bindParam(":email", $params['email']);
         $addProdQuery->bindParam(":city", $params['city']);
-        $addProdQuery->bindParam(":firstname", DataTransformer::makeCleanName($params['firstname']));
+        $addProdQuery->bindParam(":firstname", $firstName);
         $addProdQuery->bindParam(":address", $params['address']);
         $addProdQuery->bindParam(":phoneNumber", $phoneNumber);
         $addProdQuery->bindParam(":postCode", $params['postCode']);
-        $addProdQuery->bindParam(":lastname", DataTransformer::makeCleanName($params['lastname']));
+        $addProdQuery->bindParam(":lastname", $lastName);
         $addProdQuery->bindParam(":passwd", $params['passwd']);
 
 

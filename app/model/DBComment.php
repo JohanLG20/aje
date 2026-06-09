@@ -30,7 +30,7 @@ class DBComment extends CoreModel
                     WHERE id_article = :idArticle
                 )
             ) comments
-            INNER JOIN USER_ ON comments.id_user_ = USER_.id_user_
+            LEFT JOIN USER_ ON comments.id_user_ = USER_.id_user_
         ");
             $query->bindParam(':idArticle', $idArticle);
             $query->execute();

@@ -41,7 +41,12 @@
   text-align: center;
   align-items: center;
   width: 100%;
-  gap: 32px;
+  gap: 24px;
+}
+#basket .basketItemCard .basketDescriptionSection .basketQuantity .basketQuantityModulation {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 #basket #basketPaymentButton {
   width: fit-content;
@@ -1074,11 +1079,6 @@ main form .form-item select {
   box-sizing: border-box;
   width: 100%;
   transition: border-color 0.2s;
-}
-main form .form-item input:focus,
-main form .form-item select:focus {
-  outline: none;
-  border-color: #096a09;
 }
 main form .form-item input::placeholder,
 main form .form-item select::placeholder {
