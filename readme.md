@@ -1,10 +1,10 @@
-#Projet application web AJE
+# Projet application web AJE
 
-##Présentation du projet
+## Présentation du projet
 
 Ceci est un projet d'application web pour une plateforme d'E-commerce fictive dans le cadre de la formation Kercode du GRETA de Vannes. L'application est centrée sur la vente de matériel de sport, que ça soit des équipements (type ballon, haltères ...) ou bien des vêtements. La structure de la base de donnée à été pensée pour être extensible au besoin.
 
-##Liste des fonctionnalités offertes par l'application
+## Liste des fonctionnalités offertes par l'application
 
 A ce jour, l'application comprend :
 
@@ -21,7 +21,7 @@ A ce jour, l'application comprend :
 - Un système de commentaire d'article, dont lequel un utilisateur ayant "payé" un article est autorisé à le commenter. Il peut également le modifier ou le supprimer
 - Un système de modération où un administrateur est autorisé à supprimé n'importe quel commentaire contrevenant à la politique d'utilisation du site.
 
-##Fonctionnalités prévues pour des version ultérieures
+## Fonctionnalités prévues pour des version ultérieures
 
 - Possibilité d'ajouter/supprimer des catégories
 - Possibilité d'ajouter/retirer des filtres à des catégories
