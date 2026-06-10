@@ -61,10 +61,8 @@
     </div>
 </main>
 
-<script>
-    function toggleSubmit(checkbox) {
-        document.getElementById('submitButton').disabled = !checkbox.checked;
-    }
+<script src="static/js/contact.js">
+
 </script>
 
 <?php require(LAYOUT . "/footer.php") ?>

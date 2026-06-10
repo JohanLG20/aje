@@ -13,11 +13,6 @@
     </div>
 </main>
 
-<script>
-    let connexionButton = document.getElementById('connexionButton')
-    connexionButton.addEventListener('click', () => {
-        document.getElementById('loginButton').click();
-    })
-</script>
+<script src="static/js/basketRefuse.js"></script>
 
 <?php require(LAYOUT . "/footer.php"); ?>

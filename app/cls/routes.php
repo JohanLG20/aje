@@ -109,6 +109,10 @@ const ROUTES = [
         'controller' => StaticPageController::class,
         'method' => 'showContactPage'
     ],
+    "/contact/send" => [
+        'controller' => StaticPageController::class,
+        'method' => 'sendMessage'
+    ],
     "/about/" => [
         'controller' => StaticPageController::class,
         'method' => 'showAboutPage'
@@ -123,9 +127,5 @@ const ROUTES = [
         'method' => 'show404'
     ],
 
-
-
-
-    //TODO: Add contact page + validation RGPD
 
 ];
