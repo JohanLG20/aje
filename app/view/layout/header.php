@@ -16,7 +16,7 @@
         crossorigin="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="static/css/style.css">
-    
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin="" defer></script>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="navItem">
+                <div class="navItem <?= $_SESSION['showLogin'] ?? 'visible' ?>">
                     <i class="fa-solid fa-user menuIcon" id="loginButton"></i>
 
                     <?php require(TEMPLATES . '/login-form.php') ?>

@@ -4,13 +4,14 @@ namespace AJE\Controller;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
+use AJE\Utils\ImageHanddler;
 
 /**
  * Class responsible of gathering the informations in order to display the view of the articles
  * It is reach throught the path ?path=/article/{idArt} and it displays the requested article. It prepares the informations in multiples variable : - array $productInfo -> generic informations such as price, description, name .. It's also where is set if the product has variants or not
  *                                    - string $idArt : The id of the article, used to handdle the basket behavior
  *                                    - array $variants : An array that contains all the variants of the article can be in size, weight ... 
- *                                    - array $commonModalities : Contains all the values that comes from filters but are common to all the other products.
+ *                                    - array $commonModalities : Contains all the values that comes from filters but are common to all the other articles.
  *                                    
  * 
  */
@@ -18,7 +19,7 @@ class ArticleController
 {
 
 
-    
+
     /**
      * Responsible of the gathering the informations on the product, entry point on ?path=/article/{idArt}. If no article is found, show the 404 page.
      * @param int $idArt The id of the article we want to display
@@ -60,8 +61,14 @@ class ArticleController
             //If there is more than one variants, then we show them
             $productInfo['hasVariants'] = count($variants) > 1 ? true : false;
 
-            $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " . $productInfo['article_name'] . " - " . $productInfo['description']; 
-            
+            $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " . $productInfo['article_name'] . " - " . $productInfo['description'];
+
+            // --- Retrieving the associated articles
+            $relatedArticles = $this->getRelatedArticles($idArt);
+
+            //Adding the images to the related article
+            $art['image'] = ImageHanddler::addFirstImageToArray($relatedArticles);
+
 
             require(VIEW . '/articleView.php');
         } catch (\PDOException $e) {
@@ -161,6 +168,22 @@ class ArticleController
             return $allImages;
         } else {
             return [];
+        }
+    }
+
+    /**
+     * Returns an array that contains all the related articles of the given article and 
+     * @param int $idArt The id of the article we want the related article
+     * 
+     * @return array An array that contains all the related articles and the informations needed for the view
+     */
+    public function getRelatedArticles(int $idArt): array
+    {
+        try {
+            $dbArticle = new DBArticle();
+            return $dbArticle->getRelatedArticle($idArt);
+        } catch (\PDOException $e) {
+            throw $e;
         }
     }
 }

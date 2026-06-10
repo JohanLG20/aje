@@ -1,6 +1,6 @@
 <?php
 
-namespace AJE\Controller;
+namespace AJE\Controller\Backoffice;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBArticleInformations;
@@ -11,6 +11,7 @@ use AJE\Model\DBValues_;
 use AJE\Utils\ProductErrorHelper;
 use AJE\Utils\ImageHanddler;
 use AJE\Utils\DataTransformer;
+use AJE\Controller\CRUDController;
 use Exception;
 
 class ProductManagementController extends CRUDController

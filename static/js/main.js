@@ -111,6 +111,7 @@ function closeLastOpennedTopMenu() {
 
 }
 
+//Setting up the map
 var map = L.map('map').setView([47.66711, -2.741946], 15);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,

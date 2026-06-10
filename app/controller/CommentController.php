@@ -72,12 +72,15 @@ class CommentController
         return $comments;
     }
 
-    /*
-    Check if the connected user is allowed to add a comment on the article
-    */
-    public function canAddComment(string $id): bool
+    /**
+     * Check if the connected user is allowed to add a comment on the article
+     * @param string $idArticle The id of the article 
+     * 
+     * @return bool True if he can add a comment, false otherwise
+     */
+    public function canAddComment(string $idArticle): bool
     {
-        return $this->connectedUser->canCommentArticle($id) && !$this->hasCommented($id);
+        return $this->connectedUser->canCommentArticle($idArticle) && !$this->hasCommented($idArticle);
     }
 
     /**

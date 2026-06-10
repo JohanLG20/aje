@@ -58,8 +58,6 @@ class AuthentificationController
                         $dbUserLevel = new DBUserLevel();
                         $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label']; // Setting the permissions level
                         $_SESSION['userId'] = $requieredUser['id_user_'];
-
-                        header("Location: index.php");
                     } else {
                         $errors['login'] = "Identifiant ou mot de passe incorrect";
                     }
@@ -69,12 +67,13 @@ class AuthentificationController
             } catch (\PDOException $e) {
                 $errors['login'] = "Une erreur à eu lieu lors de la connexion à la base de donnée, si  le problème persiste, contacter le webmaster";
             }
+            header("Location: index.php"); // We redirect to his last page
         } else {
             $errors['login'] = "Veuillez remplir tous les champs du formulaire";
         }
 
         if (isset($errors['login'])) {
-            $_SESSION['showLogin'] = true;
+            $_SESSION['showLogin'] = 'visible';
         } else {
             unset($_SESSION['showLogin']);
         }
@@ -168,7 +167,7 @@ class AuthentificationController
             $dbUser = new DBUser();
             if (!is_null($this->id)) {
                 $commentableArticles = $dbUser->getUserCommentablesArticles($this->id, $idArticle);
-                
+
                 if ($commentableArticles && !empty($commentableArticles)) {
                     return true;
                 } else {

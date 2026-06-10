@@ -1,11 +1,12 @@
 <?php
 
-namespace AJE\Controller;
+namespace AJE\Controller\Backoffice;
 
 use AJE\Model\DBArticle;
 use AJE\Model\DBPriceHistory;
 use Exception;
 use AJE\Utils\PromotionErrorHelper;
+use AJE\Controller\CRUDController;
 
 class PromotionManagementController extends CRUDController
 {

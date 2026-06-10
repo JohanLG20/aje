@@ -4,7 +4,7 @@ namespace AJE\Controller;
 
 use AJE\Model\DBUser;
 use AJE\Utils\UserErrorHelper;
-
+use Exception;
 
 class UserManagementController extends CRUDController
 {
@@ -56,12 +56,11 @@ class UserManagementController extends CRUDController
                 header("Location: index.php");
                 $authController->logout();
                 return "";
-
             } else {
-                return "Impossible de supprimer l'utilisateur";
+                throw new Exception("Erreur lors de la suppression de l'utilisateur");
             }
         } catch (\PDOException $e) {
-            return "Une erreur est survenue lors de l'opération";
+            throw new Exception("Erreur lors de la suppression de l'utilisateur");
         }
     }
     protected function getSuccessMessage(string $action): string

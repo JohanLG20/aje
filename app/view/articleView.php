@@ -1,7 +1,6 @@
 <?php require(LAYOUT . "/header.php"); ?>
 <main class="container">
     <div class="product-page">
-
         <!-- En-tête produit -->
         <div class="product-header">
 
@@ -136,6 +135,13 @@
     </div>
 </main>
 
+<aside>
+    <h2>Produit qui pourraient vous intéresser également</h2>
+    <?php foreach($relatedArticles as $art):  ?>
+            <?php require(TEMPLATES . '/articleCard.php'); ?>
+    <?php endforeach ?>
+</aside>
+
 <script>
     function changeMainImage(thumbnail) {
         document.getElementById('mainImage').src = thumbnail.src;
@@ -144,6 +150,7 @@
         thumbnail.classList.add('active');
     }
 
+    //Creating the action to add the comment
     let addCommentButton = document.querySelector("#addComment")
     if (addCommentButton !== null) {
         addCommentButton.addEventListener("click", () => {
@@ -154,6 +161,8 @@
             }
         })
     }
+
+    let modifyComment = document.querySelector('.editComment') //Retrieving all the comments
 
     function createCommentForm(action, preloadedDatas = "") {
         let addCommentSection = document.createElement("div")

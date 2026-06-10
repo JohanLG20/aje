@@ -47,6 +47,7 @@
         <!-- Password -->
         <div class="form-item">
             <label for="passwd">Mot de passe</label>
+            <p></p>
             <input type="password" name="passwd" id="passwd" placeholder="Votre mot de passe">
             <?php if (isset($view['errors']['passwd'])): ?>
                 <p class="error"><?= $view['errors']['passwd'] ?></p>
@@ -121,11 +122,12 @@
                 form.action = '?path=/usermanagement/delete';
 
                 let formSubmitted = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'form_submitted';
+                formSubmitted.type = 'hidden';
+                formSubmitted.name = 'form_submitted';
+
                 let accountDeleted = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'account_deleted';
+                accountDeleted.type = 'hidden';
+                accountDeleted.name = 'account_deleted';
 
                 form.appendChild(formSubmitted);
                 form.appendChild(accountDeleted);

@@ -370,15 +370,15 @@ LIMIT :limit");
     public function getTotalRevenues(): array
     {
         try {
-            $query = $this->db->prepare("SELECT SUM(p.prices) AS revenues FROM (
-                                                SELECT ph.price * ao.quantity AS prices 
+            $query = $this->db->prepare("SELECT SUM(p.price * p.quantity) AS revenues, SUM(p.quantity) as total_quantity, AVG(p.price) as average_price
+                                            FROM (
+                                                SELECT quantity, price 
                                                 FROM ARTICLE_ORDER as ao 
                                                 INNER JOIN ARTICLE as a ON ao.id_article = a.id_article 
                                                 INNER JOIN PRICE_HISTORY as ph ON ph.id_article = a.id_article 
                                                 INNER JOIN ORDER_ as o ON o.id_order_ = ao.id_order_ 
                                              WHERE 
                                                 (ph.end_date IS NULL AND o.date_ >= ph.start_date
-                                                    -- Checking if there are no promotions on the product yet
                                                    AND NOT EXISTS (
                                                      SELECT 1 FROM PRICE_HISTORY ph2 
                                                         WHERE ph2.id_article = a.id_article 
@@ -386,12 +386,55 @@ LIMIT :limit");
                                                         AND o.date_ BETWEEN ph2.start_date AND ph2.end_date
                                                    ))
                                                    OR
-                                                   (ph.end_date IS NOT NULL AND o.date_ BETWEEN ph.start_date AND ph.end_date)
+                                                   (ph.end_date IS NOT NULL 
+                                                   AND o.date_ BETWEEN ph.start_date AND ph.end_date)
                                                 ) p");
 
             $query->execute();
             return $query->fetch(\PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function getRelatedArticle(int $idArticle): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT
+    a.id_article as id,
+    ai.article_name as article_name,
+    ai.image_repertory,
+    b.brand_label AS brand,
+    normal.price AS normal_price,
+    promo.price AS promo_price
+FROM ARTICLE a
+JOIN ARTICLE_INFORMATIONS ai
+    ON ai.id_article_informations = a.id_article_informations
+JOIN BRAND b
+    ON b.id_brand = ai.id_brand
+JOIN PRICE_HISTORY normal
+    ON normal.id_article = a.id_article
+    AND normal.end_date IS NULL
+LEFT JOIN PRICE_HISTORY promo
+    ON promo.id_article = a.id_article
+    AND promo.end_date IS NOT NULL
+    AND promo.end_date >= CURDATE()
+    AND promo.start_date <= CURDATE()
+WHERE a.deleted_at IS NULL
+AND ai.id_category = (SELECT id_category 
+                      FROM ARTICLE a1 
+                      INNER JOIN ARTICLE_INFORMATIONS ai1 ON a1.id_article_informations = ai1.id_article_informations 
+                      WHERE id_article = :idArticle)
+AND a.id_article_informations != (SELECT id_article_informations
+                                 FROM ARTICLE
+                                 WHERE id_article = :idArticle)
+GROUP BY a.id_article_informations ORDER BY a.id_article_informations DESC");
+
+            $query->bindParam(':idArticle', $idArticle);
+            $query->execute();
+
+            return $query->fetchAll();
+        } catch (\PDOException $e) {
             throw $e;
         }
     }

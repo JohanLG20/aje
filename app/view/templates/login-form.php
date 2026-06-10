@@ -8,6 +8,8 @@
                 <a href="?path=/productmanagement/create" class="menuLoginForm">Ajouter un produit</a>
                 <a href="?path=/productmanagement/delete" class="menuLoginForm">Supprimer un produit</a>
                 <a href="?path=/promotion/create" class="menuLoginForm">Ajouter une promotion</a>
+                <a href="?path=/revenues" class="menuLoginForm">Récapitulatif des ventes</a>
+
 
             <?php endif; ?>
             <a href="?path=/usermanagement/update" class="menuLoginForm">Modifier mon profil</a>

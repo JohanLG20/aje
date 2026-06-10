@@ -13,6 +13,12 @@ class VFilterValuesAssociations
         $this->tableName = "FILTER_VALUES_ASSOCIATIONS";
     }
 
+    /**
+     * Returns the choices available for a given filter id
+     * @param string $id The id of the filter we want the informations
+     * 
+     * @return array All the choices id of the filter
+     */
     public function getChoicesForFilterId(string $id): array|bool
     {
         try {
@@ -26,6 +32,12 @@ class VFilterValuesAssociations
         }
     }
 
+    /**
+     * Returns the choices available for the given filters id
+     * @param array $ids The id of the filters we want the informations
+     * 
+     * @return array All the choices id of the filters
+     */
     public function getAllPossibleChoicesForIds(array $ids): array
     {
         try {
@@ -51,7 +63,7 @@ class VFilterValuesAssociations
         }
     }
 
-    public function getAllInfosForId(string $id, array $attrsToGet = []) : array
+    public function getAllInfosForId(string $id, array $attrsToGet = []): array
     {
         try {
             //Prepering the select section of the querry

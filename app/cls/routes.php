@@ -1,22 +1,35 @@
 <?php
 
+use AJE\Controller\StaticPageController;
+use AJE\Controller\Backoffice\ProductManagementController;
+use AJE\Controller\Backoffice\PromotionManagementController;
+use AJE\Controller\Backoffice\RevenueController;
+use AJE\Controller\UserManagementController;
+use AJE\Controller\BasketController;
+use AJE\Controller\ArticleController;
+Use AJE\Controller\PaymentController;
+use AJE\Controller\AuthentificationController;
+use AJE\Controller\CommentController;
+use AJE\Controller\SearchPageController;
+
+
 const ROUTES = [
     '/' => [
-        'controller' => AJE\Controller\StaticPageController::class,
+        'controller' => StaticPageController::class,
         'method' => 'home'
     ],
     '/usermanagement/{action}' => [
-        'controller' => AJE\Controller\UserManagementController::class,
+        'controller' => UserManagementController::class,
         'method' => 'prepareAndDisplayView'
     ],
     '/productmanagement/{action}' => [
-        'controller' => AJE\Controller\ProductManagementController::class,
+        'controller' => ProductManagementController::class,
         'method' => 'prepareAndDisplayView',
         'minPermission' => 'admin',
         'denyAccessMethod' => 'permissionDenied'
     ],
     '/promotion/{action}' => [
-        'controller' => AJE\Controller\PromotionManagementController::class,
+        'controller' => PromotionManagementController::class,
         'method' => 'prepareAndDisplayView',
         'minPermission' => 'admin',
         'denyAccessMethod' => 'permissionDenied'
@@ -28,85 +41,85 @@ const ROUTES = [
     ],
 
     '/article/{idArt}' => [
-        'controller' => AJE\Controller\ArticleController::class,
+        'controller' => ArticleController::class,
         'method' => 'showVariant'
     ],
     '/basket/add/{id}' => [
-        'controller' => AJE\Controller\BasketController::class,
+        'controller' => BasketController::class,
         'method' => 'addToBasket'
     ],
     '/basket/remove/{id}' => [
-        'controller' => AJE\Controller\BasketController::class,
+        'controller' => BasketController::class,
         'method' => 'removeFromBasket'
     ],
     '/basket/removeOne/{id}' => [
-        'controller' => AJE\Controller\BasketController::class,
+        'controller' => BasketController::class,
         'method' => 'removeOne'
     ],
     '/revenues/' => [
-        'controller' => AJE\Controller\Backoffice\RevenueController::class,
+        'controller' => RevenueController::class,
         'method' => 'show',
         'minPermission' => 'admin',
         'denyAccessMethod' => 'permissionDenied'
     ],
 
     '/login/' => [
-        'controller' => AJE\Controller\AuthentificationController::class,
+        'controller' => AuthentificationController::class,
         'method' => 'login'
     ],
     '/logout/' => [
-        'controller' => AJE\Controller\AuthentificationController::class,
+        'controller' => AuthentificationController::class,
         'method' => 'logout'
     ],
     '/payment/' => [
-        'controller' => AJE\Controller\PaymentController::class,
+        'controller' => PaymentController::class,
         'method' => 'displayPaymentPage',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
     '/pay/' => [
-        'controller' => AJE\Controller\PaymentController::class,
+        'controller' => PaymentController::class,
         'method' => 'proceedToPayment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
     "/addComment/" => [
-        'controller' => AJE\Controller\CommentController::class,
+        'controller' => CommentController::class,
         'method' => 'addComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
     "/deleteComment/{idComment}" => [
-        'controller' => AJE\Controller\CommentController::class,
+        'controller' => CommentController::class,
         'method' => 'deleteComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
     "/edit/{idComment}" => [
-        'controller' => AJE\Controller\CommentController::class,
+        'controller' => CommentController::class,
         'method' => 'deleteComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
     "/search/{query}" => [
-        'controller' => AJE\Controller\SearchPageController::class,
+        'controller' => SearchPageController::class,
         'method' => 'displayView'
     ],
     "/contact/" => [
-        'controller' => AJE\Controller\StaticPageController::class,
+        'controller' => StaticPageController::class,
         'method' => 'showContactPage'
     ],
     "/about/" => [
-        'controller' => AJE\Controller\StaticPageController::class,
+        'controller' => StaticPageController::class,
         'method' => 'showAboutPage'
     ],
 
     "/disclaimer/" => [
-        'controller' => AJE\Controller\StaticPageController::class,
+        'controller' => StaticPageController::class,
         'method' => 'showDisclaimerPage'
     ],
     "/404/" => [
-        'controller' => AJE\Controller\StaticPageController::class,
+        'controller' => StaticPageController::class,
         'method' => 'show404'
     ],
 
