@@ -14,10 +14,18 @@ function redirectSearch(event) {
     }
 
 }
-
 //This variable will track which top menu is currently openned
-let lastOpenedTopMenu = document.getElementById('connexionMenu').classList.contains('visible') ?
-    document.getElementById('connexionMenu') : null
+let lastOpenedTopMenu = null
+
+//We check if a menu is already openned on the loading of the page
+if(document.getElementById('connexionMenu').classList.contains('visible')){
+    lastOpenedTopMenu = document.getElementById('connexionMenu')
+}
+else if(document.getElementById('basket').classList.contains('visible')){
+    lastOpenedTopMenu = document.getElementById('basket')
+}
+
+
 
 
 //Burger listener

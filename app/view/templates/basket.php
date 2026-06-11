@@ -1,5 +1,5 @@
-<?php if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])):  ?>
-    <div id="basket">
+<section id="basket" class="dropDownMenu topMenuIcon <?= $_SESSION['showBasket'] ?? 'hidden' ?>">
+    <?php if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])):  ?>
         <?php foreach ($_SESSION['basket'] as $idArticle => $bask): ?>
             <div class="basketItemCard">
                 <img src="<?= $bask['image'] ?>" alt="<?= $bask['name'] ?>">
@@ -33,9 +33,8 @@
         <?php else: ?>
             <a id="basketPaymentButton" href="?path=/payment/" class="btn1">Payer</a>
         <?php endif; ?>
-    </div>
 
-
-<?php else: ?>
-    <p id="noItemInBasket">Aucun article dans le panier</p>
-<?php endif; ?>
+    <?php else: ?>
+        <p id="noItemInBasket">Aucun article dans le panier</p>
+    <?php endif; ?>
+</section>

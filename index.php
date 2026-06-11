@@ -1,6 +1,5 @@
 <?php
 session_start();
-if(isset($_SESSION['showLogin'])) unset($_SESSION['showLogin']);
 
 require("app/cls/config.php");
 
@@ -14,5 +13,13 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 new Router();
+
+//Unsetting the temporary datas of the session
+if(isset($_SESSION['showLogin'])) unset($_SESSION['showLogin']);
+if(isset($_SESSION['loginError'])) unset($_SESSION['loginError']); 
+if(isset($_SESSION['showBasket'])) unset($_SESSION['showBasket']); 
+
+
+
 
 

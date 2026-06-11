@@ -56,6 +56,8 @@ class BasketController
         //Checking if the article already exists in the basket
         if (array_key_exists($id, $_SESSION['basket'])) {
             $_SESSION['basket'][$id]['quantity']++;
+            $_SESSION['showBasket'] = 'visible'; //Inform the view that she need to open the basket upon load
+
         } else {
             $_SESSION['basket'][$id] = $this->createBasketItem($id);
         }
@@ -71,6 +73,7 @@ class BasketController
     public function removeFromBasket(string $id)
     {
         unset($_SESSION['basket'][$id]);
+        $_SESSION['showBasket'] = 'visible'; //Inform the view that she need to open the basket upon load
         header("Location: {$_SERVER['HTTP_REFERER']}");
     }
 
@@ -87,7 +90,9 @@ class BasketController
         } else {
             unset($_SESSION['basket'][$id]);
         }
+        $_SESSION['showBasket'] = 'visible'; //Inform the view that she need to open the basket upon load
         header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit;
     }
 
     /**

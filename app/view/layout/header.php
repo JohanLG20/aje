@@ -64,12 +64,14 @@
 
                 <div class="navItem">
                     <i class="fa-solid fa-basket-shopping menuIcon"></i>
-                    <div class="dropDownMenu hidden topMenuIcon">
+                    
                         <?php require(TEMPLATES . '/basket.php') ?>
-                    </div>
+
+
+
                 </div>
 
-                <div class="navItem <?= $_SESSION['showLogin'] ?? 'visible' ?>">
+                <div class="navItem">
                     <i class="fa-solid fa-user menuIcon" id="loginButton"></i>
 
                     <?php require(TEMPLATES . '/login-form.php') ?>

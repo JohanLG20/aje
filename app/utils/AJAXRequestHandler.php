@@ -11,6 +11,17 @@ use AJE\Model\VFilterValuesAssociations;
 class AJAXRequestHandler
 {
 
+    /**
+     * Returns an array that contains all the filter types relative to the category and their values in the form of
+     *  [
+     *      [idFilterType1] => [value1, value2, value3 ...],
+     *      [idFilterType2] => [value1, value2, value3 ...],
+     *       ...
+     * ]
+     * @param string $id The id of a category
+     * 
+     * @return void
+     */
     public function getAllFiltersValueForFilterType(string $id): void
     {
         if ($id !== "" && is_numeric($id)) {

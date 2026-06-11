@@ -50,7 +50,8 @@ class AuthentificationController
                 //Checking if a user with this mail exists
                 if ($requieredUser) {
                     //Checking if the password is correct
-                    if (password_verify($postVal['passwd'], $requieredUser['passwd']) == $requieredUser['passwd']) {
+                    if (password_verify($postVal['passwd'], $requieredUser['passwd'])) {
+                        if (isset($_SESSION['loginError'])) unset($_SESSION['loginError']);
                         $_SESSION['connected'] = true;
                         $_SESSION['name'] = $requieredUser['first_name'] . " " . $requieredUser['last_name'];
 
@@ -59,24 +60,26 @@ class AuthentificationController
                         $_SESSION['permissionLevel'] = $dbUserLevel->getElementById($requieredUser['id_user_level'], ['users_level_label'])['users_level_label']; // Setting the permissions level
                         $_SESSION['userId'] = $requieredUser['id_user_'];
                     } else {
-                        $errors['login'] = "Identifiant ou mot de passe incorrect";
+                        $_SESSION['loginError'] = "Identifiant ou mot de passe incorrect";
                     }
                 } else {
-                    $errors['login'] = "Identifiant ou mot de passe incorrect";
+                    $_SESSION['loginError'] = "Identifiant ou mot de passe incorrect";
                 }
             } catch (\PDOException $e) {
-                $errors['login'] = "Une erreur à eu lieu lors de la connexion à la base de donnée, si  le problème persiste, contacter le webmaster";
+                $_SESSION['loginError'] = "Une erreur à eu lieu lors de la connexion à la base de donnée, si  le problème persiste, contacter le webmaster";
             }
-            header("Location: index.php"); // We redirect to his last page
+
+            
+            
         } else {
-            $errors['login'] = "Veuillez remplir tous les champs du formulaire";
+            $_SESSION['login'] = "Veuillez remplir tous les champs du formulaire";
         }
 
-        if (isset($errors['login'])) {
-            $_SESSION['showLogin'] = 'visible';
-        } else {
-            unset($_SESSION['showLogin']);
-        }
+        //If we reach there have been an error so we add the information that the login form must be showed
+        $_SESSION['showLogin'] = 'visible';
+        header("Location: index.php"); // We redirect to the index
+        exit; // Stop of the code and hence allow the flashdatas to be saved
+
     }
 
     /*

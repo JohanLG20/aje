@@ -1,7 +1,7 @@
-<div id="connexionMenu"
-    class="dropDownMenu topMenuIcon hidden">
+<section id="connexionMenu"
+    class="dropDownMenu topMenuIcon <?= $_SESSION['showLogin'] ?? 'hidden' ?>">
     <?php if (isset($_SESSION['connected']) && $_SESSION['connected']): ?>
-        <div id="welcomeMenu">
+        <section id="welcomeMenu">
             <p class="menuLoginForm">Bonjour <?= $_SESSION['name'] ?></p>
             <hr>
             <?php if (isset($_SESSION['permissionLevel']) && $_SESSION['permissionLevel'] === "admin"): ?>
@@ -14,7 +14,7 @@
             <?php endif; ?>
             <a href="?path=/usermanagement/update" class="menuLoginForm">Modifier mon profil</a>
             <a href="?path=/logout/" class="menuLoginForm">Se déconnecter</a>
-        </div>
+        </section>
     <?php else: ?>
         <form action="?path=/login/" method="post" id="loginForm">
             <div id="loginInputs">
@@ -22,13 +22,13 @@
                 <input type="password" name="passwd" id="passwd" placeholder="Entrez votre mot de passe">
 
             </div>
-            <?php if (isset($errors['login'])): ?>
-                <p class="error"><small><?= $errors['login'] ?></small></p>
+            <?php if (isset($_SESSION['loginError'])): ?>
+                <p class="error"><small><?= $_SESSION['loginError'] ?></small></p>
             <?php endif; ?>
-
+            <input type="hidden" name="connexionAttempt">
             <button type="submit" class="btn1">Connexion</button>
         </form>
         <a href="?path=/usermanagement/create" id="accountCreationLink">Vous n'avez pas encore de compte ? Inscrivez vous !</a>
 
     <?php endif; ?>
-</div>
+</section>
