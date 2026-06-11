@@ -5,9 +5,21 @@ namespace AJE\Controller;
 use AJE\Model\DBUser;
 use AJE\Utils\UserErrorHelper;
 use Exception;
+use Override;
 
 class UserManagementController extends CRUDController
 {
+    #[Override]
+    public function prepareAndDisplayView(string $action)
+    {
+        //Checking a non connected user tries to access routes 
+        if (($action !== 'create' && isset($_SESSION['userId'])) ||
+                $action == 'create' && !isset($_SESSION['userId']) ) {
+            return parent::prepareAndDisplayView($action);
+        }
+
+        header("Location: index.php"); //Redirecting the user to home page
+    }
 
     protected function getPostValuesErrors($action, $values): array|bool
     {
