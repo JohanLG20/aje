@@ -54,14 +54,15 @@ abstract class CoreModel
     }
 
     /**
+     * @param int $id The id of the row to modify
      * @param array $params The values of the element to modified. The keys of the array must be tied to the attributes name in the database
      * 
      * @return bool True if the request was successfull, false otherwise
      */
-    public function modifyElementById(array $params): bool
+    public function modifyElementById(int $id, array $params): bool
     {
         try {
-            $query = $this->prepareModifyQuery($params);
+            $query = $this->prepareModifyQuery($id, $params);
             return $query->execute();
         } catch (\PDOException $e) {
             throw new \PDOException($e);
@@ -156,7 +157,7 @@ abstract class CoreModel
             //We now bind the parameters
             foreach ($params as $key => $val) {
                 //Have to use bindValue because the variables used will not be referenced anymore by the time execute is called
-                $query->bindValue(":{$key}", $val);
+                $query->bindValue(":$key", $val);
             }
 
             return $query;
@@ -165,7 +166,27 @@ abstract class CoreModel
         }
     }
 
-    protected function prepareModifyQuery(array $params): \PDOStatement|false {}
+    protected function prepareModifyQuery(int $id, array $params): \PDOStatement|false
+    {
+        $setClauses = [];
+        foreach ($params as $column => $value) {
+            $setClauses[] = "$column = :$column";
+        }
+
+        $set = implode(', ', $setClauses);
+
+        $sql = "UPDATE $this->tableName SET $set WHERE id_$this->idName = :id";
+
+        $query = $this->db->prepare($sql);
+
+        foreach ($params as $key => $val) {
+            $query->bindValue(":$key", $val);
+        }
+
+        $query->bindValue(':id', $id);
+
+        return $query;
+    }
 
     /**
      * @param array $attrsToGet

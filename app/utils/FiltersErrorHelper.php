@@ -30,11 +30,10 @@ class FiltersErrorHelper extends ErrorHelper
     private function checkFilterForCategory()
     {
         try {
-            $filterByDb = new DBFilteredBy();
             $catDb = new DBCategory();
             //Retrieving the catId and all it's parents
             $allCatIds = $catDb->getCompleteBranch($this->values['idCat']);
-            $allFilters = $filterByDb->getAssociatedElementsFromArray("id_filter_type", $allCatIds);
+            $allFilters = $catDb->getAllFiltersForCategories($allCatIds);
 
 
             $allFilters = array_column($allFilters, 'id_filter_type'); //Flattening the array by selecting the id_filter_type column only

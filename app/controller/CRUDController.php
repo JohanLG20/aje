@@ -50,7 +50,7 @@ abstract class CRUDController
             $extraInfos = $this->completeViewInformations($action);
 
             if (!empty($extraInfos)) {
-                $view = self::addInfosToView($view, $extraInfos);
+                $view = $this->addInfosToView($view, $extraInfos);
             }
 
             $this->callView($view, $values);
@@ -82,7 +82,7 @@ abstract class CRUDController
     }
 
 
-    private static function addInfosToView(array $array, array $infosToAdd): array
+    private function addInfosToView(array $array, array $infosToAdd): array
     {
         foreach ($infosToAdd as $key => $values) {
             $array[$key] = $infosToAdd[$key];

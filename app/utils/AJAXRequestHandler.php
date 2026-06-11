@@ -18,10 +18,7 @@ class AJAXRequestHandler
                 //Retrieving all the parents category
                 $catDb = new DBCategory();
                 $allCats = $catDb->getCompleteBranch($id);
-
-                //Retrivening the filters for all the category
-                $filtByDb = new DBFilteredBy();
-                $filters = $filtByDb->getAssociatedElementsFromArray("id_filter_type", $allCats);
+                $filters = $catDb->getAllFiltersForCategories($allCats);
 
                 $filterTypeDb = new DBFilterType();
                 $fva = new VFilterValuesAssociations();

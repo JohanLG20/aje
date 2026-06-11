@@ -2,6 +2,8 @@
 
 namespace AJE\Utils;
 
+use AJE\Model\DBUser;
+
 abstract class UserErrorHelper
 {
     public static function checkForErrors(array $values, string $action): array|bool
@@ -10,8 +12,17 @@ abstract class UserErrorHelper
             $errors['lastname'] = self::checkLastnameErrors($values['lastname']);
             $errors['firstname'] = self::checkFirstnameErrors($values['firstname']);
             $errors['email'] = self::checkEmailErrors($values['email']);
-            $errors['passwd'] = self::checkPassword($values['passwd']);
-            $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
+
+            //These test must only be done if the action is create or update and at least one of the value of the password is entered
+            if ($action === "update" && (!empty($values['oldPasswd']) || !empty($values['passwd']) || !empty($values['passwdconf']))) {
+                $errors['oldPasswd'] = self::checkOldPassword($values['oldPasswd']);
+                $errors['passwd'] = self::checkPassword($values['passwd']);
+                $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
+            } else if ($action === 'create') {
+                $errors['passwd'] = self::checkPassword($values['passwd']);
+                $errors['passwdconf'] = self::checkPasswordsMatch($values['passwd'], $values['passwdconf']);
+            }
+
             $errors['city'] = self::checkCityErrors($values['city']);
             $errors['postCode'] = self::checkPostalCodeErrors($values['postCode']);
             $errors['address'] = self::checkAddressErrors($values['address']);
@@ -131,6 +142,35 @@ abstract class UserErrorHelper
         }
 
         return "Le mot de passe doit faire au moins 8 caractères, contenir une majuscule et une miniscule, un chiffre ainsi qu'un caractère spécial";
+    }
+
+    /**
+     * @param string $passwd The password we want to check
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
+    public static function checkOldPassword(string $passwd): ?string
+    {
+        if (!empty($passwd)) {
+            try{
+                $dbUser = new DBUser();
+                $passwdHash = $dbUser->getElementById($_SESSION['userId'])['passwd'];
+                   if(password_verify($passwd, $passwdHash)){
+                         return null;
+                   }
+                   else{
+                    return "Le mot de passe entré n'est pas le bon";
+                   }
+       
+            }
+
+            catch(\PDOException $e){
+                throw $e;
+            }
+         
+        }
+
+        return "Vous devez remplir l'ancien mot de passe";
     }
 
 

@@ -7,9 +7,10 @@ use AJE\Controller\Backoffice\RevenueController;
 use AJE\Controller\UserManagementController;
 use AJE\Controller\BasketController;
 use AJE\Controller\ArticleController;
-Use AJE\Controller\PaymentController;
+use AJE\Controller\PaymentController;
 use AJE\Controller\AuthentificationController;
 use AJE\Controller\CommentController;
+use AJE\Controller\Debug;
 use AJE\Controller\SearchPageController;
 
 
@@ -31,6 +32,13 @@ const ROUTES = [
     '/promotion/{action}' => [
         'controller' => PromotionManagementController::class,
         'method' => 'prepareAndDisplayView',
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+
+    '/debug/' => [
+        'controller' => Debug::class,
+        'method' => 'launchDebug',
         'minPermission' => 'admin',
         'denyAccessMethod' => 'permissionDenied'
     ],

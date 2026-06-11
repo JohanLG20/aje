@@ -15,11 +15,6 @@ class DBUser extends CoreModel
         $this->idName = strtolower($this->tableName);
     }
 
-    protected function prepareModifyQuery(array $params): \PDOStatement|false
-    {
-        throw new \Exception("Not implemented yet");
-    }
-
     //The function is rewrited to handdle the fact that the phone number isn't requiered. It also format the user name to a cleaner form
     public function prepareAddQuery(array $params): \PDOStatement|false
     {

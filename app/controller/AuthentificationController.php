@@ -90,12 +90,9 @@ class AuthentificationController
         unset($_SESSION['permissionLevel']);
         unset($_SESSION['userId']);
 
-        //We check if the user has suppressed his account
-        if (isset($_POST['account_deleted'])) {
-            header("Location: index.php"); //We redirect him at the index
-        } else {
-            header("Location: {$_SERVER['HTTP_REFERER']}"); // We redirect to his last page
-        }
+
+        header("Location: index.php"); //We redirect him at the index
+ 
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php require(LAYOUT . "/header.php"); ?>
 
 <main class="container">
-    <div id="searchResults">
+    <section id="searchResults">
         <?php if (!empty($articles)): ?>
             <div id="filterBar">
                 <button id="filterButton" onclick="toggleFilterModal()">
@@ -123,20 +123,10 @@
             <?php endif; ?>
             </section>
 
-    </div>
+    </section>
 </main>
 
-<script>
-    function toggleFilterModal() {
-        document.getElementById('filterModal').classList.toggle('hidden');
-        document.getElementById('filterModal').classList.toggle('visible');
-        document.getElementById('filterOverlay').classList.toggle('hidden');
-        document.getElementById('filterOverlay').classList.toggle('visible');
-    }
-
-    function applyFilters() {
-        toggleFilterModal();
-    }
+<script src="static/js/searchPage.js">
 </script>
 
 <?php require(LAYOUT . "/footer.php"); ?>

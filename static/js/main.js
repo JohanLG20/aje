@@ -112,11 +112,11 @@ function closeLastOpennedTopMenu() {
 }
 
 //Setting up the map
-var map = L.map('map').setView([47.66711, -2.741946], 15);
+let map = L.map('map').setView([47.66711, -2.741946], 15);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var marker = L.marker([47.66711, -2.741946]).addTo(map);
+let marker = L.marker([47.66711, -2.741946]).addTo(map);
 marker.bindPopup("<b>Magasin AJE</b><br><em>3 allée du Général-le-Troadec</em><br><em>56000, Vannes</em><br>Vente d'articles sportifs et de vêtements homme et femme").openPopup();

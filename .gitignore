@@ -4,3 +4,4 @@ images/*
 vendor/
 composer.lock
 .env
+app/.htaccess

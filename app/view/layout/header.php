@@ -35,7 +35,7 @@
             </div>
             <a href="index.php" class="brand">AJE</a>
             <nav id="menuIcons">
-                <!-- Version mobile : icône + dropdown -->
+                <!-- Mobile menu : Icone + dropdown -->
                 <div class="navItem mobileMenuItem">
                     <i class="fa-solid fa-magnifying-glass-plus"></i>
                     <div class="dropDownMenu hidden topMenuIcon">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                <!-- Version desktop : barre de recherche directement visible -->
+                <!-- Desktop version -->
                 <div id="searchDesktop" class="navItem desktopMenuItem">
                     <form onsubmit="redirectSearch(event)">
                         <div class="searchForm">
