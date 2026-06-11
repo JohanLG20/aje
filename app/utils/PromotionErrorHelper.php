@@ -2,6 +2,8 @@
 
 namespace AJE\Utils;
 
+use AJE\Model\DBPriceHistory;
+
 class PromotionErrorHelper
 {
 
@@ -10,7 +12,7 @@ class PromotionErrorHelper
         $errors['idArticle'] = self::checkForIdArticleErrors($values['idArticle']);
         $errors['startDate'] = self::checkForStartDateErrors($values['startDate']);
         $errors['endDate'] = self::checkForEndDateErrors($values['startDate'], $values['endDate']);
-        $errors['price'] = self::checkForPriceErrors($values['price']);
+        $errors['price'] = self::checkForPriceErrors($values['price'], $values['idArticle']);
 
         foreach ($errors as $key => $val) {
             if (is_null($val)) {
@@ -72,10 +74,20 @@ class PromotionErrorHelper
      * 
      * @return string|null Returns null if there are no errors or a string that contains the error
      */
-    private static function checkForPriceErrors(string $price): ?string
+    private static function checkForPriceErrors(string $price, string $idArticle): ?string
     {
         if (is_numeric($price)) {
-            return null;
+            try{
+                $dbPriceHistory = new DBPriceHistory();
+
+                $actualPrice = $dbPriceHistory->getElementById($idArticle)[''];
+
+                return $price >= $actualPrice ? 'Le prix renseigné doit être inférieur au prix actuel du produit' : null;
+            }
+            catch(\PDOException $e){
+                throw $e;
+            }
+            
         } else {
             return "Veuillez entrer un prix";
         }
