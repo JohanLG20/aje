@@ -131,7 +131,8 @@ class BasketController
             $basket['price'] = $dbArticle->getArticlePrice($id);
 
             //Retrieving the principal image
-            $image = ImageHanddler::getFirstImage($articleInfos['image_repertory']);
+            $ih = new ImageHanddler();
+            $image = $ih->getFirstImage($articleInfos['image_repertory']);
             $basket['image'] = $image ?? IMAGE_NOT_FOUND_LINK;
 
             return $basket;

@@ -101,7 +101,7 @@
             </div>
             <div id="filterOverlay" class="hidden" onclick="toggleFilterModal()"></div>
 
-            <div id="articleList">
+            <section id="articleList">
 
                 <?php foreach ($articles as $art): ?>
                     <?php require(TEMPLATES . "/articleCard.php"); ?>
@@ -121,7 +121,7 @@
                     <a href="index.php" class="btn1">Retour à l'accueil</a>
                 </div>
             <?php endif; ?>
-            </div>
+            </section>
 
     </div>
 </main>

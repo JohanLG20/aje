@@ -1,4 +1,6 @@
 /node_modules
 preloadedDatas.sql
-images/
+images/*
 vendor/
+composer.lock
+.env

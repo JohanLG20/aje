@@ -5,7 +5,7 @@
 
     <form action="?path=/promotion/<?= $view['action'] ?>" method="POST">
 
-        <!-- Sélection de l'article -->
+        <!-- Select the article -->
 
         <div class="form-item">
             <label for="idArticle">Selectionnez un article</label>
@@ -27,7 +27,7 @@
 
 
 
-        <!-- Date de début -->
+        <!-- Start date -->
         <div class="form-item">
             <label for="startDate">Date de début :</label>
             <input type="date" name="startDate" id="startDate" required>
@@ -36,7 +36,7 @@
             <p class="error"><?= $view['errors']["startDate"] ?></p>
         <?php endif; ?>
 
-        <!-- Date de fin -->
+        <!-- End date -->
         <div class="form-item">
             <label for="endDate">Date de fin :</label>
             <input type="date" name="endDate" id="endDate" required>
@@ -45,7 +45,7 @@
             <p class="error"><?= $view['errors']["endDate"] ?></p>
         <?php endif; ?>
 
-        <!-- Prix -->
+        <!-- Price -->
         <div class="form-item">
             <label for="price">Prix promotionnel :</label>
             <input type="text" name="price" id="price" placeholder="Ex: 19.99" pattern="[0-9]+([\.,][0-9]+)?" required>

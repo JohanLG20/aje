@@ -85,7 +85,7 @@ class PromotionManagementController extends CRUDController
 
     protected function callView(array $view, array $values): void
     {
-        require(VIEW . "/promotionPage.php");
+        require(VIEW . "/backoffice/promotionPage.php");
     }
 
     protected function completeViewInformations(string $action): array

@@ -25,7 +25,16 @@ class ProductManagementController extends CRUDController
     protected function create(array $params): string
     {
         try {
-            $imageRepertory = uniqid();
+            //--------------------- Saving the image -------------
+            //Generating the image handdler
+            $ih = new ImageHanddler();
+            $uniqId = $ih->generateUniqid();
+
+            $ih->createImageDirectory($uniqId);
+            if (!$ih->saveImages($_FILES['images'], $uniqId)) {
+                throw new Exception("Impossible de créer la page de l'article");
+            }
+
 
             // ----------------- Creating the article informations ------------
             $artInfoDb = new DBArticleInformations();
@@ -35,7 +44,7 @@ class ProductManagementController extends CRUDController
                 'description' => $params['description'],
                 'id_category' => $params['idCat'],
                 'id_brand' => $params['idBrand'],
-                'image_repertory' => $imageRepertory
+                'image_repertory' => $uniqId
             ];
 
             $artInfoDb->addNewElement($artInfoParams);
@@ -96,22 +105,9 @@ class ProductManagementController extends CRUDController
                 }
             }
 
-            //--------------------- Saving the image -------------
 
-            $sih = new ImageHanddler($imageRepertory);
-            if (!$sih->saveImages($_FILES['images'])) {
-                throw new Exception("Impossible de créer la page de l'article");
-            }
 
-            //--------------------- Creating the page ---------------
-            /*  $cap = new CreateArticlePage();
-            $fileContent = $cap->loadArticleInformation($idLastArticle);
-            if ($cap->saveFile($fileContent)) {
-            } else {
-                throw new Exception("Impossible de créer la page de l'article");
-            }*/
-
-            return "Article ajouté avec succès";
+            return $this->getSuccessMessage("create");
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);
         }
@@ -122,23 +118,34 @@ class ProductManagementController extends CRUDController
     }
     protected function delete(array $params): string
     {
-        try{
+        try {
             $artDb = new DBArticle();
-            if($artDb->deleteElementById($params['idArticle'])){
+
+            if ($artDb->deleteElementById($params['idArticle'])) {
                 return "Article supprimé avec succès";
-            }else{
+            } else {
                 return "Impossible de supprimer l'article";
             }
-        }
-        catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return "Une erreur est survenue lors de l'opération";
         }
-
-
     }
     protected function getSuccessMessage(string $action): string
     {
-        throw new \Exception("Not implemented yet");
+        $successMessage = "";
+
+        switch ($action) {
+            case 'create':
+                $successMessage = "L'article à bien été ajouté";
+                break;
+            case 'update':
+                $successMessage = "L'article à bien été modifié";
+                break;
+            case 'delete':
+                $successMessage = "L'article a bien été supprimé";
+        }
+
+        return $successMessage;
     }
     protected function handdleSqlErrors(\Exception $e, string $action, array $values): string
     {
@@ -182,7 +189,7 @@ class ProductManagementController extends CRUDController
     }
     protected function callView(array $view, array $values): void
     {
-        require(VIEW . '/productManagement/' . $view['action'] . '.php');
+        require(VIEW . '/backoffice/productManagement/' . $view['action'] . '.php');
     }
 
     private function getCategoryTree(array $categories): array
@@ -345,7 +352,8 @@ class ProductManagementController extends CRUDController
         return $result;
     }
 
-    public function permissionDenied(string $action){
-        require (VIEW . "/404.php");
+    public function permissionDenied(string $action)
+    {
+        require(VIEW . "/404.php");
     }
 }

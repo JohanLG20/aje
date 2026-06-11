@@ -4,7 +4,7 @@
     <div id="homePage">
 
         <!-- Slider -->
-        <div class="slider">
+        <section class="slider">
             <div id="sliderWrapper">
                 <div id="leftButton" class="sliderButton" onclick="previousSlide()">
                     <i class="fa-solid fa-circle-arrow-left"></i>
@@ -33,21 +33,26 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+        
+        <section id="lastestArticles">
+            <h2>Les nouveautés</h2>
+            <div class="articleCardSlider">
+                <?php foreach ($latestArticles as $art) {
+                    require(TEMPLATES . "/articleCard.php");
+                } ?>
+            </div>
+        </section>
 
-        <h2>Les nouveautés</h2>
-        <div class="articleCardSlider">
-            <?php foreach ($latestArticles as $art) {
-                require(TEMPLATES . "/articleCard.php");
-            } ?>
-        </div>
+        <section id="promotions">
+            <h2>Les promotions</h2>
+            <div class="articleCardSlider">
+                <?php foreach ($promotions as $art) {
+                    require(TEMPLATES . "/articleCard.php");
+                } ?>
+            </div>
+        </section>
 
-        <h2>Les promotions</h2>
-        <div class="articleCardSlider">
-            <?php foreach ($promotions as $art) {
-                require(TEMPLATES . "/articleCard.php");
-            } ?>
-        </div>
     </div>
 
 </main>

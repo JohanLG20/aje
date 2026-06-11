@@ -2,7 +2,7 @@
 
 <main class="container">
     <h2><?= $view['operationLabel'] ?></h2>
-    <form action="?path=/productmanagement/create" method="post" enctype="multipart/form-data">
+    <form action="?path=/productmanagement/modify" method="post" enctype="multipart/form-data">
 
             <!-- Article name -->
             <div class="form-item">
@@ -54,52 +54,9 @@
             </div>
 
 
-
-            <!-- Categories -->
-            <div class="form-item">
-                <label for="idCat">Catégorie de l'article</label>
-                <select name="idCat" id="idCat" value="<?= $values['idCat'] ?? '' ?>">
-                    <option value="-1">Sélectionnez une catégorie</option>
-                    <?php //Creating the options with all the categories in the database
-                    foreach ($view['categoriesList'] as $category):
-                    ?>
-                        <option value="<?= $category['id_category'] ?>">
-                            <?= str_repeat('&nbsp;&nbsp;&nbsp;', $category['depth']) ?>
-                            <?= $category['depth'] > 0 ? '└ ' : '' ?>
-                            <?= $category['cat_label'] ?>
-                        </option> <?php endforeach ?>
-                </select>
-                <?php if (isset($view['errors']["idCat"])): ?>
-                    <p class="error"><?= $view['errors']["idCat"] ?></p>
-                <?php endif; ?>
-            </div>
-
-
-            <!-- Categories -->
-            <div class="form-list">
-                <p><b>Liste des filtres</b></p>
-                <div id="filterList">
-
-                </div>
-            </div>
-
-
-            <!-- Image section -->
-            <div>
-                <p><b>Ajouter des images</b></p>
-                <div id="images">
-                    <?php if (isset($view['errors']["images"])): ?>
-                        <p id="imageNeededMessage" class="error"><?= $view['errors']['images'] ?></p>
-                    <?php else: ?>
-                        <p id="imageNeededMessage">Veuillez insérer au moins une image</p>
-                    <?php endif ?>
-                </div>
-                <i id="addImageButton" class="fa-solid fa-plus miniButton"></i>
-
-            </div>
             <br>
         <input type="hidden" name="form_submitted">
-        <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
+        <button type="submit" class="btn1">Ajouter</button>
 
         <?php if (isset($view['operationResult'])) : ?>
             <p><?= $view['operationResult'] ?></p>
@@ -109,6 +66,4 @@
 
 </main>
 
-
-<script src="static/js/addProduct.js"></script>
 <?php require(LAYOUT . '/footer.php'); ?>

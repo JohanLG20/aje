@@ -70,21 +70,21 @@ class SearchPageController
         $filters = [
             'brands'     => [],
             'categories' => [],
-            'modalities' => [] // Filtres dynamiques liés aux articles
+            'modalities' => [] // Dynamics filters
         ];
 
         foreach ($articles as $art) {
-            // Marques
+            // Brands
             if (!empty($art['brand']) && !in_array($art['brand'], $filters['brands'])) {
                 $filters['brands'][] = $art['brand'];
             }
 
-            // Catégories
+            // Categories
             if (!empty($art['category']) && !in_array($art['category'], $filters['categories'])) {
                 $filters['categories'][] = $art['category'];
             }
 
-            // Modalités dynamiques (tailles, couleurs, matières...)
+            // Dynamic modalities like size, shoe size ...
             if (!empty($art['filter_type_label']) && !empty($art['choice_value'])) {
                 $label = $art['filter_type_label'];
 
@@ -104,22 +104,19 @@ class SearchPageController
             }
         }
 
-        // Tri alphabétique des valeurs pour chaque type
-        sort($filters['brands']);
-        sort($filters['categories']);
-        foreach ($filters['modalities'] as &$modality) {
-            usort($modality, fn($a, $b) => strcmp($a['value'], $b['value']));
-        }
-
         return $filters;
     }
 
+    /**
+     * Function that is in charge to display the view. A query can be entered to 
+     * @param string $query
+     * 
+     * @return [type]
+     */
     public function displayView(string $query)
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
+        //Checking if 
         $isNewSearch = !isset($_SESSION['search_query'])
             || $_SESSION['search_query'] !== $query;
 
@@ -127,7 +124,7 @@ class SearchPageController
             unset($_SESSION['search_query']);
         }
 
-        // On sauvegarde uniquement la query
+        // We save the query
         $_SESSION['search_query'] = $query;
 
         $datas = $this->search($query);
@@ -137,6 +134,12 @@ class SearchPageController
         require(VIEW . "/searchProduct_view.php");
     }
 
+    /**
+     * Return the array ordered by the selected presets of alphabetic number and price, and filtered 
+     * @param array $rawArticles The article to sort
+     * 
+     * @return array The same array, but sorted and filtered by the parameters chosen by the user
+     */
     private function applyFiltersAndSort(array $rawArticles): array
     {
         $articles = $rawArticles;
@@ -176,6 +179,7 @@ class SearchPageController
             });
         }
 
+        //Sorting the array
         $sort['price'] = $_GET['price'] ?? null;
         $sort['alpha'] = $_GET['alpha'] ?? null;
 
@@ -183,7 +187,7 @@ class SearchPageController
             foreach ($sort as $key => $order) {
                 $multiplier = $order === 'ASC' ? 1 : -1;
 
-                if ($key === 'price') {
+                if ($key === 'price') { //Checking if the price is selected, it also takes account of the promotion price
                     $priceA = $a['promo_price'] ?? $a['normal_price'];
                     $priceB = $b['promo_price'] ?? $b['normal_price'];
                     $result = ($priceA <=> $priceB) * $multiplier;
@@ -196,7 +200,11 @@ class SearchPageController
             return 0;
         });
 
-        $articles = ImageHanddler::addFirstImageToArray($articles);
+        //Creating the images
+        $ih = new ImageHanddler();
+        foreach($articles as &$art){
+            $art['image'] = $ih->getFirstImage($art['image_repertory']);
+        }
 
         return [
             'articles' => array_values($articles),

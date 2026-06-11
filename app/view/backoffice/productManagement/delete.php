@@ -20,6 +20,13 @@
             </div>
         <?php endif; ?>
 
+        <input type="hidden" name="form_submitted">
+        <button type="submit" class="btn1">Supprimer</button>
+
+        <?php if (isset($view['operationResult'])) : ?>
+            <p><?= $view['operationResult'] ?></p>
+        <?php endif; ?>
+
     </form>
 </main>
 

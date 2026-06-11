@@ -66,8 +66,12 @@ class ArticleController
             // --- Retrieving the associated articles
             $relatedArticles = $this->getRelatedArticles($idArt);
 
+            $ih = new ImageHanddler();
             //Adding the images to the related article
-            $art['image'] = ImageHanddler::addFirstImageToArray($relatedArticles);
+            foreach($relatedArticles as &$rel){
+                $rel['image'] = $ih->getFirstImage($rel['image_repertory']);
+            }
+            
 
 
             require(VIEW . '/articleView.php');

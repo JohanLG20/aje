@@ -1,24 +1,34 @@
 <?php
 
 namespace AJE\Controller;
+
 use AJE\Model\DBArticle;
 use AJE\Utils\ImageHanddler;
 
 class StaticPageController
 {
- 
+
     /**
-     * Function that displays the home page, accessed byt the route /
+     * Function that displays the home page, accessed by the route /
      */
     public function home()
     {
 
         $dbArt = new DBArticle();
+        $ih = new ImageHanddler();
         $latestArticles = $dbArt->getLatestArticles();
-        $latestArticles = ImageHanddler::addFirstImageToArray($latestArticles);
+
+        //Adding the images to the latest article
+        foreach ($latestArticles as &$art) {
+            $art['image'] = $ih->getFirstImage($art['image_repertory']);
+        }
 
         $promotions = $dbArt->getArticlesInPromotions();
-        $promotions = ImageHanddler::addFirstImageToArray($promotions);
+
+        //Adding the images to the related article
+        foreach ($promotions as &$art) {
+            $art['image'] = $ih->getFirstImage($art['image_repertory']);
+        }
 
 
         require(VIEW . '/homePage.php');
