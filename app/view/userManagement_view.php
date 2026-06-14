@@ -44,7 +44,8 @@
             <?php endif; ?>
         </div>
 
-        <?php if ($view['action'] == "update"): //Only displays when trying to update a profil ?>
+        <?php if ($view['action'] == "update"): //Only displays when trying to update a profil 
+        ?>
             <!-- Old password -->
             <div class="form-item">
                 <label for="passwd">Votre ancien mot de passe</label>
@@ -111,16 +112,20 @@
 
 
         <input type="hidden" name="form_submitted">
-        <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
+        <section id="actionButton">
+            <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
+            <?php if ($view['action'] === "update"): ?>
+                <button id="deleteButton" class="btn1">Supprimer mon compte</button>
+            <?php endif; ?>
+        </section>
+
 
         <?php if (isset($view['operationResult'])) : ?>
             <p><?= $view['operationResult'] ?></p>
         <?php endif; ?>
     </form>
 
-    <?php if ($view['action'] === "update"): ?>
-        <button id="deleteButton">Supprimer mon compte</button>
-    <?php endif; ?>
+
 </main>
 
 <script src="static/js/userManagement.js"></script>

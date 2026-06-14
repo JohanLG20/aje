@@ -166,6 +166,13 @@ abstract class CoreModel
         }
     }
 
+    /**
+     * Prepares the modify query to be ready to be executed
+     * @param int $id
+     * @param array $params
+     * 
+     * @return \PDOStatement The query ready to be executed
+     */
     protected function prepareModifyQuery(int $id, array $params): \PDOStatement|false
     {
         $setClauses = [];

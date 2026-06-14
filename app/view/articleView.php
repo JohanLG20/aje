@@ -1,8 +1,8 @@
 <?php require(LAYOUT . "/header.php"); ?>
-<main class="container">
-    <div class="product-page">
+<main class="container" id="articlePage">
+    <article class="product-page" title="<?= $productInfo['article_name'] ?>">
         <!-- En-tête produit -->
-        <div class="product-header">
+        <section class="product-header">
 
             <!-- Galerie d'images -->
             <div id="gallery">
@@ -40,18 +40,18 @@
                     Ajouter au panier
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- Description -->
-        <div class="product-section">
+        <section class="product-section">
             <h3 class="articleInfos">Description du produit</h3>
             <div class="product-section-content">
                 <p><?= $productInfo['description'] ?></p>
             </div>
-        </div>
+        </section>
 
         <!-- Spécifications -->
-        <div class="product-section">
+        <section class="product-section">
             <h3 class="articleInfos">Spécifications</h3>
             <div class="product-section-content">
 
@@ -71,12 +71,12 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        </div>
+        </section>
 
-        <!-- Variantes -->
+        <!-- Variants -->
         <?php
         if ($productInfo['hasVariants']): ?>
-            <div class="product-section">
+            <section class="product-section">
                 <h3 class="articleInfos">Tous les modèles disponibles</h3>
                 <div class="product-section-content">
                     <div id="variantsList">
@@ -90,57 +90,66 @@
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
+            </section>
         <?php endif; ?>
 
-        <!-- Commentaires -->
-        <div class="product-section" id="commentSection">
-            <div id="commentSectionHeader" class="articleInfos-header">
+        <!-- Comment -->
+        <section class="product-section" id="commentSection">
+            <?php if (isset($_SESSION['commentError'])): ?>
+                <p class="error"><?= $_SESSION['commentError'] ?></p>
+            <?php endif; ?>
+
+            <section id="commentSectionHeader" class="articleInfos-header">
                 <h3 class="articleInfos">Commentaires</h3>
                 <?php if (isset($productInfo['canAddComment']) && $productInfo['canAddComment']): ?>
                     <p id="addComment">Ajouter un commentaire</p>
                 <?php endif; ?>
-            </div>
+            </section>
 
-            <div class="product-section-content">
+            <section class="product-section-content">
                 <?php if (isset($productInfo['commentError'])): ?>
                     <p class="error"><?= $productInfo['commentError'] ?></p>
                 <?php endif; ?>
 
                 <?php if (!empty($productInfo['comments'])): ?>
-                    <div id="allComments">
+                    <section id="allComments">
                         <?php foreach ($productInfo['comments'] as $comment): ?>
                             <div id="<?= $comment['idComment'] ?>" class="comment">
                                 <div class="commentHeader">
                                     <h4><?= $comment['fullname'] ?></h4>
                                     <div class="commentActions">
                                         <?php if (isset($comment['canEdit']) && $comment['canEdit']): ?>
-                                            <p class="editComment hidden">Editer</p>
+                                            <button class="editComment">Editer</button>
                                         <?php endif; ?>
                                         <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                            <a href="?path=/deleteComment/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                                            <a href="?path=/comment/delete/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <p><?= $comment['comment'] ?></p>
+                                <p class="commentText"><?= $comment['comment'] ?></p>
                             </div>
                         <?php endforeach; ?>
-                    </div>
+                    </section>
                 <?php else: ?>
                     <p class="noComment">Aucun commentaire sur l'article pour le moment.</p>
                 <?php endif; ?>
-            </div>
-        </div>
+            </section>
+        </section>
 
-    </div>
+    </article>
+
+    <section id="relatedArticles">
+        <h2>Produits qui pourraient vous intéresser également</h2>
+        <?php if ($relatedArticles): ?>
+            <?php foreach ($relatedArticles as $art):  ?>
+                <?php require(TEMPLATES . '/articleCard.php'); ?>
+            <?php endforeach ?>
+        <?php else: ?>
+            <p>Aucun article proposé pour le moment.</p>
+        <?php endif ?>
+    </section>
 </main>
 
-<aside>
-    <h2>Produit qui pourraient vous intéresser également</h2>
-    <?php foreach($relatedArticles as $art):  ?>
-            <?php require(TEMPLATES . '/articleCard.php'); ?>
-    <?php endforeach ?>
-</aside>
 
 <script src="static/js/articleView.js"></script>
 

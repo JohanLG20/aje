@@ -38,6 +38,7 @@ class ArticleController
                 return;
             }
 
+            $productInfo['id'] = $idArt;
             $dbArticleInformations = new DBArticleInformations();
             $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
             $productInfo['price'] = $dbArticle->getArticlePrice($idArt);

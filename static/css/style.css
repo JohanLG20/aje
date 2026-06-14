@@ -457,14 +457,21 @@
   background-color: grey;
 }
 
-.product-page {
+#articlePage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+#articlePage .product-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
   padding: 16px;
   box-sizing: border-box;
 }
-.product-page .articleInfos {
+#articlePage .product-page .articleInfos {
   background-color: #096a09;
   color: #eeeeee;
   padding: 8px 16px;
@@ -473,67 +480,67 @@
   text-transform: uppercase;
   margin: 0;
 }
-.product-page .articleInfos-header {
+#articlePage .product-page .articleInfos-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #096a09;
 }
-.product-page .articleInfos-header .articleInfos {
+#articlePage .product-page .articleInfos-header .articleInfos {
   flex: 1;
 }
-.product-page .articleInfos-header #addComment {
+#articlePage .product-page .articleInfos-header #addComment {
   color: #eeeeee;
   font-size: 13px;
   padding: 8px 16px;
   cursor: pointer;
 }
-.product-page .articleInfos-header #addComment:hover {
+#articlePage .product-page .articleInfos-header #addComment:hover {
   text-decoration: underline;
 }
-.product-page .product-section-content {
+#articlePage .product-page .product-section-content {
   background-color: #d9d9d9;
   padding: 16px;
 }
-.product-page .product-header {
+#articlePage .product-page .product-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
   text-align: center;
 }
-.product-page .product-header h1 {
+#articlePage .product-page .product-header h1 {
   font-size: 26px;
   font-family: "LucioleBold", "sans-serif";
   color: black;
 }
-.product-page .product-header #gallery {
+#articlePage .product-page .product-header #gallery {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   width: 100%;
 }
-.product-page .product-header #gallery #mainImage {
+#articlePage .product-page .product-header #gallery #mainImage {
   width: 100%;
   max-width: 280px;
   aspect-ratio: 1/1;
   object-fit: contain;
 }
-.product-page .product-header #gallery #thumbnails {
+#articlePage .product-page .product-header #gallery #thumbnails {
   display: flex;
   gap: 8px;
   justify-content: center;
   overflow-x: auto;
 }
-.product-page .product-header #gallery #thumbnails::-webkit-scrollbar {
+#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar {
   height: 4px;
 }
-.product-page .product-header #gallery #thumbnails::-webkit-scrollbar-thumb {
+#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar-thumb {
   background: #096a09;
   border-radius: 2px;
 }
-.product-page .product-header #gallery #thumbnails img {
+#articlePage .product-page .product-header #gallery #thumbnails img {
   width: 64px;
   height: 64px;
   object-fit: cover;
@@ -543,39 +550,39 @@
   flex-shrink: 0;
   transition: border-color 0.2s;
 }
-.product-page .product-header #gallery #thumbnails img:hover, .product-page .product-header #gallery #thumbnails img.active {
+#articlePage .product-page .product-header #gallery #thumbnails img:hover, #articlePage .product-page .product-header #gallery #thumbnails img.active {
   border-color: #096a09;
 }
-.product-page .product-header .product-details {
+#articlePage .product-page .product-header .product-details {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   width: 100%;
 }
-.product-page .product-header .product-details .product-brand {
+#articlePage .product-page .product-header .product-details .product-brand {
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: grey;
 }
-.product-page .product-header .product-details .price {
+#articlePage .product-page .product-header .product-details .price {
   font-size: 22px;
   font-family: "LucioleBold", "sans-serif";
 }
-.product-page .product-header .product-details .deliveryDate {
+#articlePage .product-page .product-header .product-details .deliveryDate {
   font-size: 13px;
   color: grey;
   font-style: italic;
 }
-.product-page .product-header .product-details .addBasketButton {
+#articlePage .product-page .product-header .product-details .addBasketButton {
   width: 60%;
   text-align: center;
   padding: 12px;
   font-size: 15px;
   border-radius: 24px;
 }
-.product-page .modality {
+#articlePage .product-page .modality {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -583,124 +590,124 @@
   font-size: 14px;
   border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
 }
-.product-page .modality:last-child {
+#articlePage .product-page .modality:last-child {
   border-bottom: none;
 }
-.product-page .modality .modality-label {
+#articlePage .product-page .modality .modality-label {
   color: grey;
 }
-.product-page .modality .modality-label::after {
+#articlePage .product-page .modality .modality-label::after {
   content: " :";
 }
-.product-page .modality .modality-color {
+#articlePage .product-page .modality .modality-color {
   width: 18px;
   height: 18px;
   border-radius: 50%;
   border: 1px solid grey;
 }
-.product-page #variantsList {
+#articlePage .product-page #variantsList {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-.product-page #variantsList .variant-card {
+#articlePage .product-page #variantsList .variant-card {
   padding: 8px 16px;
   border: 2px solid #096a09;
   border-radius: 8px;
   text-decoration: none;
   transition: background-color 0.2s;
 }
-.product-page #variantsList .variant-card .modality-value {
+#articlePage .product-page #variantsList .variant-card .modality-value {
   font-size: 14px;
   color: #096a09;
 }
-.product-page #variantsList .variant-card .modality-color {
+#articlePage .product-page #variantsList .variant-card .modality-color {
   width: 18px;
   height: 18px;
   border-radius: 50%;
   border: 1px solid grey;
   display: block;
 }
-.product-page #variantsList .variant-card:hover, .product-page #variantsList .variant-card.active {
+#articlePage .product-page #variantsList .variant-card:hover, #articlePage .product-page #variantsList .variant-card.active {
   background-color: #096a09;
 }
-.product-page #variantsList .variant-card:hover .modality-value, .product-page #variantsList .variant-card.active .modality-value {
+#articlePage .product-page #variantsList .variant-card:hover .modality-value, #articlePage .product-page #variantsList .variant-card.active .modality-value {
   color: #eeeeee;
 }
-.product-page #commentSection #commentSectionHeader #addComment {
+#articlePage .product-page #commentSection #commentSectionHeader #addComment {
   color: #eeeeee;
 }
-.product-page #commentSection #allComments {
+#articlePage .product-page #commentSection #allComments {
   display: flex;
   flex-direction: column;
 }
-.product-page #commentSection #allComments .comment {
+#articlePage .product-page #commentSection #allComments .comment {
   padding: 12px 0;
   border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
 }
-.product-page #commentSection #allComments .comment:last-child {
+#articlePage .product-page #commentSection #allComments .comment:last-child {
   border-bottom: none;
 }
-.product-page #commentSection #allComments .comment .commentHeader {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
 }
-.product-page #commentSection #allComments .comment .commentHeader h4 {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader h4 {
   font-size: 14px;
   color: black;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions {
   display: flex;
   gap: 8px;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment,
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment,
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
   font-size: 11px;
   padding: 3px 8px;
   border-radius: 6px;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment {
   color: #096a09;
   border: 1px solid #096a09;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment:hover {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment:hover {
   background-color: #096a09;
   color: #eeeeee;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
   color: red;
   border: 1px solid red;
 }
-.product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment:hover {
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment:hover {
   background-color: red;
   color: white;
 }
-.product-page #commentSection #allComments .comment p {
+#articlePage .product-page #commentSection #allComments .comment p {
   font-size: 13px;
   color: grey;
   font-style: italic;
   line-height: 1.5;
 }
-.product-page #commentSection .noComment {
+#articlePage .product-page #commentSection .noComment {
   font-size: 14px;
   color: grey;
   font-style: italic;
 }
-.product-page #commentSection #addCommentSection {
+#articlePage .product-page #commentSection #addCommentSection {
   margin-top: 16px;
 }
-.product-page #commentSection #addCommentSection form {
+#articlePage .product-page #commentSection #addCommentSection form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.product-page #commentSection #addCommentSection form #addCommentFormTitle {
+#articlePage .product-page #commentSection #addCommentSection form #addCommentFormTitle {
   color: #096a09;
   font-size: 15px;
 }
-.product-page #commentSection #addCommentSection form textarea {
+#articlePage .product-page #commentSection #addCommentSection form textarea {
   padding: 12px;
   border: 2px solid #096a09;
   border-radius: 8px;
@@ -709,26 +716,75 @@
   font-size: 14px;
   background-color: #eeeeee;
 }
-.product-page #commentSection #addCommentSection form textarea:focus {
+#articlePage .product-page #commentSection #addCommentSection form textarea:focus {
   outline: none;
 }
-.product-page #commentSection #addCommentSection form button[type=submit] {
+#articlePage .product-page #commentSection #addCommentSection form button[type=submit] {
   align-self: flex-end;
 }
+#articlePage #relatedArticles {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+#articlePage #relatedArticles h2 {
+  font-size: 18px;
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+}
+#articlePage #relatedArticles > div:not(h2) {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar {
+  height: 4px;
+}
+#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar-thumb {
+  background: #096a09;
+  border-radius: 2px;
+}
+#articlePage #relatedArticles > div:not(h2) .articleCard {
+  flex: 0 0 200px;
+  width: 200px;
+}
 @media screen and (min-width: 1024px) {
-  .product-page .product-header {
+  #articlePage {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  #articlePage .product-page {
+    flex: 1;
+    width: auto;
+  }
+  #articlePage .product-page .product-header {
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
     gap: 48px;
   }
-  .product-page .product-header #gallery {
+  #articlePage .product-page .product-header #gallery {
     width: 45%;
     flex-shrink: 0;
   }
-  .product-page .product-header .product-details {
+  #articlePage .product-page .product-header .product-details {
     align-items: flex-start;
     flex: 1;
+  }
+  #articlePage #relatedArticles {
+    width: 280px;
+    flex-shrink: 0;
+    top: 100px;
+  }
+  #articlePage #relatedArticles > div:not(h2) {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+  #articlePage #relatedArticles > div:not(h2) .articleCard {
+    flex: none;
+    width: 100%;
   }
 }
 

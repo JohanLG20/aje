@@ -91,21 +91,21 @@ const ROUTES = [
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
-    "/addComment/" => [
+    "/comment/add" => [
         'controller' => CommentController::class,
         'method' => 'addComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
-    "/deleteComment/{idComment}" => [
+    "/comment/delete/{idComment}" => [
         'controller' => CommentController::class,
         'method' => 'deleteComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],
-    "/edit/{idComment}" => [
+    "/comment/modify/{idComment}" => [
         'controller' => CommentController::class,
-        'method' => 'deleteComment',
+        'method' => 'modifyComment',
         'minPermission' => 'client',
         'denyAccessMethod' => 'permissionDenied'
     ],

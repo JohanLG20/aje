@@ -18,6 +18,8 @@ new Router();
 if(isset($_SESSION['showLogin'])) unset($_SESSION['showLogin']);
 if(isset($_SESSION['loginError'])) unset($_SESSION['loginError']); 
 if(isset($_SESSION['showBasket'])) unset($_SESSION['showBasket']); 
+if(isset($_SESSION['commentError'])) unset($_SESSION['commentError']);
+
 
 
 

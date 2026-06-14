@@ -105,8 +105,6 @@ class ProductManagementController extends CRUDController
                 }
             }
 
-
-
             return $this->getSuccessMessage("create");
         } catch (\PDOException $e) {
             return $this->handdleSqlErrors($e, 'create', $params);

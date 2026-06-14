@@ -162,6 +162,33 @@ class CommentController
     }
 
     /**
+     * Modify the given comment. The connected user must be the on trying to modifiy the comment
+     * @param int $idComment The id of the comment to modify
+     */
+    public function modifyComment(int $idComment)
+    {
+        if ($this->isAuthor($idComment, $_POST['idArticle'])) {
+            try {
+                $comment = trim(htmlspecialchars($_POST['comment']));
+                if (strlen($comment) >= 3) {
+                    $dbComment = new DBComment();
+                    $dbComment->modifyElementById($idComment, ['comment_label' => $comment]);
+                    header("Location: {$_SERVER['HTTP_REFERER']}");
+                } else {
+                    $_SESSION['commentError'] = 'Le commentaire doit faire au moins 3 caractères';
+                    var_dump($_SESSION['commentError']);
+                    header("Location: {$_SERVER['HTTP_REFERER']}");
+                    exit; //Stopping the execution of the program to allow the flashdatas to be displayed
+                }
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+        }
+        //Redirect to home page if some one is not the author of the given comment
+        header("Location: index.php");
+    }
+
+    /**
      * Triggered when some one without the correct permissions tries to take an action on the comments
      */
     public function permissionDenied()
