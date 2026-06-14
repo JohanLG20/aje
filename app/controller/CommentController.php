@@ -174,6 +174,7 @@ class CommentController
                     $dbComment = new DBComment();
                     $dbComment->modifyElementById($idComment, ['comment_label' => $comment]);
                     header("Location: {$_SERVER['HTTP_REFERER']}");
+                    exit;
                 } else {
                     $_SESSION['commentError'] = 'Le commentaire doit faire au moins 3 caractères';
                     var_dump($_SESSION['commentError']);

@@ -5,7 +5,7 @@
 
         <div id="confirmationCard">
 
-            <!-- Icône succès -->
+            <!-- Succes icon -->
             <div id="confirmationIcon">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
@@ -14,7 +14,7 @@
             <p class="confirmationSubtitle">Merci pour votre achat, <?= ($_SESSION['name']) ?> !</p>
 
 
-            <!-- Récapitulatif commande -->
+            <!-- Summary -->
             <div id="orderSummary">
                 <h2>Récapitulatif</h2>
 

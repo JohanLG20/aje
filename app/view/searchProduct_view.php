@@ -16,7 +16,7 @@
                     <form method="GET" id="filterForm">
                         <input type="hidden" name="path" value="/search/<?= htmlspecialchars($query) ?>">
 
-                        <!-- Tri par prix -->
+                        <!-- Sort by price -->
                         <div class="filterSection">
                             <h3>Trier par prix</h3>
                             <label>
@@ -31,7 +31,7 @@
                             </label>
                         </div>
 
-                        <!-- Tri alphabétique -->
+                        <!-- Alphabetic sorting -->
                         <div class="filterSection">
                             <h3>Trier par ordre alphabétique</h3>
                             <label>
@@ -46,7 +46,7 @@
                             </label>
                         </div>
 
-                        <!-- Marques -->
+                        <!-- Brand -->
                         <?php if (!empty($filters['brands'])): ?>
                             <div class="filterSection">
                                 <h3>Marques</h3>
@@ -60,7 +60,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <!-- Catégories -->
+                        <!-- Categories -->
                         <?php if (!empty($filters['categories'])): ?>
                             <div class="filterSection">
                                 <h3>Catégories</h3>
@@ -74,7 +74,6 @@
                             </div>
                         <?php endif; ?>
 
-                        <!-- Modalités dynamiques -->
                         <?php if (!empty($filters['modalities'])): ?>
                             <?php foreach ($filters['modalities'] as $label => $modality): ?>
                                 <div class="filterSection">

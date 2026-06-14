@@ -130,7 +130,6 @@
   overflow-x: auto;
   gap: 16px;
   padding-bottom: 16px;
-  /* Pour ne pas couper la scrollbar */
 }
 
 #connexionMenu {
@@ -253,6 +252,26 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media screen and (min-width: 1024px) {
+  #searchResults {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  #searchResults #filterBar {
+    display: none;
+  }
+  #searchResults #articleList {
+    flex: 1;
+    margin: 0;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 1024px) and (min-width: 1280px) {
+  #searchResults #articleList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 #filterOverlay {
   position: fixed;
@@ -262,6 +281,11 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
+}
+@media screen and (min-width: 1024px) {
+  #filterOverlay {
+    display: none;
+  }
 }
 
 #filterModal {
@@ -303,6 +327,26 @@
     bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+  }
+}
+@media screen and (min-width: 1024px) {
+  #filterModal {
+    position: static;
+    width: 280px;
+    flex-shrink: 0;
+    max-height: none;
+    overflow-y: visible;
+    border-radius: 16px;
+    transform: none;
+    left: auto;
+    bottom: auto;
+    z-index: auto;
+  }
+  #filterModal.hidden, #filterModal.visible {
+    display: block;
+  }
+  #filterModal #filterModalContent #closeModal {
+    display: none;
   }
 }
 

@@ -176,9 +176,9 @@ hr {
         #menuIcons {
             display: flex;
             align-items: center;
-            gap: 8px; // Espacement uniforme entre chaque icône
-            justify-content: flex-end; // Alignées à droite
-            flex-shrink: 0; // Les icônes ne rétrécissent pas
+            gap: 8px; 
+            justify-content: flex-end; 
+            flex-shrink: 0; 
 
             .navItem {
                 position: relative;
@@ -188,8 +188,8 @@ hr {
 
 
                 .menuIcon {
-                    width: auto; // On retire le width: 50% qui causait les décalages
-                    font-size: 22px; // Taille uniforme pour toutes les icônes
+                    width: auto;
+                    font-size: 22px; 
                     cursor: pointer;
 
                     &:hover {

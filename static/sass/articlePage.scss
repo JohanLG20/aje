@@ -3,7 +3,7 @@
 
 #articlePage {
     display: flex;
-    flex-direction: column; // Mobile first : tout est empilé
+    flex-direction: column; 
     gap: 32px;
     padding: 16px;
     box-sizing: border-box;
@@ -15,7 +15,6 @@
         padding: 16px;
         box-sizing: border-box;
 
-        // Style commun des headers de section
         .articleInfos {
             background-color: col.$color-primary;
             color: col.$color-secondary;

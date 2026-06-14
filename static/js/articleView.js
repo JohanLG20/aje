@@ -90,7 +90,7 @@ function createModifyCommentForm(idComment, currentComment) {
     let idArticle = document.createElement("input")
     idArticle.name = "idArticle"
     idArticle.type = "hidden"
-    idArticle.value = 80
+    idArticle.value = document.querySelector(".product-page").id //Retrieving the id of the article
 
     addCommentSection.append(addCommentForm)
     addCommentForm.append(addCommentFormTitle)

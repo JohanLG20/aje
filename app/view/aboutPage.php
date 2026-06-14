@@ -3,13 +3,11 @@
 <main class="container">
     <div id="aboutPage">
 
-        <!-- Hero -->
         <div id="aboutHero">
             <h1>À Propos d'AJE</h1>
             <p>Le sport, une passion. La qualité, une exigence.</p>
         </div>
 
-        <!-- Histoire -->
         <div class="aboutSection">
             <h2 class="articleInfos">Notre histoire</h2>
             <div class="aboutSectionContent">
@@ -27,7 +25,6 @@
             </div>
         </div>
 
-        <!-- Valeurs -->
         <div class="aboutSection">
             <h2 class="articleInfos">Nos valeurs</h2>
             <div class="aboutSectionContent" id="valuesGrid">
@@ -54,7 +51,6 @@
             </div>
         </div>
 
-        <!-- Chiffres clés -->
         <div class="aboutSection">
             <h2 class="articleInfos">AJE en chiffres</h2>
             <div class="aboutSectionContent" id="statsGrid">
@@ -77,7 +73,6 @@
             </div>
         </div>
 
-        <!-- Fondateur -->
         <div class="aboutSection">
             <h2 class="articleInfos">Le mot du fondateur</h2>
             <div class="aboutSectionContent" id="founderSection">
@@ -94,7 +89,6 @@
             </div>
         </div>
 
-        <!-- Localisation -->
         <div class="aboutSection">
             <h2 class="articleInfos">Nous retrouver</h2>
             <div class="aboutSectionContent" id="locationSection">

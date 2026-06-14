@@ -1,10 +1,9 @@
 <?php require(LAYOUT . "/header.php"); ?>
 <main class="container" id="articlePage">
-    <article class="product-page" title="<?= $productInfo['article_name'] ?>">
-        <!-- En-tête produit -->
+    <article id="<?= $productInfo['id'] ?>" class="product-page" title="<?= $productInfo['article_name'] ?>">
+
         <section class="product-header">
 
-            <!-- Galerie d'images -->
             <div id="gallery">
                 <h1><?= $productInfo['article_name'] ?></h1>
 
@@ -24,7 +23,6 @@
                 <?php endif; ?>
             </div>
 
-            <!-- Détails -->
             <div class="product-details">
                 <span class="product-brand"><?= $productInfo['brand'] ?></span>
                 <div class="price">
@@ -42,7 +40,6 @@
             </div>
         </section>
 
-        <!-- Description -->
         <section class="product-section">
             <h3 class="articleInfos">Description du produit</h3>
             <div class="product-section-content">
@@ -50,7 +47,6 @@
             </div>
         </section>
 
-        <!-- Spécifications -->
         <section class="product-section">
             <h3 class="articleInfos">Spécifications</h3>
             <div class="product-section-content">
@@ -73,7 +69,6 @@
             </div>
         </section>
 
-        <!-- Variants -->
         <?php
         if ($productInfo['hasVariants']): ?>
             <section class="product-section">
@@ -93,7 +88,6 @@
             </section>
         <?php endif; ?>
 
-        <!-- Comment -->
         <section class="product-section" id="commentSection">
             <?php if (isset($_SESSION['commentError'])): ?>
                 <p class="error"><?= $_SESSION['commentError'] ?></p>

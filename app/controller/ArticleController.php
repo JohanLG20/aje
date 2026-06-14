@@ -38,11 +38,11 @@ class ArticleController
                 return;
             }
 
-            $productInfo['id'] = $idArt;
             $dbArticleInformations = new DBArticleInformations();
             $productInfo = $dbArticleInformations->getProductInformations($idArticleInformations);
             $productInfo['price'] = $dbArticle->getArticlePrice($idArt);
             $rawVariants = $dbArticleInformations->getProductVariants($idArticleInformations);
+            $productInfo['id'] = $idArt;
 
             $formatted   = $this->formatVariants($rawVariants);
 
@@ -69,10 +69,10 @@ class ArticleController
 
             $ih = new ImageHanddler();
             //Adding the images to the related article
-            foreach($relatedArticles as &$rel){
+            foreach ($relatedArticles as &$rel) {
                 $rel['image'] = $ih->getFirstImage($rel['image_repertory']);
             }
-            
+
 
 
             require(VIEW . '/articleView.php');

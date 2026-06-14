@@ -28,12 +28,35 @@
 
     #articleList {
         display: grid;
-        grid-template-columns: 1fr; // 1 colonne par défaut sur mobile
+        grid-template-columns: 1fr; // 1 column by default on mobile
         gap: 16px;
         margin: 0 32px;
 
         @media screen and (min-width: 750px) {
-            grid-template-columns: repeat(2, 1fr); // 2 colonnes au dessus de 750px
+            grid-template-columns: repeat(2, 1fr); // 2 columns above 750px
+        }
+    }
+
+    // Desktop mode: filter sidebar on the left + list on the right
+    @media screen and (min-width: 1024px) {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 32px;
+
+        // The "Filter and sort" button disappears on desktop
+        #filterBar {
+            display: none;
+        }
+
+        #articleList {
+            flex: 1;
+            margin: 0;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            @media screen and (min-width: 1280px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     }
 }
@@ -46,6 +69,11 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 100;
+
+    // The overlay is no longer needed on desktop
+    @media screen and (min-width: 1024px) {
+        display: none;
+    }
 }
 
 #filterModal {
@@ -53,13 +81,13 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    max-height: 80vh; // Limite la hauteur à 80% de l'écran
-    overflow-y: auto; // Scroll si le contenu dépasse
+    max-height: 80vh; // Limits the height to 80% of the screen
+    overflow-y: auto; // Scroll if the content overflows
     background-color: col.$color-secondary;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     padding: 24px;
-    box-sizing: border-box; // Évite que le padding fasse dépasser la modal
+    box-sizing: border-box; // Prevents the padding from overflowing the modal
     z-index: 101;
 
     #filterModalContent {
@@ -83,12 +111,38 @@
     }
 
     @media screen and (min-width: 1024px) {
-        width: 400px; // Largeur fixe sur desktop
+        width: 400px; // Fixed width on desktop
         left: 50%;
         transform: translateX(-50%);
         bottom: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+    }
+
+    // Desktop mode: becomes a permanently visible sidebar
+    @media screen and (min-width: 1024px) {
+        position: static;
+        width: 280px;
+        flex-shrink: 0;
+        max-height: none;
+        overflow-y: visible;
+        border-radius: 16px;
+        transform: none;
+        left: auto;
+        bottom: auto;
+        z-index: auto;
+
+        // Forces display even if .hidden/.visible is applied via JS
+        &.hidden,
+        &.visible {
+            display: block;
+        }
+
+        #filterModalContent {
+            #closeModal {
+                display: none; // No need to close a permanent sidebar
+            }
+        }
     }
 }
 
@@ -133,7 +187,7 @@
             font-size: 14px;
             text-align: left;
 
-            // Petite puce colorée à la place du bullet par défaut
+            // Small colored bullet instead of the default one
             &::before {
                 content: '';
                 min-width: 8px;

@@ -8,7 +8,6 @@
             <p>Dernière mise à jour : <?= date('d/m/Y') ?></p>
         </div>
 
-        <!-- Identité de l'entreprise -->
         <div class="legalSection">
             <h2 class="articleInfos">Identité de l'entreprise</h2>
             <div class="legalSectionContent">
@@ -45,7 +44,6 @@
             </div>
         </div>
 
-        <!-- Registres et immatriculations -->
         <div class="legalSection">
             <h2 class="articleInfos">Registres et immatriculations</h2>
             <div class="legalSectionContent">
@@ -74,7 +72,6 @@
             </div>
         </div>
 
-        <!-- Hébergement -->
         <div class="legalSection">
             <h2 class="articleInfos">Hébergement du site</h2>
             <div class="legalSectionContent">
@@ -95,7 +92,6 @@
             </div>
         </div>
 
-        <!-- Propriété intellectuelle -->
         <div class="legalSection">
             <h2 class="articleInfos">Propriété intellectuelle</h2>
             <div class="legalSectionContent">
@@ -105,7 +101,6 @@
             </div>
         </div>
 
-        <!-- CGV -->
         <div class="legalSection">
             <h2 class="articleInfos">Conditions générales de vente</h2>
             <div class="legalSectionContent">
@@ -158,7 +153,6 @@
             </div>
         </div>
 
-        <!-- Données personnelles et cookies -->
         <div class="legalSection">
             <h2 class="articleInfos">Politique de confidentialité et cookies</h2>
             <div class="legalSectionContent">
