@@ -30,3 +30,9 @@ A ce jour, l'application comprend :
 - Rendre la page d'acceuil éditable 
 - Optimisation de l'affichage des images
 
+## Comment installer le projet
+
+Prérequis : Composer et un serveur web local opérationnel avec un base de données MySql ou MariaDB.
+
+Ouvrez un terminal et lancez la commande git clone https://github.com/JohanLG20/aje.git. Celà créra un nouveau répertoire contenant les fichiers présents sur github. Rendez-vous dans le répertoire nouvellement créer et lancez la commande `composer install`. Renommez le fichier .env.exemple en .env. Créez une base de données nommée aje et importez-y les données présentent dans le fichier creationTable.sql.
+Le script de création contient quelques articles pré-remplis, vous pourrez ensuite en rajouter d'autres. 
