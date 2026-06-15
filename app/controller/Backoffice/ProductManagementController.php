@@ -17,7 +17,7 @@ use Exception;
 class ProductManagementController extends CRUDController
 {
 
-    protected function getPostValuesErrors($action, $values): array|bool
+    protected function getPostValuesErrors(string $action, array $values): array|bool
     {
         return ProductErrorHelper::checkForErrors($values, $action);
     }
