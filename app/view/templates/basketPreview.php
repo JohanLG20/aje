@@ -1,4 +1,4 @@
-<section id="basket" class="dropDownMenu topMenuIcon <?= $_SESSION['showBasket'] ?? 'hidden' ?>">
+<section id="basketPreview">
     <?php if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])):  ?>
         <?php foreach ($_SESSION['basket'] as $idArticle => $bask): ?>
             <div class="basketItemCard">
@@ -15,12 +15,8 @@
                         <p>Quantité</p>
 
                         <div class="basketQuantityModulation">
-                            <a href="?path=/basket/add/<?= $idArticle ?>"><span class="fa-solid fa-plus"></span></a>
                             <p><?= $bask['quantity'] ?></p>
-                            <a href="?path=/basket/removeOne/<?= $idArticle ?>"><span class="fa-solid fa-minus"></span></a>
                         </div>
-
-                        <a href="?path=/basket/remove/<?= $idArticle ?>" class="error">Supprimer</a>
 
                     </div>
 
@@ -28,7 +24,6 @@
 
             </div>
         <?php endforeach; ?>
-            <a id="basketPaymentButton" href="?path=/payment/" class="btn1">Payer</a>
 
     <?php else: ?>
         <p id="noItemInBasket">Aucun article dans le panier</p>

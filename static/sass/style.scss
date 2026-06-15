@@ -8,12 +8,13 @@
 @use 'slider';
 @use 'searchPage';
 @use 'contactPage';
-@use 'articlePage';
 @use 'aboutPage';
 @use 'disclaimer';
 @use 'crudForm';
 @use 'page404';
 @use 'validatePayement';
+@use 'articlePage';
+
 
 * {
     margin: 0;

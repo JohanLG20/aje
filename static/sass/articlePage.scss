@@ -3,7 +3,7 @@
 
 #articlePage {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 32px;
     padding: 16px;
     box-sizing: border-box;
@@ -245,12 +245,31 @@
                         .commentActions {
                             display: flex;
                             gap: 8px;
+                            align-items: center;
+                            width: fit-content;
+                            box-sizing: border-box;
+
+                            .deleteForm {
+                                display: flex;
+                                width: auto;
+                                padding: 0;
+                            }
 
                             .editComment,
                             .deleteComment {
+                                width: fit-content;
+                                text-align: center;
                                 font-size: 11px;
-                                padding: 3px 8px;
+                                padding: 4px 10px;
                                 border-radius: 6px;
+                                margin-top: 0 !important;
+                                background: none;
+                                cursor: pointer;
+                                font-family: fonts.$title;
+                                transition: background-color 0.2s, color 0.2s;
+                                white-space: nowrap;
+                                line-height: 1.2;
+                                box-sizing: border-box;
                             }
 
                             .editComment {
@@ -290,15 +309,15 @@
                 font-style: italic;
             }
 
-            #addCommentSection {
-                margin-top: 16px;
+            #commentSection {
+                margin: 16px 0;
 
                 form {
                     display: flex;
                     flex-direction: column;
                     gap: 12px;
 
-                    #addCommentFormTitle {
+                    #commentFormTitle {
                         color: col.$color-primary;
                         font-size: 15px;
                     }
@@ -339,7 +358,7 @@
             font-family: fonts.$titleBold;
         }
 
-        & > div:not(h2) {
+        &>div:not(h2) {
             display: flex;
             overflow-x: auto;
             gap: 16px;
@@ -392,7 +411,7 @@
             flex-shrink: 0;
             top: 100px;
 
-            & > div:not(h2) {
+            &>div:not(h2) {
                 flex-direction: column;
                 overflow-x: visible;
 

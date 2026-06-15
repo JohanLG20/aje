@@ -28,7 +28,7 @@
 
 <body>
     <header id="banner">
-        <div id="baseMenu">
+        <section id="baseMenu">
 
             <div id="burger" class="menuItem mobileMenuItem">
                 <i class="fa-solid fa-bars menuIcon"></i>
@@ -78,7 +78,7 @@
                 </div>
 
             </nav>
-        </div>
+        </section>
 
 
         </div>

@@ -47,12 +47,6 @@ class CommentController
     {
         $comments = []; //The variable returned
 
-        //Checking if a comment error as occured
-        if (isset($_SESSION['commentError'])) {
-            $comments['error'] = $_SESSION['commentError']; //Set the error for the user if there was one
-            unset($_SESSION['commentError']); //Unsetting the variable to prevent the message to be displayed again
-        }
-
         try {
             //Retrive all the comment and the id of the user associated to the comment
             $dbComment = new DBComment();
@@ -107,12 +101,11 @@ class CommentController
     }
 
     /**
-     * It adds a comment on an article. It is reached with the path /addComment/. It test the permissions, the given comment and add it to the db if all is correct
+     * It adds a comment on an article. It is reached with the path /comment/add. It test the permissions, the given comment and add it to the db if all is correct
      */
     public function addComment()
     {
-        $idArticle = $this->getArticleIdFromHTTPReferer();
-
+        $idArticle = $_POST['idArticle'];
 
         if ($this->canAddComment($idArticle)) {
             //Escaping the values
@@ -138,7 +131,9 @@ class CommentController
                 $_SESSION['commentError'] = "Veuillez ne pas entrer un commentaire vide ou de plus de 120 caractères";
             }
         }
+        var_dump($_SESSION['commentError']);
         header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit;
     }
 
     /**
@@ -148,7 +143,7 @@ class CommentController
      */
     public function deleteComment(string $idComment)
     {
-        $idArticle = $this->getArticleIdFromHTTPReferer();
+        $idArticle = $_POST['idArticle'];
         if ($this->canDelete($idComment, $idArticle)) {
             try {
                 $this->db->deleteElementById($idComment);
@@ -173,14 +168,13 @@ class CommentController
                 if (strlen($comment) >= 3) {
                     $dbComment = new DBComment();
                     $dbComment->modifyElementById($idComment, ['comment_label' => $comment]);
-                    header("Location: {$_SERVER['HTTP_REFERER']}");
-                    exit;
                 } else {
                     $_SESSION['commentError'] = 'Le commentaire doit faire au moins 3 caractères';
-                    var_dump($_SESSION['commentError']);
-                    header("Location: {$_SERVER['HTTP_REFERER']}");
-                    exit; //Stopping the execution of the program to allow the flashdatas to be displayed
                 }
+
+                header("Location: {$_SERVER['HTTP_REFERER']}");
+                exit; //Stopping the execution of the program to allow the flashdatas to be displayed
+
             } catch (\PDOException $e) {
                 throw $e;
             }

@@ -39,63 +39,69 @@ if (modifyComment !== null) {
 Creates the form that allow an user to add comment on the article
 */
 function createAddCommentForm() {
-    let addCommentSection = document.createElement("div")
-    addCommentSection.id = "addCommentSection"
+    let commentSection = document.createElement("div")
+    commentSection.id = "commentSection"
 
-    let addCommentForm = document.createElement("form")
-    addCommentForm.action = "?path=/comment/add"
-    addCommentForm.method = "POST"
+    let commentForm = document.createElement("form")
+    commentForm.action = "?path=/comment/add"
+    commentForm.method = "POST"
 
-    let addCommentFormTitle = document.createElement("h4")
-    addCommentFormTitle.id = "addCommentFormTitle"
-    addCommentFormTitle.textContent = "Ajouter un commentaire"
+    let commentFormTitle = document.createElement("h4")
+    commentFormTitle.id = "commentFormTitle"
+    commentFormTitle.textContent = "Ajouter un commentaire"
 
-    let addCommentFormText = document.createElement("textarea")
-    addCommentFormText.name = "comment"
+    let commentFormText = document.createElement("textarea")
+    commentFormText.name = "comment"
 
-    let addCommentFormSubmit = document.createElement("button")
-    addCommentFormSubmit.classList.add('btn1')
-    addCommentFormSubmit.type = "submit"
-    addCommentFormSubmit.textContent = "Envoyer le commentaire"
-
-    addCommentSection.append(addCommentForm)
-    addCommentForm.append(addCommentFormTitle)
-    addCommentForm.append(addCommentFormText)
-    addCommentForm.append(addCommentFormSubmit)
-    return addCommentSection
-}
-
-function createModifyCommentForm(idComment, currentComment) {
-
-    let addCommentSection = document.createElement("section")
-    addCommentSection.id = "addCommentSection"
-
-    let addCommentForm = document.createElement("form")
-    addCommentForm.action = "?path=/comment/modify/" + idComment
-    addCommentForm.method = "POST"
-
-    let addCommentFormTitle = document.createElement("h4")
-    addCommentFormTitle.id = "addCommentFormTitle"
-    addCommentFormTitle.textContent = "Modifier un commentaire"
-
-    let addCommentFormText = document.createElement("textarea")
-    addCommentFormText.name = "comment"
-    addCommentFormText.textContent = currentComment
-
-    let addCommentFormSubmit = document.createElement("button")
-    addCommentFormSubmit.classList.add('btn1')
-    addCommentFormSubmit.type = "submit"
-    addCommentFormSubmit.textContent = "Envoyer le commentaire"
+    let commentFormSubmit = document.createElement("button")
+    commentFormSubmit.classList.add('btn1')
+    commentFormSubmit.type = "submit"
+    commentFormSubmit.textContent = "Envoyer le commentaire"
 
     let idArticle = document.createElement("input")
     idArticle.name = "idArticle"
     idArticle.type = "hidden"
     idArticle.value = document.querySelector(".product-page").id //Retrieving the id of the article
 
-    addCommentSection.append(addCommentForm)
-    addCommentForm.append(addCommentFormTitle)
-    addCommentForm.append(addCommentFormText)
-    addCommentForm.append(addCommentFormSubmit)
-    addCommentForm.append(idArticle)
-    return addCommentSection
+    commentSection.append(commentForm)
+    commentForm.append(commentFormTitle)
+    commentForm.append(commentFormText)
+    commentForm.append(commentFormSubmit)
+    commentForm.append(idArticle)
+    return commentSection
+}
+
+function createModifyCommentForm(idComment, currentComment) {
+
+    let commentSection = document.createElement("div")
+    commentSection.id = "commentSection"
+
+    let commentForm = document.createElement("form")
+    commentForm.action = "?path=/comment/modify/" + idComment
+    commentForm.method = "POST"
+
+    let commentFormTitle = document.createElement("h4")
+    commentFormTitle.id = "commentFormTitle"
+    commentFormTitle.textContent = "Modifier un commentaire"
+
+    let commentFormText = document.createElement("textarea")
+    commentFormText.name = "comment"
+    commentFormText.value = currentComment
+
+    let commentFormSubmit = document.createElement("button")
+    commentFormSubmit.classList.add('btn1')
+    commentFormSubmit.type = "submit"
+    commentFormSubmit.textContent = "Envoyer le commentaire"
+
+    let idArticle = document.createElement("input")
+    idArticle.name = "idArticle"
+    idArticle.type = "hidden"
+    idArticle.value = document.querySelector(".product-page").id //Retrieving the id of the article
+
+    commentSection.append(commentForm)
+    commentForm.append(commentFormTitle)
+    commentForm.append(commentFormText)
+    commentForm.append(commentFormSubmit)
+    commentForm.append(idArticle)
+    return commentSection
 }

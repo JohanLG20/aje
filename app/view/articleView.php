@@ -89,9 +89,6 @@
         <?php endif; ?>
 
         <section class="product-section" id="commentSection">
-            <?php if (isset($_SESSION['commentError'])): ?>
-                <p class="error"><?= $_SESSION['commentError'] ?></p>
-            <?php endif; ?>
 
             <section id="commentSectionHeader" class="articleInfos-header">
                 <h3 class="articleInfos">Commentaires</h3>
@@ -101,8 +98,8 @@
             </section>
 
             <section class="product-section-content">
-                <?php if (isset($productInfo['commentError'])): ?>
-                    <p class="error"><?= $productInfo['commentError'] ?></p>
+                <?php if (isset($_SESSION['commentError'])): ?>
+                    <p class="error"><?= $_SESSION['commentError'] ?></p>
                 <?php endif; ?>
 
                 <?php if (!empty($productInfo['comments'])): ?>
@@ -116,7 +113,10 @@
                                             <button class="editComment">Editer</button>
                                         <?php endif; ?>
                                         <?php if (isset($comment['canDelete']) && $comment['canDelete']): ?>
-                                            <a href="?path=/comment/delete/<?= $comment['idComment'] ?>" class="deleteComment">Supprimer</a>
+                                            <form class="deleteForm" action="?path=/comment/delete/<?= $comment['idComment'] ?>" method="post">
+                                                <input type="hidden" name="idArticle" value="<?= $productInfo['id'] ?>">
+                                                <button type="submit" class="deleteComment">Supprimer</button>
+                                            </form>
                                         <?php endif; ?>
                                     </div>
                                 </div>

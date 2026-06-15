@@ -7,13 +7,16 @@
   font-family: "LucioleBold";
   src: url(../fonts/Luciole-Bold.woff) format("woff");
 }
-#basket {
+#basket,
+#basketPreview {
   flex-direction: column;
   gap: 24px;
+  margin-bottom: 16px;
   align-items: center;
   color: black;
 }
-#basket .basketItemCard {
+#basket .basketItemCard,
+#basketPreview .basketItemCard {
   display: flex;
   gap: 16px;
   width: 100%;
@@ -21,12 +24,18 @@
   border: 2px solid #096a09;
   align-items: center;
 }
-#basket .basketItemCard img {
+#basket .basketItemCard a,
+#basketPreview .basketItemCard a {
+  color: black;
+}
+#basket .basketItemCard img,
+#basketPreview .basketItemCard img {
   max-width: 150px;
   max-height: 150px;
   height: auto;
 }
-#basket .basketItemCard .basketDescriptionSection {
+#basket .basketItemCard .basketDescriptionSection,
+#basketPreview .basketItemCard .basketDescriptionSection {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,20 +44,27 @@
   padding: 8px 0;
   margin-right: 16px;
 }
-#basket .basketItemCard .basketDescriptionSection .basketQuantity {
+#basket .basketItemCard .basketDescriptionSection .basketQuantity,
+#basketPreview .basketItemCard .basketDescriptionSection .basketQuantity {
   display: flex;
   text-align: center;
   align-items: center;
   width: 100%;
   gap: 24px;
 }
-#basket .basketItemCard .basketDescriptionSection .basketQuantity .basketQuantityModulation {
+#basket .basketItemCard .basketDescriptionSection .basketQuantity .basketQuantityModulation,
+#basketPreview .basketItemCard .basketDescriptionSection .basketQuantity .basketQuantityModulation {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
-#basket #basketPaymentButton {
+#basket #basketPaymentButton,
+#basketPreview #basketPaymentButton {
   width: fit-content;
+}
+
+#validatePaymentButton {
+  justify-self: center;
 }
 
 #noItemInBasket {
@@ -502,337 +518,6 @@
   opacity: 0.4;
   cursor: not-allowed;
   background-color: grey;
-}
-
-#articlePage {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 16px;
-  box-sizing: border-box;
-}
-#articlePage .product-page {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 16px;
-  box-sizing: border-box;
-}
-#articlePage .product-page .articleInfos {
-  background-color: #096a09;
-  color: #eeeeee;
-  padding: 8px 16px;
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin: 0;
-}
-#articlePage .product-page .articleInfos-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #096a09;
-}
-#articlePage .product-page .articleInfos-header .articleInfos {
-  flex: 1;
-}
-#articlePage .product-page .articleInfos-header #addComment {
-  color: #eeeeee;
-  font-size: 13px;
-  padding: 8px 16px;
-  cursor: pointer;
-}
-#articlePage .product-page .articleInfos-header #addComment:hover {
-  text-decoration: underline;
-}
-#articlePage .product-page .product-section-content {
-  background-color: #d9d9d9;
-  padding: 16px;
-}
-#articlePage .product-page .product-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  text-align: center;
-}
-#articlePage .product-page .product-header h1 {
-  font-size: 26px;
-  font-family: "LucioleBold", "sans-serif";
-  color: black;
-}
-#articlePage .product-page .product-header #gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-#articlePage .product-page .product-header #gallery #mainImage {
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-}
-#articlePage .product-page .product-header #gallery #thumbnails {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  overflow-x: auto;
-}
-#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar {
-  height: 4px;
-}
-#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar-thumb {
-  background: #096a09;
-  border-radius: 2px;
-}
-#articlePage .product-page .product-header #gallery #thumbnails img {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border-radius: 4px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: border-color 0.2s;
-}
-#articlePage .product-page .product-header #gallery #thumbnails img:hover, #articlePage .product-page .product-header #gallery #thumbnails img.active {
-  border-color: #096a09;
-}
-#articlePage .product-page .product-header .product-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-#articlePage .product-page .product-header .product-details .product-brand {
-  font-size: 14px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: grey;
-}
-#articlePage .product-page .product-header .product-details .price {
-  font-size: 22px;
-  font-family: "LucioleBold", "sans-serif";
-}
-#articlePage .product-page .product-header .product-details .deliveryDate {
-  font-size: 13px;
-  color: grey;
-  font-style: italic;
-}
-#articlePage .product-page .product-header .product-details .addBasketButton {
-  width: 60%;
-  text-align: center;
-  padding: 12px;
-  font-size: 15px;
-  border-radius: 24px;
-}
-#articlePage .product-page .modality {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 0;
-  font-size: 14px;
-  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
-}
-#articlePage .product-page .modality:last-child {
-  border-bottom: none;
-}
-#articlePage .product-page .modality .modality-label {
-  color: grey;
-}
-#articlePage .product-page .modality .modality-label::after {
-  content: " :";
-}
-#articlePage .product-page .modality .modality-color {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid grey;
-}
-#articlePage .product-page #variantsList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-#articlePage .product-page #variantsList .variant-card {
-  padding: 8px 16px;
-  border: 2px solid #096a09;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-#articlePage .product-page #variantsList .variant-card .modality-value {
-  font-size: 14px;
-  color: #096a09;
-}
-#articlePage .product-page #variantsList .variant-card .modality-color {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid grey;
-  display: block;
-}
-#articlePage .product-page #variantsList .variant-card:hover, #articlePage .product-page #variantsList .variant-card.active {
-  background-color: #096a09;
-}
-#articlePage .product-page #variantsList .variant-card:hover .modality-value, #articlePage .product-page #variantsList .variant-card.active .modality-value {
-  color: #eeeeee;
-}
-#articlePage .product-page #commentSection #commentSectionHeader #addComment {
-  color: #eeeeee;
-}
-#articlePage .product-page #commentSection #allComments {
-  display: flex;
-  flex-direction: column;
-}
-#articlePage .product-page #commentSection #allComments .comment {
-  padding: 12px 0;
-  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
-}
-#articlePage .product-page #commentSection #allComments .comment:last-child {
-  border-bottom: none;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader h4 {
-  font-size: 14px;
-  color: black;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions {
-  display: flex;
-  gap: 8px;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment,
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment {
-  color: #096a09;
-  border: 1px solid #096a09;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment:hover {
-  background-color: #096a09;
-  color: #eeeeee;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
-  color: red;
-  border: 1px solid red;
-}
-#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment:hover {
-  background-color: red;
-  color: white;
-}
-#articlePage .product-page #commentSection #allComments .comment p {
-  font-size: 13px;
-  color: grey;
-  font-style: italic;
-  line-height: 1.5;
-}
-#articlePage .product-page #commentSection .noComment {
-  font-size: 14px;
-  color: grey;
-  font-style: italic;
-}
-#articlePage .product-page #commentSection #addCommentSection {
-  margin-top: 16px;
-}
-#articlePage .product-page #commentSection #addCommentSection form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-#articlePage .product-page #commentSection #addCommentSection form #addCommentFormTitle {
-  color: #096a09;
-  font-size: 15px;
-}
-#articlePage .product-page #commentSection #addCommentSection form textarea {
-  padding: 12px;
-  border: 2px solid #096a09;
-  border-radius: 8px;
-  min-height: 100px;
-  resize: vertical;
-  font-size: 14px;
-  background-color: #eeeeee;
-}
-#articlePage .product-page #commentSection #addCommentSection form textarea:focus {
-  outline: none;
-}
-#articlePage .product-page #commentSection #addCommentSection form button[type=submit] {
-  align-self: flex-end;
-}
-#articlePage #relatedArticles {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-#articlePage #relatedArticles h2 {
-  font-size: 18px;
-  color: #096a09;
-  font-family: "LucioleBold", "sans-serif";
-}
-#articlePage #relatedArticles > div:not(h2) {
-  display: flex;
-  overflow-x: auto;
-  gap: 16px;
-  padding-bottom: 8px;
-}
-#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar {
-  height: 4px;
-}
-#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar-thumb {
-  background: #096a09;
-  border-radius: 2px;
-}
-#articlePage #relatedArticles > div:not(h2) .articleCard {
-  flex: 0 0 200px;
-  width: 200px;
-}
-@media screen and (min-width: 1024px) {
-  #articlePage {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  #articlePage .product-page {
-    flex: 1;
-    width: auto;
-  }
-  #articlePage .product-page .product-header {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-    gap: 48px;
-  }
-  #articlePage .product-page .product-header #gallery {
-    width: 45%;
-    flex-shrink: 0;
-  }
-  #articlePage .product-page .product-header .product-details {
-    align-items: flex-start;
-    flex: 1;
-  }
-  #articlePage #relatedArticles {
-    width: 280px;
-    flex-shrink: 0;
-    top: 100px;
-  }
-  #articlePage #relatedArticles > div:not(h2) {
-    flex-direction: column;
-    overflow-x: visible;
-  }
-  #articlePage #relatedArticles > div:not(h2) .articleCard {
-    flex: none;
-    width: 100%;
-  }
 }
 
 #aboutPage {
@@ -1445,6 +1130,355 @@ main form p:last-child {
   #confirmationPage #confirmationCard #confirmationActions a {
     width: auto;
     padding: 14px 32px;
+  }
+}
+
+#articlePage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+#articlePage .product-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+#articlePage .product-page .articleInfos {
+  background-color: #096a09;
+  color: #eeeeee;
+  padding: 8px 16px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+#articlePage .product-page .articleInfos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #096a09;
+}
+#articlePage .product-page .articleInfos-header .articleInfos {
+  flex: 1;
+}
+#articlePage .product-page .articleInfos-header #addComment {
+  color: #eeeeee;
+  font-size: 13px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+#articlePage .product-page .articleInfos-header #addComment:hover {
+  text-decoration: underline;
+}
+#articlePage .product-page .product-section-content {
+  background-color: #d9d9d9;
+  padding: 16px;
+}
+#articlePage .product-page .product-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+#articlePage .product-page .product-header h1 {
+  font-size: 26px;
+  font-family: "LucioleBold", "sans-serif";
+  color: black;
+}
+#articlePage .product-page .product-header #gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+#articlePage .product-page .product-header #gallery #mainImage {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+#articlePage .product-page .product-header #gallery #thumbnails {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  overflow-x: auto;
+}
+#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar {
+  height: 4px;
+}
+#articlePage .product-page .product-header #gallery #thumbnails::-webkit-scrollbar-thumb {
+  background: #096a09;
+  border-radius: 2px;
+}
+#articlePage .product-page .product-header #gallery #thumbnails img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+#articlePage .product-page .product-header #gallery #thumbnails img:hover, #articlePage .product-page .product-header #gallery #thumbnails img.active {
+  border-color: #096a09;
+}
+#articlePage .product-page .product-header .product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+#articlePage .product-page .product-header .product-details .product-brand {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: grey;
+}
+#articlePage .product-page .product-header .product-details .price {
+  font-size: 22px;
+  font-family: "LucioleBold", "sans-serif";
+}
+#articlePage .product-page .product-header .product-details .deliveryDate {
+  font-size: 13px;
+  color: grey;
+  font-style: italic;
+}
+#articlePage .product-page .product-header .product-details .addBasketButton {
+  width: 60%;
+  text-align: center;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 24px;
+}
+#articlePage .product-page .modality {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+#articlePage .product-page .modality:last-child {
+  border-bottom: none;
+}
+#articlePage .product-page .modality .modality-label {
+  color: grey;
+}
+#articlePage .product-page .modality .modality-label::after {
+  content: " :";
+}
+#articlePage .product-page .modality .modality-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+#articlePage .product-page #variantsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#articlePage .product-page #variantsList .variant-card {
+  padding: 8px 16px;
+  border: 2px solid #096a09;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+#articlePage .product-page #variantsList .variant-card .modality-value {
+  font-size: 14px;
+  color: #096a09;
+}
+#articlePage .product-page #variantsList .variant-card .modality-color {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  display: block;
+}
+#articlePage .product-page #variantsList .variant-card:hover, #articlePage .product-page #variantsList .variant-card.active {
+  background-color: #096a09;
+}
+#articlePage .product-page #variantsList .variant-card:hover .modality-value, #articlePage .product-page #variantsList .variant-card.active .modality-value {
+  color: #eeeeee;
+}
+#articlePage .product-page #commentSection #commentSectionHeader #addComment {
+  color: #eeeeee;
+}
+#articlePage .product-page #commentSection #allComments {
+  display: flex;
+  flex-direction: column;
+}
+#articlePage .product-page #commentSection #allComments .comment {
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(78.947826087, 240.052173913, 78.947826087);
+}
+#articlePage .product-page #commentSection #allComments .comment:last-child {
+  border-bottom: none;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader h4 {
+  font-size: 14px;
+  color: black;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: fit-content;
+  box-sizing: border-box;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteForm {
+  display: flex;
+  width: auto;
+  padding: 0;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment,
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+  width: fit-content;
+  text-align: center;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 0 !important;
+  background: none;
+  cursor: pointer;
+  font-family: "Luciole", "sans-serif";
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment {
+  color: #096a09;
+  border: 1px solid #096a09;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .editComment:hover {
+  background-color: #096a09;
+  color: #eeeeee;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment {
+  color: red;
+  border: 1px solid red;
+}
+#articlePage .product-page #commentSection #allComments .comment .commentHeader .commentActions .deleteComment:hover {
+  background-color: red;
+  color: white;
+}
+#articlePage .product-page #commentSection #allComments .comment p {
+  font-size: 13px;
+  color: grey;
+  font-style: italic;
+  line-height: 1.5;
+}
+#articlePage .product-page #commentSection .noComment {
+  font-size: 14px;
+  color: grey;
+  font-style: italic;
+}
+#articlePage .product-page #commentSection #commentSection {
+  margin: 16px 0;
+}
+#articlePage .product-page #commentSection #commentSection form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#articlePage .product-page #commentSection #commentSection form #commentFormTitle {
+  color: #096a09;
+  font-size: 15px;
+}
+#articlePage .product-page #commentSection #commentSection form textarea {
+  padding: 12px;
+  border: 2px solid #096a09;
+  border-radius: 8px;
+  min-height: 100px;
+  resize: vertical;
+  font-size: 14px;
+  background-color: #eeeeee;
+}
+#articlePage .product-page #commentSection #commentSection form textarea:focus {
+  outline: none;
+}
+#articlePage .product-page #commentSection #commentSection form button[type=submit] {
+  align-self: flex-end;
+}
+#articlePage #relatedArticles {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+#articlePage #relatedArticles h2 {
+  font-size: 18px;
+  color: #096a09;
+  font-family: "LucioleBold", "sans-serif";
+}
+#articlePage #relatedArticles > div:not(h2) {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar {
+  height: 4px;
+}
+#articlePage #relatedArticles > div:not(h2)::-webkit-scrollbar-thumb {
+  background: #096a09;
+  border-radius: 2px;
+}
+#articlePage #relatedArticles > div:not(h2) .articleCard {
+  flex: 0 0 200px;
+  width: 200px;
+}
+@media screen and (min-width: 1024px) {
+  #articlePage {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  #articlePage .product-page {
+    flex: 1;
+    width: auto;
+  }
+  #articlePage .product-page .product-header {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 48px;
+  }
+  #articlePage .product-page .product-header #gallery {
+    width: 45%;
+    flex-shrink: 0;
+  }
+  #articlePage .product-page .product-header .product-details {
+    align-items: flex-start;
+    flex: 1;
+  }
+  #articlePage #relatedArticles {
+    width: 280px;
+    flex-shrink: 0;
+    top: 100px;
+  }
+  #articlePage #relatedArticles > div:not(h2) {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+  #articlePage #relatedArticles > div:not(h2) .articleCard {
+    flex: none;
+    width: 100%;
   }
 }
 
