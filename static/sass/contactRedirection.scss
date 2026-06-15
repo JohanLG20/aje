@@ -1,0 +1,106 @@
+#contactConfirmationPage {
+    display: flex;
+    justify-content: center;
+    padding: 48px 16px;
+    box-sizing: border-box;
+
+    #confirmationCard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        width: 100%;
+        max-width: 560px;
+        text-align: center;
+
+        // Success icon
+        #confirmationIcon {
+            i {
+                font-size: 64px;
+                color: col.$color-primary;
+            }
+        }
+
+        h1 {
+            font-size: 26px;
+            font-family: fonts.$titleBold;
+            color: col.$color-primary;
+        }
+
+        .confirmationSubtitle {
+            font-size: 15px;
+            color: grey;
+            line-height: 1.6;
+            margin-top: -8px;
+        }
+
+        // Additional information
+        #confirmationInfos {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
+            background-color: col.$color-third;
+            border-radius: 12px;
+            overflow: hidden;
+
+            .confirmationInfoItem {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px;
+                text-align: left;
+                border-bottom: 1px solid col.$color-primary-light;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                i {
+                    font-size: 22px;
+                    color: col.$color-primary;
+                    flex-shrink: 0;
+                }
+
+                .infoLabel {
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    color: col.$color-primary;
+                    font-family: fonts.$titleBold;
+                    margin-bottom: 4px;
+                }
+
+                p:not(.infoLabel) {
+                    font-size: 14px;
+                    color: grey;
+                }
+            }
+        }
+
+        // Buttons
+        #confirmationActions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+
+            a {
+                text-align: center;
+                padding: 14px;
+                border-radius: 24px;
+                font-size: 15px;
+            }
+
+            @media screen and (min-width: 750px) {
+                flex-direction: row;
+                justify-content: center;
+
+                a {
+                    width: auto;
+                    padding: 14px 32px;
+                }
+            }
+        }
+    }
+}

@@ -65,4 +65,8 @@ class StaticPageController
     {
         require(VIEW . "/404.php");
     }
+
+    public function sendMessage() {
+        require(VIEW . "/contactRedirection.php");
+    }
 }

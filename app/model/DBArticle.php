@@ -126,7 +126,7 @@ JOIN PRICE_HISTORY normal
 LEFT JOIN PRICE_HISTORY promo
     ON promo.id_article = a.id_article
     AND promo.end_date IS NOT NULL
-    AND promo.end_date >= CURDATE()
+    AND promo.end_date > CURDATE()
     AND promo.start_date <= CURDATE();
     WHERE a.deleted_at IS NULL
 
@@ -212,7 +212,7 @@ LEFT JOIN PRICE_HISTORY promo
         LEFT JOIN PRICE_HISTORY promo
             ON promo.id_article = a.id_article
             AND promo.end_date IS NOT NULL
-            AND promo.end_date >= CURDATE()
+            AND promo.end_date > CURDATE()
             AND promo.start_date <= CURDATE()
         LEFT JOIN VALUES_ v
             ON v.id_article = a.id_article
@@ -281,7 +281,7 @@ JOIN PRICE_HISTORY normal
 JOIN PRICE_HISTORY promo
     ON promo.id_article = a.id_article
     AND promo.end_date IS NOT NULL
-    AND promo.end_date >= CURDATE()
+    AND promo.end_date > CURDATE()
     AND promo.start_date <= CURDATE()
     AND a.deleted_at IS NULL
 GROUP BY a.id_article_informations
@@ -320,7 +320,7 @@ JOIN PRICE_HISTORY normal
 LEFT JOIN PRICE_HISTORY promo
     ON promo.id_article = a.id_article
     AND promo.end_date IS NOT NULL
-    AND promo.end_date >= CURDATE()
+    AND promo.end_date > CURDATE()
     AND promo.start_date <= CURDATE()
 WHERE a.deleted_at IS NULL
     GROUP BY a.id_article_informations ORDER BY a.id_article_informations DESC
@@ -443,7 +443,7 @@ JOIN PRICE_HISTORY normal
 LEFT JOIN PRICE_HISTORY promo
     ON promo.id_article = a.id_article
     AND promo.end_date IS NOT NULL
-    AND promo.end_date >= CURDATE()
+    AND promo.end_date > CURDATE()
     AND promo.start_date <= CURDATE()
 WHERE a.deleted_at IS NULL
 AND ai.id_category = (SELECT id_category 

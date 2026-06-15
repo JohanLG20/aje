@@ -55,14 +55,14 @@ abstract class UserErrorHelper
                     $lastName,
                     FILTER_VALIDATE_REGEXP,
                     array('options' => array(
-                        'regexp' => "/^([a-zA-Z\-\s]*)$/"
+                        'regexp' => "/^([a-zA-Z\-]*)$/"
 
                     ))
                 )) {
                     //No errors has been encountered so we return null
                     return null;
                 } else {
-                    return 'Veuillez ne pas entrer de chiffres ni de caractères spéciaux (- autorisé)';
+                    return 'Veuillez ne pas entrer de chiffres ni de caractères spéciaux (- et espace autorisé)';
                 }
             }
         } else {
