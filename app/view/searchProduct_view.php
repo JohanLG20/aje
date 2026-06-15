@@ -84,9 +84,6 @@
                                                 name="filters[<?= $choice['id_filter_type'] ?>][]"
                                                 value="<?= $choice['id_choice'] ?>"
                                                 <?= isset($_GET['filters'][$choice['id_filter_type']]) && in_array($choice['id_choice'], $_GET['filters'][$choice['id_filter_type']]) ? 'checked' : '' ?>>
-                                            <?php if ($choice['hexa']): ?>
-                                                <span style="display:inline-block; width:16px; height:16px; background-color:<?= htmlspecialchars($choice['hexa']) ?>; border-radius:50%;"></span>
-                                            <?php endif; ?>
                                             <?= htmlspecialchars($choice['value']) ?>
                                         </label>
                                     <?php endforeach; ?>

@@ -348,6 +348,9 @@
   #filterModal #filterModalContent #closeModal {
     display: none;
   }
+  #filterModal #filterModalContent #filterForm {
+    display: flex;
+  }
 }
 
 #noResults {

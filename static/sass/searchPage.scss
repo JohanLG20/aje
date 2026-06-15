@@ -142,6 +142,11 @@
             #closeModal {
                 display: none; // No need to close a permanent sidebar
             }
+
+            #filterForm{
+                display: flex;
+
+            }
         }
     }
 }

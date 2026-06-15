@@ -17,8 +17,6 @@ class SearchPageController
     {
         $query = trim($query);
 
-        $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " .$query;
-
         try {
             $dbArticle = new DBArticle();
 
@@ -83,24 +81,6 @@ class SearchPageController
                 $filters['categories'][] = $art['category'];
             }
 
-            // Dynamic modalities like size, shoe size ...
-            if (!empty($art['filter_type_label']) && !empty($art['choice_value'])) {
-                $label = $art['filter_type_label'];
-
-                if (!isset($filters['modalities'][$label])) {
-                    $filters['modalities'][$label] = [];
-                }
-
-                $alreadyPresent = array_column($filters['modalities'][$label], 'value');
-                if (!in_array($art['choice_value'], $alreadyPresent)) {
-                    $filters['modalities'][$label][] = [
-                        'id_choice'      => $art['id_choice_'],
-                        'id_filter_type' => $art['id_filter_type'],
-                        'value'          => $art['choice_value'],
-                        'hexa'           => $art['color_choice_hexa'] ?? null
-                    ];
-                }
-            }
         }
 
         return $filters;
@@ -113,6 +93,7 @@ class SearchPageController
      */
     public function displayView(string $query)
     {
+        $metaDesc = "AJE - Vente d'équipements et de vêtement sportifs. " . $query;
 
         //Checking if 
         $isNewSearch = !isset($_SESSION['search_query'])
@@ -200,7 +181,7 @@ class SearchPageController
 
         //Creating the images
         $ih = new ImageHanddler();
-        foreach($articles as &$art){
+        foreach ($articles as &$art) {
             $art['image'] = $ih->getFirstImage($art['image_repertory']);
         }
 
