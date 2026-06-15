@@ -12,7 +12,8 @@ class ProductErrorHelper
 
     public static function checkForErrors(array $values, string $action): array|bool
     {
-        if ($action === "dellete") {
+        $errors = [];
+        if ($action === "delete") {
             $errors['idArticle'] = self::checkArticleIdErrors($values['idArticle']);
         }
 

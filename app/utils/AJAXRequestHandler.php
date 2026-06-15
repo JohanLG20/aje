@@ -22,9 +22,8 @@ class AJAXRequestHandler
      * ]
      * @param string $id The id of a category
      * 
-     * @return void
      */
-    public function getAllFiltersValueForFilterType(string $id): void
+    public function getAllFiltersValueForFilterType(string $id)
     {
         if ($id !== "" && is_numeric($id)) {
             try {

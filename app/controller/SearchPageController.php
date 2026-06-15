@@ -206,8 +206,6 @@ class SearchPageController
 
         return [
             'articles' => array_values($articles),
-            // Les filtres disponibles sont calculés depuis les résultats bruts
-            // pour ne pas perdre les options non sélectionnées
             'filters'  => $this->getAvailableFilters($rawArticles)
         ];
     }
