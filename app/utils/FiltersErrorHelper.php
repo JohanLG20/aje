@@ -16,6 +16,10 @@ class FiltersErrorHelper extends ErrorHelper
         $this->filtersValues = $this->getFiltersValuesFromPost();
     }
 
+    /**
+     * @return array Array of the errors that occured, with the key being where the error happened and the value the error message associated
+
+     */
     protected function checkErrors(): array
     {
         try {
@@ -27,7 +31,11 @@ class FiltersErrorHelper extends ErrorHelper
         }
     }
 
-    private function checkFilterForCategory()
+    /**
+     * Checks if the filters for categories is valid
+     * @return ?string Return the error message or null if there are no errors
+     */
+    private function checkFilterForCategory(): ?string
     {
         try {
             $catDb = new DBCategory();
@@ -49,7 +57,12 @@ class FiltersErrorHelper extends ErrorHelper
             throw $e;
         }
     }
-    private function checkValuesForFilter()
+
+    /**
+     * Checks if the values for the filter is valid
+     * @return ?string Return the error message or null if there are no errors
+     */
+    private function checkValuesForFilter() : ?string
     {
         try {
             $fva = new VFilterValuesAssociations();
@@ -59,10 +72,9 @@ class FiltersErrorHelper extends ErrorHelper
             $allValues = array_merge(...$this->filtersValues); //Flattening the array
 
             //Checking if the filters values are in the possible values
-            if(empty(array_diff($allValues, $allPossibleValues))){
+            if (empty(array_diff($allValues, $allPossibleValues))) {
                 return null;
-            }
-            else{
+            } else {
                 return "Une des valeurs choisis pour le filtre ne correspond pas aux types de filtres autorisés";
             }
 
@@ -72,6 +84,9 @@ class FiltersErrorHelper extends ErrorHelper
         }
     }
 
+    /**
+     * @return array An array where the key is the id_filter_type and the value is the choice_label
+     */
     private function getFiltersValuesFromPost(): array
     {
         $arr = [];
@@ -86,5 +101,4 @@ class FiltersErrorHelper extends ErrorHelper
 
         return $arr;
     }
-
 }

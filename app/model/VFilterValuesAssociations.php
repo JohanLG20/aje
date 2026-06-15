@@ -63,6 +63,13 @@ class VFilterValuesAssociations
         }
     }
 
+    /**
+     * Returns the infos of a choice which match the given id
+     * @param string $id The of of choice we want the infos
+     * @param array $attrsToGet Optionnal, only returns the attributes specified
+     * 
+     * @return array All the informations for the given choice
+     */
     public function getAllInfosForId(string $id, array $attrsToGet = []): array
     {
         try {

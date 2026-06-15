@@ -13,6 +13,12 @@ class DBPriceHistory extends CoreModel
         $this->idName = strtolower($this->tableName);
     }
 
+    /**
+     * Rewrites of the base function, allows to have end_date as a null params
+     * @param array $params The datas to insert in the table. Keys must be the same as the database attributes
+     * 
+     * @return PDOStatement
+     */
     protected function prepareAddQuery(array $params): PDOStatement|false
     {
         //By default, if no values are specified for the startDate it take the day of the day

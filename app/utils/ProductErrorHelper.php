@@ -115,6 +115,12 @@ class ProductErrorHelper
         }
     }
 
+    /**
+     * Checks if the price is valid and under 9999.99.
+     * @param string $price The given price
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
     private static function checkPriceErrors(string $price): ?string
     {
         if (is_numeric($price)) {
@@ -128,6 +134,12 @@ class ProductErrorHelper
         }
     }
 
+    /**
+     * Check if a category has been given
+     * @param string $idCat The id of the category
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
     private static function checkCategoryErrors(string $idCat): ?string
     {
         if (is_numeric($idCat) && $idCat >= 0) {
@@ -142,17 +154,27 @@ class ProductErrorHelper
         }
     }
 
+    /**
+     * Checks if images has been provided
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
     private static function checkImagesErrors(): ?string
     {
 
         if (isset($_FILES['images']) && !empty($_FILES['images'])) {
-            //TODO: Insert validation image
+            // Insert validation image here
             return null;
         } else {
             return "Veuillez entrer au moins une image";
         }
     }
 
+    /**
+     * Checks if an id has been given
+     * @param string $id The id of the article given
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
     private static function checkArticleIdErrors(string $id): ?string
     {
 
@@ -172,6 +194,12 @@ class ProductErrorHelper
         }
     }
 
+    /**
+     * Checks if an id_article_information has been given
+     * @param string $id The id given
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
     private static function checkArticleInfosIdErrors(string $id): ?string
     {
 

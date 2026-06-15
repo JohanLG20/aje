@@ -5,6 +5,10 @@ namespace AJE\Utils;
 class ImageHanddler
 {
 
+    /**
+     * Returns an uniqid
+     * @return string An uniqid
+     */
     public function generateUniqid(): string
     {
         return uniqid();

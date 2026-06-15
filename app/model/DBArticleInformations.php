@@ -63,6 +63,12 @@ class DBArticleInformations extends CoreModel
         }
     }
 
+    /**
+     * Returns the price for a given id
+     * @param int $id The id_article_inforamtions of the article we want the price
+     * 
+     * @return array An array that contains the price 
+     */
     public function getArticlePrice(int $id): array
     {
         try {

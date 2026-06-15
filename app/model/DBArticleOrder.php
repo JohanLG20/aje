@@ -2,7 +2,7 @@
 
 namespace AJE\Model;
 
-class DBArticleOrder extends CoreAssociativeTable
+class DBArticleOrder extends CoreModel
 {
     public function __construct()
     {

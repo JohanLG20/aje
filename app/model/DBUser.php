@@ -39,7 +39,13 @@ class DBUser extends CoreModel
         return $addProdQuery;
     }
 
-    public function getUserByMail(string $mail): array|bool
+    /**
+     * Returns a user with the given mail. Returns an empty array if no user is found
+     * @param string $mail The mail of the user we search for
+     * 
+     * @return array Returns the user if found one, empty array otherwise
+     */
+    public function getUserByMail(string $mail): array
     {
         try {
             $query = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE mail = :mail");

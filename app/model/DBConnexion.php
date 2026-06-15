@@ -20,6 +20,9 @@ class DBConnexion
         }
     }
 
+    /**
+     * @return DBConnexion An instance of the connexion to the database
+     */
     public static function getInstance(): DBConnexion
     {
         if (self::$instance === null) {
@@ -29,7 +32,9 @@ class DBConnexion
         return self::$instance;
     }
 
-
+    /**
+     * @return \PDO An object that allows to interact with the database
+     */
     public function getConnexion() : \PDO
     {
         return $this->connexion;

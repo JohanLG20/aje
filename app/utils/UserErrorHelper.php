@@ -193,7 +193,13 @@ abstract class UserErrorHelper
         }
     }
 
-    private static function checkCityErrors(?string $city): ?string
+    /**
+     * Checks if the city has an error error
+     * @param string $city The given city name
+     * 
+     * @return string|null Return a string that contains the error if one is detected, or null if there are no errors
+     */
+    private static function checkCityErrors(string $city): ?string
     {
         if (strlen($city) > 0) {
             if (strlen($city) > 50) {

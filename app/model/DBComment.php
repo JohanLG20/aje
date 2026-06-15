@@ -13,6 +13,12 @@ class DBComment extends CoreModel
         $this->idName = strtolower($this->tableName);
     }
 
+    /**
+     * Returns an array that contains the user informations (name and id) and the comment for a given article
+     * @param string $idArticle The id of the article
+     * 
+     * @return array An array of comments where each row contains the username (null if the user is deleted), the user id, the comment id and the comment
+     */
     public function getCommentsAndUserInfosForArticle(string $idArticle): array
     {
         try {
@@ -40,6 +46,14 @@ class DBComment extends CoreModel
         }
     }
 
+    /**
+     * Return the comment for a given user on a given article
+     * @param string $idComment The id of the comment
+     * @param string $idUser The id of the user
+     * @param string $idArticle The id of the article
+     * 
+     * @return array The informations of the comment
+     */
     public function getCommentByIdByAuthorByArticle(string $idComment, string $idUser, string $idArticle)
     {
         try {
