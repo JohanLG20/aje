@@ -45,7 +45,16 @@ const ROUTES = [
 
     '/filterRequest/getFvForCat/{id}' => [
         'controller' => AJE\Utils\AJAXRequestHandler::class,
-        'method' => 'getAllFiltersValueForFilterType'
+        'method' => 'getAllFiltersValueForFilterType',
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
+    ],
+
+    '/getArtInfos/{id}' => [
+        'controller' => AJE\Utils\AJAXRequestHandler::class,
+        'method' => 'getArticleInfos',
+        'minPermission' => 'admin',
+        'denyAccessMethod' => 'permissionDenied'
     ],
 
     '/article/{idArt}' => [

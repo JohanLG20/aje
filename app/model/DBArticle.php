@@ -142,6 +142,12 @@ LEFT JOIN PRICE_HISTORY promo
         }
     }
 
+    /**
+     * Returns the id_article_informations of the required article
+     * @param int $idArticle The article we want the id_article_informations
+     * 
+     * @return int|null The id_article_informations or null if not found
+     */
     public function getArticleInformationsId(int $idArticle): ?int
     {
         $query = $this->db->prepare("
@@ -155,6 +161,12 @@ LEFT JOIN PRICE_HISTORY promo
         return $result ? (int) $result['id_article_informations'] : null;
     }
 
+    /**
+     * Returns a list of articles that matches the given research
+     * @param string $research What to look for in the database
+     * 
+     * @return array An array of articles where each row contains the infos of the article
+     */
     public function searchForArticles(string $research): array
     {
         try {
@@ -246,7 +258,7 @@ LEFT JOIN PRICE_HISTORY promo
     /**
      * @param string $limit The number of article we want, 10 is set by default
      * 
-     * @return array
+     * @return array An array of articles where each row contains the infos of the article
      */
     public function getArticlesInPromotions(string $limit = "10"): array
     {
@@ -353,6 +365,12 @@ LIMIT :limit");
     }
 
 
+    /**
+     * Rewrite of the base function, we on put a date on deleted_at
+     * @param int $idArticle The id of the article to delete
+     * 
+     * @return bool True if the operation was successful, false otherwise
+     */
     public function deleteElementById(int $idArticle): bool
     {
         $query = $this->db->prepare("
@@ -365,9 +383,10 @@ LIMIT :limit");
     }
 
     /**
+     * Returns informations such as the total sellings, the number of articles sell or the average price of a sell.
      * @return array An array that contains the total of the revenues
      */
-    public function getTotalRevenues(): array
+    public function getRevenuesInformations(): array
     {
         try {
             $query = $this->db->prepare("SELECT SUM(p.price * p.quantity) AS revenues, SUM(p.quantity) as total_quantity, AVG(p.price) as average_price
@@ -397,6 +416,12 @@ LIMIT :limit");
         }
     }
 
+    /**
+     * Returns the articles that share the same category of the given article
+     * @param int $idArticle The id of the article
+     * 
+     * @return array An array of article where each line contains the informations of the articles 
+     */
     public function getRelatedArticle(int $idArticle): array
     {
         try {

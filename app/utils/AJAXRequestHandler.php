@@ -2,10 +2,12 @@
 
 namespace AJE\Utils;
 
+use AJE\Model\DBArticleInformations;
 use AJE\Model\DBCategory;
 use AJE\Model\DBChoice_;
 use AJE\Model\DBFilteredBy;
 use AJE\Model\DBFilterType;
+use AJE\Model\DBPriceHistory;
 use AJE\Model\VFilterValuesAssociations;
 
 class AJAXRequestHandler
@@ -64,6 +66,30 @@ class AJAXRequestHandler
             echo $json;
         } else {
             echo 'Données introuvables avec ces paramètres';
+        }
+    }
+
+    /**
+     * Echoes a json that contains the infos of the required article informations.
+     * @param int $id An id article informations
+     */
+    public function getArticleInfos(int $id) {
+        try{
+            $dbArtInfos = new DBArticleInformations();
+
+            $datas = $dbArtInfos->getElementById($id);
+            $datas = array_merge($datas, $dbArtInfos->getArticlePrice($id));
+        }
+        catch(\PDOException $e){
+            throw $e;
+        }
+
+        if($datas){
+            $json = json_encode($datas);
+            echo $json;
+        }
+        else{
+            echo 'Données introuvables';
         }
     }
 }

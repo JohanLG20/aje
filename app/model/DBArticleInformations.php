@@ -4,7 +4,8 @@ namespace AJE\Model;
 
 use Exception;
 
-class DBArticleInformations extends CoreModel{
+class DBArticleInformations extends CoreModel
+{
     public function __construct()
     {
         parent::__construct();
@@ -32,11 +33,16 @@ class DBArticleInformations extends CoreModel{
     }
 
 
+    /**
+     * Returns all the variants of a given article
+     * @param int $id The id of the article we want the variants
+     * 
+     * @return array
+     */
     public function getProductVariants(int $id): array|bool
     {
-        try{
-            // Toutes les variantes (ARTICLE) liées à cet ARTICLE_INFORMATIONS
-        $query = $this->db->prepare("
+        try {
+            $query = $this->db->prepare("
             SELECT
                 a.id_article,
                 ft.filter_type_label,
@@ -50,15 +56,28 @@ class DBArticleInformations extends CoreModel{
             LEFT JOIN CHOICE_COLOR cc ON cc.id_choice_ = v.id_choice_
             WHERE a.id_article_informations = :id AND a.deleted_at IS NULL
         ");
-        $query->execute([':id' => $id]);
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-        catch(\PDOException $e){
+            $query->execute([':id' => $id]);
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
             throw new \Exception("Erreur de connexion à la base de données");
         }
-        
     }
 
-    
-
+    public function getArticlePrice(int $id): array
+    {
+        try {
+            $query = $this->db->prepare("SELECT 
+    normal.price AS price
+FROM ARTICLE a
+JOIN PRICE_HISTORY normal
+    ON normal.id_article = a.id_article
+    AND normal.end_date IS NULL
+WHERE a.id_article_informations = :idArticleInformations
+LIMIT 1;");
+            $query->execute([':idArticleInformations' => $id]);
+            return $query->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
 }

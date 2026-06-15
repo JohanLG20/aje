@@ -112,7 +112,24 @@ class ProductManagementController extends CRUDController
     }
     protected function update(array $params): string
     {
-        throw new \Exception("Not implemented yet");
+        try{
+            $dbArtInfos = new DBArticleInformations();
+            $datas = [
+                'article_name' => $params['articleName'],
+                'id_brand' => $params['idBrand'],
+                'description' => $params['description'],
+            ];
+
+            $dbArtInfos->modifyElementById($params['idArticleInformations'], $datas);
+
+            $dbPh = new DBPriceHistory();
+            $dbPh->updatePriceForAllVariants($params['idArticleInformations'], $params['price']);
+
+            return $this->getSuccessMessage("update");
+        }
+        catch(\PDOException $e){
+            throw $e;
+        }
     }
     protected function delete(array $params): string
     {
@@ -175,11 +192,15 @@ class ProductManagementController extends CRUDController
         $extraInformations['categoriesList'] = $this->flattenTree($allCategories);
         $extraInformations['brandList'] = $brandDb->getAllElements();
 
-        if ($action !== "create") {
+        if ($action === "delete") {
             $artDb = new DBArticle();
             $allArticles = $artDb->getAllArticlesWithModalities();
             $allArticles = $this->groupArticles($allArticles);
             $extraInformations['articlesList'] = $this->flattenArticlesForSelect($allArticles);
+        }
+        else if($action == "update"){
+            $artInfosDb = new DBArticleInformations();
+            $extraInformations['articlesList'] = $artInfosDb->getAllElements();
         }
 
 

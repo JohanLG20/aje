@@ -9,7 +9,7 @@ use Override;
 
 class UserManagementController extends CRUDController
 {
-    #[Override]
+
     public function prepareAndDisplayView(string $action)
     {
         //Checking a non connected user tries to access routes 

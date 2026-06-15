@@ -3,6 +3,7 @@
 namespace AJE\Utils;
 
 use AJE\Model\DBArticle;
+use AJE\Model\DBArticleInformations;
 use AJE\Model\DBBrand;
 use AJE\Model\DBCategory;
 
@@ -11,11 +12,19 @@ class ProductErrorHelper
 
     public static function checkForErrors(array $values, string $action): array|bool
     {
-        if ($action !== "create") {
+        if ($action === "dellete") {
             $errors['idArticle'] = self::checkArticleIdErrors($values['idArticle']);
         }
 
-        if ($action !== "delete") {
+        if ($action === "update") {
+            $errors['idArticleInformations'] = self::checkArticleInfosIdErrors($values['idArticleInformations']);
+            $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
+            $errors['description'] = self::checkDescriptionErrors($values['description']);
+            $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
+            $errors['price'] = self::checkPriceErrors($values['price']);
+        }
+
+        if ($action === "create") {
             $errors['articleName'] = self::checkArticleNameErrors($values['articleName']);
             $errors['idBrand'] = self::checkBrandErrors($values['idBrand']);
             $errors['description'] = self::checkDescriptionErrors($values['description']);
@@ -158,7 +167,25 @@ class ProductErrorHelper
             } catch (\PDOException $e) {
                 return "Une erreur est survenue lors de la connexion de la base de données";
             }
-            return null;
+        } else {
+            return "Veuillez sélectionner un article";
+        }
+    }
+
+    private static function checkArticleInfosIdErrors(string $id): ?string
+    {
+
+        if (is_numeric($id)) {
+            try {
+                $artInfoDb = new DBArticleInformations();
+                if (!empty($artInfoDb->getElementById($id))) {
+                    return null;
+                } else {
+                    return "Article introuvable";
+                }
+            } catch (\PDOException $e) {
+                return "Une erreur est survenue lors de la connexion de la base de données";
+            }
         } else {
             return "Veuillez sélectionner un article";
         }

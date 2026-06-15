@@ -6,11 +6,14 @@ use AJE\Model\DBArticle;
 
 class RevenueController
 {
+    /**
+     * Shows the revenues. Access routes is /revenues/
+     */
     public function show()
     {
         try {
             $dbArticle = new DBArticle();
-            $revenuesInfos = $dbArticle->getTotalRevenues();
+            $revenuesInfos = $dbArticle->getRevenuesInformations();
             $total = $revenuesInfos['revenues'];
             $totalQuantity = $revenuesInfos['total_quantity'];
             $averagePrice = (float) $revenuesInfos['average_price'];

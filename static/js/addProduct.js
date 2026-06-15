@@ -98,3 +98,4 @@ function createFilterValuesDiv(filterName, filterValues) {
 
     return filterDiv;
 }
+

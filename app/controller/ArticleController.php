@@ -81,6 +81,12 @@ class ArticleController
         }
     }
 
+    /**
+     * Formats the variants of the given articles
+     * @param array $rawVariants The list of articles we want to format the variants
+     * 
+     * @return array The formatted variants of all the articles
+     */
     private function formatVariants(array $rawVariants): array
     {
         $variants = [];
@@ -104,7 +110,7 @@ class ArticleController
 
         $variants = array_values($variants);
 
-        // On regroupe toutes les valeurs par type de modalité
+        // Grouping the modalities by type
         $modalitiesByType = [];
         foreach ($variants as $variant) {
             foreach ($variant['modalities'] as $label => $modality) {
@@ -112,19 +118,18 @@ class ArticleController
             }
         }
 
-        // On sépare les modalités communes des modalités variables
+        // Separing the common modalities with the ones that varies
         $commonModalities  = [];
         $variantTypes      = [];
         foreach ($modalitiesByType as $label => $values) {
             if (count(array_unique($values)) === 1) {
-                // Même valeur pour toutes les variantes → modalité commune
                 $commonModalities[$label] = $variants[0]['modalities'][$label];
             } else {
                 $variantTypes[] = $label;
             }
         }
 
-        // On ne garde que les modalités variables dans chaque variante
+        // We only keep the variants that changes
         foreach ($variants as &$variant) {
             $variant['modalities'] = array_filter(
                 $variant['modalities'],
@@ -139,6 +144,9 @@ class ArticleController
         ];
     }
 
+    /**
+     * Called when the asked article is not found. Displays the 404 page
+     */
     private function notFound(): void
     {
         http_response_code(404);

@@ -22,29 +22,28 @@ class SearchPageController
         try {
             $dbArticle = new DBArticle();
 
-            // Découpage correct par espaces et +
+            // Split the query by spaces
             $eachQueryWord = preg_split('/[\s+]+/', $query, -1, PREG_SPLIT_NO_EMPTY);
 
             $rawArticles = [];
 
             if (count($eachQueryWord) > 1) {
-                // On récupère les résultats du premier mot indexés par id
+                // We get the results for the first word
                 $firstResult = $dbArticle->searchForArticles($eachQueryWord[0]);
                 $rawArticles = array_column($firstResult, null, 'id');
 
-                // Pour chaque mot suivant on intersecte sur les ids
+                // We search for the word that is present in the first resultat and the others
                 for ($i = 1; $i < count($eachQueryWord); $i++) {
                     $result = $dbArticle->searchForArticles($eachQueryWord[$i]);
                     $resultIds = array_column($result, 'id');
 
-                    // On ne garde que les articles présents dans les deux résultats
                     $rawArticles = array_filter(
                         $rawArticles,
                         fn($article) => in_array($article['id'], $resultIds)
                     );
                 }
             } else {
-                // Recherche simple sur un seul mot
+                // Search on a single word
                 $result = $dbArticle->searchForArticles($query);
                 $rawArticles = array_column($result, null, 'id');
             }
@@ -110,8 +109,7 @@ class SearchPageController
     /**
      * Function that is in charge to display the view. A query can be entered to 
      * @param string $query
-     * 
-     * @return [type]
+     *
      */
     public function displayView(string $query)
     {
