@@ -12,6 +12,7 @@
   flex-direction: column;
   gap: 24px;
   margin-bottom: 16px;
+  justify-content: center;
   align-items: center;
   color: black;
 }
@@ -61,10 +62,6 @@
 #basket #basketPaymentButton,
 #basketPreview #basketPaymentButton {
   width: fit-content;
-}
-
-#validatePaymentButton {
-  justify-self: center;
 }
 
 #noItemInBasket {
@@ -1131,6 +1128,12 @@ main form p:last-child {
     width: auto;
     padding: 14px 32px;
   }
+}
+
+#revenuesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 #articlePage {

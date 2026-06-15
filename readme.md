@@ -36,3 +36,5 @@ Prérequis : Composer et un serveur web local opérationnel avec un base de donn
 
 Ouvrez un terminal et lancez la commande git clone https://github.com/JohanLG20/aje.git. Celà créra un nouveau répertoire contenant les fichiers présents sur github. Rendez-vous dans le répertoire nouvellement créer et lancez la commande `composer install`. Renommez le fichier .env.exemple en .env. Créez une base de données nommée aje et importez-y les données présentent dans le fichier creationTable.sql.
 Le script de création contient quelques articles pré-remplis, vous pourrez ensuite en rajouter d'autres. 
+
+Problème connu : Lors de la sélection de la catégorie en mode administrateur, les filtres peuvent ne pas apparaître automatiquement. Dans ce cas, rendez-sur sur un gestionnaire de base de données (type phpmyadmin) et assurez-vous que le definer de la vue FILTER_VALUES_ASSOCIATIONS est un utilisateur présent dans la base de données. Si ce n'est pas le cas, vous pouvez changer le definer par votre utilisateur à vous.
