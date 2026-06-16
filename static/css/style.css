@@ -1730,6 +1730,10 @@ hr {
   text-align: right;
 }
 
+#deleteButtonUser {
+  margin-top: 32px;
+}
+
 #footer {
   background-color: #096a09;
   padding: 32px 0;

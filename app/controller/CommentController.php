@@ -131,7 +131,6 @@ class CommentController
                 $_SESSION['commentError'] = "Veuillez ne pas entrer un commentaire vide ou de plus de 120 caractères";
             }
         }
-        var_dump($_SESSION['commentError']);
         header("Location: {$_SERVER['HTTP_REFERER']}");
         exit;
     }
@@ -165,11 +164,11 @@ class CommentController
         if ($this->isAuthor($idComment, $_POST['idArticle'])) {
             try {
                 $comment = trim(htmlspecialchars($_POST['comment']));
-                if (strlen($comment) >= 3) {
+                if (isset($comment) && strlen($comment) < 120 && !empty($comment)) {
                     $dbComment = new DBComment();
                     $dbComment->modifyElementById($idComment, ['comment_label' => $comment]);
                 } else {
-                    $_SESSION['commentError'] = 'Le commentaire doit faire au moins 3 caractères';
+                    $_SESSION['commentError'] = "Veuillez ne pas entrer un commentaire vide ou de plus de 120 caractères";
                 }
 
                 header("Location: {$_SERVER['HTTP_REFERER']}");
@@ -188,16 +187,7 @@ class CommentController
      */
     public function permissionDenied()
     {
-        //TODO: Create a function that display an error
-    }
-
-    public function getArticleIdFromHTTPReferer(): string
-    {
-        $lastUri = $_SERVER['HTTP_REFERER'];
-        $explodedLastUri = explode("/", $lastUri);
-
-        //Returns the last value of the array as it is the article id
-        return  $explodedLastUri[count($explodedLastUri) - 1];
+        require(VIEW . "/404.php");
     }
 
     /**

@@ -1,4 +1,4 @@
-let deleteButton = document.getElementById("deleteButton")
+let deleteButton = document.getElementById("deleteButtonUser")
 if (deleteButton) {
     deleteButton.addEventListener("click", () => {
         if (confirm("Souhaitez vous réelement supprimer votre compte ?")) {

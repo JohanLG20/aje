@@ -4,7 +4,7 @@
 
         <section class="product-header">
 
-            <div id="gallery">
+            <section id="gallery">
                 <h1><?= $productInfo['article_name'] ?></h1>
 
                 <img id="mainImage"
@@ -21,9 +21,9 @@
                         <?php endforeach ?>
                     </div>
                 <?php endif; ?>
-            </div>
+            </section>
 
-            <div class="product-details">
+            <section class="product-details">
                 <span class="product-brand"><?= $productInfo['brand'] ?></span>
                 <div class="price">
                     <p class="<?= !is_null($productInfo['price']["promo_price"]) ? 'promotion' : 'normalPrice' ?>">
@@ -37,19 +37,19 @@
                 <a href="?path=/basket/add/<?= $idArt ?>" class="addBasketButton btn1">
                     Ajouter au panier
                 </a>
-            </div>
+            </section>
         </section>
 
         <section class="product-section">
             <h3 class="articleInfos">Description du produit</h3>
-            <div class="product-section-content">
+            <section class="product-section-content">
                 <p><?= $productInfo['description'] ?></p>
-            </div>
+            </section>
         </section>
 
         <section class="product-section">
             <h3 class="articleInfos">Spécifications</h3>
-            <div class="product-section-content">
+            <section class="product-section-content">
 
                 <?php if (isset($activeVariantLabel)): ?>
                     <div class="modality">
@@ -66,14 +66,14 @@
 
                     </div>
                 <?php endforeach; ?>
-            </div>
+            </sections>
         </section>
 
         <?php
         if ($productInfo['hasVariants']): ?>
             <section class="product-section">
                 <h3 class="articleInfos">Tous les modèles disponibles</h3>
-                <div class="product-section-content">
+                <section class="product-section-content">
                     <div id="variantsList">
                         <?php foreach ($variants as $variant): ?>
                             <a href="?path=/article/<?= $variant['id_article'] ?>"
@@ -84,7 +84,7 @@
                             </a>
                         <?php endforeach; ?>
                     </div>
-                </div>
+                </section>
             </section>
         <?php endif; ?>
 

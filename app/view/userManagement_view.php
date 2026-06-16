@@ -114,9 +114,6 @@
         <input type="hidden" name="form_submitted">
         <section id="actionButton">
             <button type="submit" class="btn1"><?= explode(" ", $view['operationLabel'])[0] ?></button>
-            <?php if ($view['action'] === "update"): ?>
-                <button type="button" id="deleteButton" class="btn1">Supprimer mon compte</button>
-            <?php endif; ?>
         </section>
 
 
@@ -125,6 +122,9 @@
         <?php endif; ?>
     </form>
 
+    <?php if ($view['action'] === "update"): ?>
+        <button type="button" id="deleteButtonUser" class="btn1">Supprimer mon compte</button>
+    <?php endif; ?>
 
 </main>
 
